@@ -10,7 +10,7 @@ trait ResolvableRequestValidator
      * @param Request $request
      * @return bool
      */
-    public function validate(Request $request): bool
+    public function getHttpData(Request $request): bool
     {
         $http = $request->request->get('http');
 

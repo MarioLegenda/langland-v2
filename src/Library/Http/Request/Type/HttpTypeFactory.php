@@ -10,7 +10,7 @@ class HttpTypeFactory
      * @param string $type
      * @return TypeInterface
      */
-    public static function create(string $type): TypeInterface
+    public static function create(?string $type): TypeInterface
     {
         $types = [
             'get' => GetHttpType::class,

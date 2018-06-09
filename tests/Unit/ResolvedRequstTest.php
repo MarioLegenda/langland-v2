@@ -2,9 +2,10 @@
 
 namespace App\Tests\Unit;
 
+use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
+use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Validation\SymfonyValidatorFacade;
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ResolvedRequestTest extends WebTestCase
@@ -29,14 +30,63 @@ class ResolvedRequestTest extends WebTestCase
 
         /** @var SymfonyValidatorFacade $symfonyValidator */
         $symfonyValidator = static::$container->get('library.facade.symfony_validator');
+        /** @var RequestDataModel $requestDataModel */
+        $requestDataModel = static::$container
+            ->get(SerializerWrapper::class)
+            ->getDeserializer()
+            ->create($validRequest, RequestDataModel::class);
 
         $resolvedRequest = new ResolvedRequest(
-            $validRequest,
+            $requestDataModel,
             $symfonyValidator
         );
 
         static::assertEquals($validRequest['method'], $resolvedRequest->getMethod());
         static::assertEquals($validRequest['name'], $resolvedRequest->getName());
         static::assertEquals($validRequest['internal_type'], $resolvedRequest->getInternalType());
+    }
+
+    public function test_invalid_resolved_request()
+    {
+        $validRequest = [
+            'internal_type' => 'view',
+            'name' => 'name',
+            'data' => [
+                'some_data' => [],
+            ],
+            'method' => 'get',
+        ];
+
+        $requestKeys = array_keys($validRequest);
+
+        /** @var SymfonyValidatorFacade $symfonyValidator */
+        $symfonyValidator = static::$container->get('library.facade.symfony_validator');
+
+        foreach ($requestKeys as $key) {
+            $entersException = false;
+
+            $previousValue = $validRequest[$key];
+            $validRequest[$key] = '';
+
+            try {
+                /** @var RequestDataModel $requestDataModel */
+                $requestDataModel = static::$container
+                    ->get(SerializerWrapper::class)
+                    ->getDeserializer()
+                    ->create($validRequest, RequestDataModel::class);
+
+                new ResolvedRequest(
+                    $requestDataModel,
+                    $symfonyValidator
+                );
+
+            } catch (\RuntimeException $e) {
+                $entersException = true;
+
+                $validRequest[$key] = $previousValue;
+            }
+
+            static::assertTrue($entersException);
+        }
     }
 }

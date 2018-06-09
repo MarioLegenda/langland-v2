@@ -2,7 +2,9 @@
 
 namespace App\Symfony\Resolver;
 
+use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
+use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Validation\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
@@ -16,13 +18,20 @@ class LanguageResolver implements ArgumentValueResolverInterface
      */
     private $validator;
     /**
+     * @var SerializerWrapper $serializerWrapper
+     */
+    private $serializerWrapper;
+    /**
      * LanguageResolver constructor.
      * @param ValidatorInterface $validator
+     * @param SerializerWrapper $serializerWrapper
      */
     public function __construct(
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        SerializerWrapper $serializerWrapper
     ) {
         $this->validator = $validator;
+        $this->serializerWrapper = $serializerWrapper;
     }
     /**
      * @param Request $request
@@ -32,17 +41,18 @@ class LanguageResolver implements ArgumentValueResolverInterface
     public function supports(Request $request, ArgumentMetadata $argument)
     {
         /** @var array $httpData */
-        $httpData = $this->validate($request);
+        $httpData = $this->getHttpData($request);
         if ($httpData === false) {
             return false;
         }
 
+        /** @var RequestDataModel $requestDataModel */
+        $requestDataModel = $this->serializerWrapper->getDeserializer()->create($httpData, RequestDataModel::class);
+
         $requestResolver = new ResolvedRequest(
-            $httpData,
+            $requestDataModel,
             $this->validator
         );
-
-
     }
 
     /**
