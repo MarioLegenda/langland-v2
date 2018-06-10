@@ -82,7 +82,7 @@ class SerializerWrapper
      * @param bool $validate
      * @return object
      */
-    public function convertFromTo(
+    public function convertFromToByGroup(
         object $object,
         $groups,
         string $class,
@@ -91,6 +91,25 @@ class SerializerWrapper
         $serialized = $this->serialize($object, $this->normalizeGroups($groups));
 
         $created = $this->getDeserializer()->create($serialized, $class);
+
+        if ($validate) {
+            $this->modelValidator->validate($created);
+        }
+
+        return $created;
+    }
+    /**
+     * @param array $data
+     * @param string $class
+     * @param bool $validate
+     * @return object
+     */
+    public function convertFromToByArray(
+        array $data,
+        string $class,
+        bool $validate = true
+    ): object {
+        $created = $this->getDeserializer()->create($data, $class);
 
         if ($validate) {
             $this->modelValidator->validate($created);

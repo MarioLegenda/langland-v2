@@ -5,12 +5,12 @@ namespace Library\Http\Request;
 use Library\Http\Request\InternalType\CreationType;
 use Library\Http\Request\InternalType\ViewType;
 use Library\Http\Request\Type\HttpTypeFactory;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Infrastructure\Type\TypeInterface;
 use Library\Validation\SymfonyValidatorFacade;
 use Library\Validation\ValidatorInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
-class ResolvedRequest
+class ResolvedRequest implements ArrayNotationInterface, \JsonSerializable
 {
     /**
      * @var RequestData $requestData
@@ -74,6 +74,25 @@ class ResolvedRequest
     public function getInternalType(): TypeInterface
     {
         return $this->internalType;
+    }
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'method' => $this->getMethod(),
+            'internal_type' => $this->getInternalType(),
+            'data' => $this->getRequestData()->getData()
+        ];
+    }
+    /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
     /**
      * @param RequestDataModel $requestDataModel

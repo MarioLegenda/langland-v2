@@ -2,7 +2,7 @@
 
 namespace App\PresentationLayer\Model;
 
-class Language
+class Language implements PresentationModelInterface
 {
     /**
      * @var string $name
@@ -30,7 +30,7 @@ class Language
     /**
      * @return bool
      */
-    public function isShowOnPage(): bool
+    public function getShowOnPage(): bool
     {
         return $this->showOnPage;
     }

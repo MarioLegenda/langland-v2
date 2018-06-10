@@ -2,6 +2,7 @@
 
 namespace App\Symfony\Resolver;
 
+use App\PresentationLayer\Model\Language;
 use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
 use Library\Infrastructure\Helper\SerializerWrapper;
@@ -21,6 +22,10 @@ class LanguageResolver implements ArgumentValueResolverInterface
      * @var SerializerWrapper $serializerWrapper
      */
     private $serializerWrapper;
+    /**
+     * @var Language
+     */
+    private $languageModel;
     /**
      * LanguageResolver constructor.
      * @param ValidatorInterface $validator
@@ -49,12 +54,21 @@ class LanguageResolver implements ArgumentValueResolverInterface
         /** @var RequestDataModel $requestDataModel */
         $requestDataModel = $this->serializerWrapper->getDeserializer()->create($httpData, RequestDataModel::class);
 
-        $requestResolver = new ResolvedRequest(
+        $resolvedRequest = new ResolvedRequest(
             $requestDataModel,
             $this->validator
         );
-    }
 
+        $request->request->set('resolved_request', $resolvedRequest);
+
+        /** @var Language languageModel */
+        $this->languageModel = $this->serializerWrapper->convertFromToByArray(
+            $resolvedRequest->toArray(),
+            Language::class
+        );
+
+        return true;
+    }
     /**
      * Returns the possible value(s).
      *
@@ -63,7 +77,8 @@ class LanguageResolver implements ArgumentValueResolverInterface
      *
      * @return \Generator
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): \Generator
     {
+        yield $this->languageModel;
     }
 }

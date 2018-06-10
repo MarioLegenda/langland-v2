@@ -9,13 +9,27 @@ use App\PresentationLayer\Model\PresentationModelInterface;
 class Language
 {
     /**
-     * @param LanguageModel|PresentationModelInterface $language
+     * @var LanguageGateway $languageGateway
+     */
+    private $languageGateway;
+    /**
+     * Language constructor.
      * @param LanguageGateway $languageGateway
      */
-    public function create(LanguageModel $language, LanguageGateway $languageGateway)
+    public function __construct(
+        LanguageGateway $languageGateway
+    ) {
+        $this->languageGateway = $languageGateway;
+    }
+
+    /**
+     * @param LanguageModel|PresentationModelInterface $language
+     */
+    public function create(LanguageModel $language)
     {
-        $logicModel = $languageGateway->create($language);
+        $logicModel = $this->languageGateway->create($language);
 
         dump($logicModel);
+        die();
     }
 }
