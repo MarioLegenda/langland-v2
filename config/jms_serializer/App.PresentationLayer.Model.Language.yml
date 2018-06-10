@@ -1,0 +1,23 @@
+App\PresentationLayer\Model\Language:
+    exclusion_policy: all
+    properties:
+        name:
+            expose: true
+            groups: [default]
+            type: string
+
+        showOnPage:
+            expose: true
+            groups: [default]
+            type: bool
+            serialized_name: showOnPage
+
+        description:
+            expose: true
+            groups: [default]
+            type: string
+
+        images:
+            expose: true
+            groups: [default]
+            type: array

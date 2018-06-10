@@ -8,23 +8,20 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LanguageEntryPointTest extends WebTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        static::createClient();
-    }
-
     public function test_language_create()
     {
-        /** @var LanguageEntryPointTest $presentationModelDataProvider */
-        $languageEntryPoint = static::$container
-            ->get(Language::class);
+        $client = static::createClient();
 
-        $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
+        $container = $client->getContainer();
+
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $container->get(PresentationModelDataProvider::class);
 
         $languageModel = $presentationModelDataProvider->getLanguageModel();
 
+        /** @var Language $languageEntryPoint */
+        $languageEntryPoint = $container->get(Language::class);
 
+        $languageEntryPoint->create($languageModel);
     }
 }

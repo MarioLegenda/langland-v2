@@ -2,7 +2,7 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-class Language
+class Language implements DomainModelInterface
 {
     /**
      * @var string $name

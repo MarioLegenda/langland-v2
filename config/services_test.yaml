@@ -9,7 +9,9 @@ services:
     # test.App\Service\MyService: '@App\Service\MyService'
 
     # library
-    App\Tests\PresentationLayer\DataProvider\:
-        resource: '../tests/PresentationLayer/DataProvider'
+    App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider:
+        arguments:
+            $deserializer: '@Library\Infrastructure\Helper\Deserializer'
+
 
 

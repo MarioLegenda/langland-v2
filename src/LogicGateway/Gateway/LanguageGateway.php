@@ -16,7 +16,7 @@ class LanguageGateway extends Gateway
     {
         /** @var DomainModelInterface $logicModel */
         $logicModel = $this->serializerWrapper
-            ->convertFromTo($model, 'default', Language::class);
+            ->convertFromToByGroup($model, 'default', Language::class);
 
         return $logicModel;
     }
