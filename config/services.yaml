@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    doctrine_env: '%env(APP_ENV)%'
 
 services:
     # default configuration for services in *this* file
@@ -25,6 +26,12 @@ services:
     # gateways
     App\LogicGateway\:
         resource: '../src/LogicGateway'
+
+    App\LogicGateway\Gateway\LanguageGateway:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+            $logic: '@App\LogicLayer\LearningMetadata\Logic\LanguageLogic'
+
 
     App\DataSourceGateway\:
         resource: '../src/DataSourceGateway'

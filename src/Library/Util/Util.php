@@ -15,11 +15,17 @@ class Util
         }
     }
     /**
-     * @param \DateTime|string $dateTime
+     * @param \DateTime|string|null $dateTime
      * @return \DateTime
      */
-    public static function toDateTime($dateTime): \DateTime
+    public static function toDateTime($dateTime = null): \DateTime
     {
+        if (is_null($dateTime)) {
+            $temp = new \DateTime();
+
+            return \DateTime::createFromFormat('Y-m-d H:m:s', $temp->format('Y-m-d H:m:s'));
+        }
+
         if ($dateTime instanceof \DateTime) {
             return $dateTime;
         }

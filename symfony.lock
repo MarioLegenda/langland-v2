@@ -20,6 +20,9 @@
     "doctrine/common": {
         "version": "v2.8.1"
     },
+    "doctrine/dbal": {
+        "version": "v2.7.1"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -28,6 +31,9 @@
     },
     "doctrine/lexer": {
         "version": "v1.0.1"
+    },
+    "doctrine/orm": {
+        "version": "v2.6.1"
     },
     "easycorp/easy-log-handler": {
         "version": "1.0",

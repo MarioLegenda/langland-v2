@@ -3,25 +3,34 @@
 namespace App\Tests\PresentationLayer;
 
 use App\PresentationLayer\LearningMetadata\EntryPoint\Language;
+use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Library\Util\ApiResponseData;
+use Symfony\Component\HttpFoundation\Response;
 
-class LanguageEntryPointTest extends WebTestCase
+class LanguageEntryPointTest extends BasicSetup
 {
     public function test_language_create()
     {
-        $client = static::createClient();
-
-        $container = $client->getContainer();
-
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
-        $presentationModelDataProvider = $container->get(PresentationModelDataProvider::class);
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
 
         $languageModel = $presentationModelDataProvider->getLanguageModel();
 
         /** @var Language $languageEntryPoint */
-        $languageEntryPoint = $container->get(Language::class);
+        $languageEntryPoint = $this->locator->get(Language::class);
 
-        $languageEntryPoint->create($languageModel);
+        /** @var Response $response */
+        $response = $languageEntryPoint->create($languageModel);
+
+        $data = json_decode($response->getContent(), true);
+
+        $apiResponseData = new ApiResponseData($data);
+
+        static::assertEquals($apiResponseData->getMethod(), 'GET');
+        static::assertEquals($apiResponseData->getStatusCode(), 201);
+        static::assertTrue($apiResponseData->isResource());
+        static::assertFalse($apiResponseData->isCollection());
+        static::assertEmpty($apiResponseData->getData()['data']);
     }
 }
