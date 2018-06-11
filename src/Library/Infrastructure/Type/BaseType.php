@@ -2,8 +2,14 @@
 
 namespace Library\Infrastructure\Type;
 
-class BaseType implements TypeInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+
+class BaseType implements TypeInterface, ArrayNotationInterface
 {
+    /**
+     * @var array $allTypes
+     */
+    protected $allTypes;
     /**
      * @var array $type
      */
@@ -11,10 +17,12 @@ class BaseType implements TypeInterface
     /**
      * BaseType constructor.
      * @param array $type
+     * @param array $types
      */
-    public function __construct(array $type)
+    public function __construct(array $type, array $types)
     {
         $this->type = $type;
+        $this->allTypes = $types;
     }
     /**
      * @param mixed $value
@@ -24,7 +32,7 @@ class BaseType implements TypeInterface
     {
         foreach (static::$types as $key => $type) {
             if ($value === $type) {
-                return new static([$key => $type]);
+                return new static([$key => $type], static::$types);
             }
         }
 
@@ -38,7 +46,7 @@ class BaseType implements TypeInterface
     {
         foreach (static::$types as $k => $type) {
             if ($k === $key) {
-                return new static([$k => $type]);
+                return new static([$k => $type], static::$types);
             }
         }
 
@@ -127,6 +135,13 @@ class BaseType implements TypeInterface
         }
 
         return false;
+    }
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->allTypes;
     }
     /**
      * @return string

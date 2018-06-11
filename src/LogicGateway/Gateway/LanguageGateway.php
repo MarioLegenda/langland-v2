@@ -3,6 +3,7 @@
 namespace App\LogicGateway\Gateway;
 
 use App\DataSourceLayer\RepositoryFactory;
+use App\DataSourceLayer\Type\MysqlType;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LogicInterface;
@@ -51,6 +52,6 @@ class LanguageGateway
         $dataSourceModel = $this->serializerWrapper
             ->convertFromToByGroup($domainLogicModel, 'default', LanguageDataSource::class);
 
-        RepositoryFactory::create(DataSourceModel::class)->save($dataSourceModel);
+        RepositoryFactory::create(DataSourceModel::class, MysqlType::fromValue())->save($dataSourceModel);
     }
 }

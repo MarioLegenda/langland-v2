@@ -12,7 +12,7 @@ class StringType extends BaseType
     public static function fromValue($value): TypeInterface
     {
         if (is_string($value)) {
-            return new static([$value]);
+            return new static([$value], static::$types);
         }
 
         throw new \RuntimeException(sprintf('%s could not be created from value %s', static::class, (string) $value));
