@@ -1,4 +1,4 @@
-App\DataSourceLayer\Doctrine\Entity\Language:
+App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language:
     exclusion_policy: all
     properties:
         name:
@@ -30,4 +30,4 @@ App\DataSourceLayer\Doctrine\Entity\Language:
         updatedAt:
             expose: true
             groups: [default]
-            type: DateTime<'Y-m-d H:m:s'>
+            type: DateTime<'Y-md-d H:m:s'>

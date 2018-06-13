@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer;
+namespace App\DataSourceLayer\Infrastructure;
 
 interface DataSourceEntity
 {

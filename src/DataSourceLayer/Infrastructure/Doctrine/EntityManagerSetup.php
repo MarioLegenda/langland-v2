@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DataSourceLayer\Doctrine;
+namespace App\DataSourceLayer\Infrastructure\Doctrine;
 
-use App\DataSourceLayer\DataSourceInterface;
-use App\DataSourceLayer\DataSourceSetupInterface;
+use App\DataSourceLayer\Infrastructure\DataSourceInterface;
+use App\DataSourceLayer\Infrastructure\DataSourceSetupInterface;
 
 class EntityManagerSetup implements DataSourceSetupInterface
 {

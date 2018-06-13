@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DataSourceLayer;
+namespace App\DataSourceLayer\Infrastructure;
 
-use App\DataSourceLayer\Doctrine\Entity\Language;
-use App\DataSourceLayer\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Library\Infrastructure\Type\TypeInterface;

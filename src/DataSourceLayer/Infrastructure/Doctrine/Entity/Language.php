@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataSourceLayer\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
 
-use App\DataSourceLayer\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;

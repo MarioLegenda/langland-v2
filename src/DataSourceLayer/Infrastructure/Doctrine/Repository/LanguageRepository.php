@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Doctrine\Repository;
+namespace App\DataSourceLayer\Infrastructure\Doctrine\Repository;
 
 class LanguageRepository extends BaseRepository
 {

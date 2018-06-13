@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataSourceLayer\Doctrine;
+namespace App\DataSourceLayer\Infrastructure\Doctrine;
 
-use App\DataSourceLayer\DataSourceInterface;
+use App\DataSourceLayer\Infrastructure\DataSourceInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Setup;
@@ -17,7 +17,7 @@ class DoctrineDataSource implements DataSourceInterface
     {
         $isDevMode = true;
 
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/Entity"), $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/Entity"), $isDevMode);
 
         $conn = array(
             'driver' => 'pdo_mysql',

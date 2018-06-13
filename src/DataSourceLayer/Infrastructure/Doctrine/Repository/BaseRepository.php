@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataSourceLayer\Doctrine\Repository;
+namespace App\DataSourceLayer\Infrastructure\Doctrine\Repository;
 
-use App\DataSourceLayer\RepositoryInterface;
+use App\DataSourceLayer\Infrastructure\RepositoryInterface;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Util\Inflector;
 use Doctrine\ORM\EntityManager;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataSourceLayer;
+namespace App\DataSourceLayer\Infrastructure;
 
-use App\DataSourceLayer\Doctrine\EntityManagerSetup;
+use App\DataSourceLayer\Infrastructure\Doctrine\EntityManagerSetup;
 
 class DataSourceSetup
 {

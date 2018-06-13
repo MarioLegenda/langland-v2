@@ -2,9 +2,9 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\DataSourceLayer\DataSourceEntity;
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\RepositoryFactory;
+use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
@@ -12,7 +12,7 @@ use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Util\ApiResponseData;
 use Symfony\Component\HttpFoundation\Response;
-use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 
 class LanguageEntryPointTest extends BasicSetup
 {

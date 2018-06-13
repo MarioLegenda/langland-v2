@@ -2,9 +2,9 @@
 
 namespace App\Tests\Unit;
 
-use App\DataSourceLayer\Doctrine\Entity\Language;
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\RepositoryFactory;
+use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use App\Tests\Library\BasicSetup;
 
 class RepositoryFactoryTest extends BasicSetup

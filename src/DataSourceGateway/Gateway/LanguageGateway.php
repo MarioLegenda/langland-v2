@@ -2,12 +2,10 @@
 
 namespace App\DataSourceGateway\Gateway;
 
-use App\DataSourceLayer\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\LearningMetadata\Language;
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 

@@ -2,10 +2,10 @@
 
 namespace App\DataSourceLayer\LearningMetadata;
 
-use App\DataSourceLayer\DataSourceEntity;
-use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\RepositoryFactory;
+use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 
 class Language
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Type;
+namespace App\DataSourceLayer\Infrastructure\Type;
 
 use Library\Infrastructure\Type\StringType;
 use Library\Infrastructure\Type\TypeInterface;

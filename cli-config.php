@@ -1,7 +1,7 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use App\DataSourceLayer\DataSourceSetup;
+use App\DataSourceLayer\Infrastructure\DataSourceSetup;
 use Doctrine\ORM\EntityManagerInterface;
 
 /** @var EntityManagerInterface $em */
