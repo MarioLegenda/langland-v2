@@ -85,6 +85,19 @@ class ModelValidator implements LibraryValidator
         return $this->errorsString;
     }
     /**
+     * @return string
+     */
+    public function getUserFriendlyErrorsString(): string
+    {
+        $userFriendlyErrorString = '';
+
+        foreach ($this->errorsArray as $error) {
+            $userFriendlyErrorString.=$error."\r\n";
+        }
+
+        return $userFriendlyErrorString;
+    }
+    /**
      * @return array
      */
     public function getErrorsArray(): ?array

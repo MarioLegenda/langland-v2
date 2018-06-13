@@ -8,7 +8,7 @@ use App\PresentationLayer\Model\PresentationModelInterface;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 
-class Language
+class LanguageEntryPoint
 {
     /**
      * @var LanguageGateway $languageGateway
@@ -19,7 +19,7 @@ class Language
      */
     private $apiResponseWrapper;
     /**
-     * Language constructor.
+     * LanguageEntryPoint constructor.
      * @param LanguageGateway $languageGateway
      * @param ApiResponseWrapper $apiResponseWrapper
      */

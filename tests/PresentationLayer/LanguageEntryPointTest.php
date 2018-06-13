@@ -2,7 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\PresentationLayer\LearningMetadata\EntryPoint\Language;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -22,8 +22,8 @@ class LanguageEntryPointTest extends BasicSetup
 
         $modelValidator->validate($languageModel);
 
-        /** @var Language $languageEntryPoint */
-        $languageEntryPoint = $this->locator->get(Language::class);
+        /** @var LanguageEntryPoint $languageEntryPoint */
+        $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
 
         /** @var Response $response */
         $response = $languageEntryPoint->create($languageModel);

@@ -2,7 +2,7 @@
 
 namespace App\Symfony\Command;
 
-use App\PresentationLayer\LearningMetadata\EntryPoint\Language;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +16,7 @@ class CreateLanguage extends BaseCommand
      */
     private $serializerWrapper;
     /**
-     * @var Language $languageEntryPoint
+     * @var LanguageEntryPoint $languageEntryPoint
      */
     private $languageEntryPoint;
     /**
@@ -26,12 +26,12 @@ class CreateLanguage extends BaseCommand
     /**
      * CreateLanguage constructor.
      * @param SerializerWrapper $serializerWrapper
-     * @param Language $languageEntryPoint
+     * @param LanguageEntryPoint $languageEntryPoint
      * @param ModelValidator $modelValidator
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
-        Language $languageEntryPoint,
+        LanguageEntryPoint $languageEntryPoint,
         ModelValidator $modelValidator
     ) {
         $this->languageEntryPoint = $languageEntryPoint;
@@ -55,7 +55,7 @@ class CreateLanguage extends BaseCommand
         $this->makeEasier($input, $output);
 
         $answers = $this->askQuestions([
-            'name' => 'Language name: ',
+            'name' => 'LanguageEntryPoint name: ',
             'showOnPage' => 'Show on page: ',
             'description' => 'Description: ',
             'images' => 'Images: ',

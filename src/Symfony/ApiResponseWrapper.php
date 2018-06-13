@@ -34,7 +34,7 @@ class ApiResponseWrapper
         $responseData = $this->apiSdk
             ->create($data)
             ->method('GET')
-            ->addMessage('Language created')
+            ->addMessage('LanguageEntryPoint created')
             ->isResource()
             ->setStatusCode(201)
             ->build();
