@@ -9,5 +9,5 @@ interface ValidatorInterface
      * @param array $additionalData
      * @return mixed
      */
-    public function validate($value, array $additionalData);
+    public function validate($value, array $additionalData = []);
 }

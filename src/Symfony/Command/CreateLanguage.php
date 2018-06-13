@@ -20,16 +20,23 @@ class CreateLanguage extends BaseCommand
      */
     private $languageEntryPoint;
     /**
+     * @var ModelValidator $modelValidator
+     */
+    private $modelValidator;
+    /**
      * CreateLanguage constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param Language $languageEntryPoint
+     * @param ModelValidator $modelValidator
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
-        Language $languageEntryPoint
+        Language $languageEntryPoint,
+        ModelValidator $modelValidator
     ) {
         $this->languageEntryPoint = $languageEntryPoint;
         $this->serializerWrapper = $serializerWrapper;
+        $this->modelValidator = $modelValidator;
 
         parent::__construct();
     }
@@ -66,12 +73,10 @@ class CreateLanguage extends BaseCommand
         /** @var PresentationLanguageModel $presentationLanguageModel */
         $presentationLanguageModel = $this->serializerWrapper->getDeserializer()->create($answers, PresentationLanguageModel::class);
 
-        /** @var ModelValidator $validator */
-        $validator = $this->serializerWrapper->getModelValidator();
-        $validator->tryValidate($presentationLanguageModel);
+        $this->modelValidator->tryValidate($presentationLanguageModel);
 
-        if ($validator->hasErrors()) {
-            $this->outputFail($validator->getErrorsString());
+        if ($this->modelValidator->hasErrors()) {
+            $this->outputFail($this->modelValidator->getErrorsString());
 
             return;
         }

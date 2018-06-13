@@ -8,7 +8,7 @@ use Library\Http\Request\Type\HttpTypeFactory;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Infrastructure\Type\TypeInterface;
 use Library\Validation\SymfonyValidatorFacade;
-use Library\Validation\ValidatorInterface;
+use Library\Validation\ValidatorInterface as LibraryValidator;
 
 class ResolvedRequest implements ArrayNotationInterface, \JsonSerializable
 {
@@ -31,11 +31,11 @@ class ResolvedRequest implements ArrayNotationInterface, \JsonSerializable
     /**
      * ResolvedRequest constructor.
      * @param RequestDataModel $requestDataModel
-     * @param ValidatorInterface|SymfonyValidatorFacade $validator
+     * @param LibraryValidator $validator
      */
     public function __construct(
         RequestDataModel $requestDataModel,
-        ValidatorInterface $validator
+        LibraryValidator $validator
     ) {
         $this->validate($requestDataModel, $validator);
 
@@ -96,9 +96,9 @@ class ResolvedRequest implements ArrayNotationInterface, \JsonSerializable
     }
     /**
      * @param RequestDataModel $requestDataModel
-     * @param SymfonyValidatorFacade $validator
+     * @param LibraryValidator $validator
      */
-    private function validate(RequestDataModel $requestDataModel, SymfonyValidatorFacade $validator)
+    private function validate(RequestDataModel $requestDataModel, LibraryValidator $validator)
     {
         $validator->validate($requestDataModel);
 

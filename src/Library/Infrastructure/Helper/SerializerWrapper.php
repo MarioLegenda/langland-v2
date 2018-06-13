@@ -17,10 +17,6 @@ class SerializerWrapper
      */
     private $deserializer;
     /**
-     * @var ModelValidator $modelValidator
-     */
-    private $modelValidator;
-    /**
      * SerializerWrapper constructor.
      * @param SerializerInterface $serializer
      * @param Deserializer $deserializer
@@ -28,12 +24,10 @@ class SerializerWrapper
      */
     public function __construct(
         SerializerInterface $serializer,
-        Deserializer $deserializer,
-        ModelValidator $modelValidator
+        Deserializer $deserializer
     ) {
         $this->serializer = $serializer;
         $this->deserializer = $deserializer;
-        $this->modelValidator = $modelValidator;
     }
     /**
      * @param $object
@@ -79,43 +73,41 @@ class SerializerWrapper
      * @param object $object
      * @param array|string $groups
      * @param string $class
-     * @param bool $validate
      * @return object
      */
     public function convertFromToByGroup(
         object $object,
         $groups,
-        string $class,
-        bool $validate = true
+        string $class
     ): object {
         $serialized = $this->serialize($object, $this->normalizeGroups($groups));
 
         $created = $this->getDeserializer()->create($serialized, $class);
-
-        if ($validate) {
-            $this->modelValidator->validate($created);
-        }
 
         return $created;
     }
     /**
      * @param array $data
      * @param string $class
-     * @param bool $validate
      * @return object
      */
     public function convertFromToByArray(
         array $data,
-        string $class,
-        bool $validate = true
+        string $class
     ): object {
         $created = $this->getDeserializer()->create($data, $class);
 
-        if ($validate) {
-            $this->modelValidator->validate($created);
-        }
-
         return $created;
+    }
+    /**
+     * @param $data
+     * @param $type
+     * @param string $format
+     * @return object
+     */
+    public function deserialize($data, $type, $format = 'json'): object
+    {
+        return $this->deserializer->create($data, $type, $format);
     }
     /**
      * @return Deserializer
@@ -123,13 +115,6 @@ class SerializerWrapper
     public function getDeserializer(): Deserializer
     {
         return $this->deserializer;
-    }
-    /**
-     * @return ModelValidator
-     */
-    public function getModelValidator(): ModelValidator
-    {
-        return $this->modelValidator;
     }
     /**
      * @param array|string $groups

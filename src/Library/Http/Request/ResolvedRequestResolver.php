@@ -4,6 +4,7 @@ namespace Library\Http\Request;
 
 use App\PresentationLayer\Model\Language;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use Library\Infrastructure\Helper\TypedArray;
 use Library\Validation\ValidatorInterface;
 
 class ResolvedRequestResolver
@@ -33,7 +34,7 @@ class ResolvedRequestResolver
      * @param array $data
      * @return array
      */
-    public function resolveTo(string $class, array $data): array
+    public function resolveTo(string $class, array $data): iterable
     {
         /** @var RequestDataModel $requestDataModel */
         $requestDataModel = $this->serializerWrapper->getDeserializer()->create($data, RequestDataModel::class);
@@ -59,9 +60,9 @@ class ResolvedRequestResolver
             throw new \RuntimeException($message);
         }
 
-        return [
+        return TypedArray::create('string', 'object', [
             'resolvedRequest' => $resolvedRequest,
             'model' => $languageModel,
-        ];
+        ]);
     }
 }

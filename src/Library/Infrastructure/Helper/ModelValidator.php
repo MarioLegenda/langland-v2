@@ -3,9 +3,10 @@
 namespace Library\Infrastructure\Helper;
 
 use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator;
+use Library\Validation\ValidatorInterface as LibraryValidator;
 
-class ModelValidator
+class ModelValidator implements LibraryValidator
 {
     /**
      * @var array $errorsArray
@@ -16,23 +17,29 @@ class ModelValidator
      */
     private $errorsString;
     /**
-     * @var ValidatorInterface $validator
+     * @var SymfonyValidator $validator
      */
     private $validator;
     /**
      * ModelValidator constructor.
-     * @param ValidatorInterface $validator
+     * @param SymfonyValidator $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(SymfonyValidator $validator)
     {
         $this->validator = $validator;
     }
     /**
-     * @param object $object
+     * @param array $additionalData
+     * @param object|array $value
      */
-    public function tryValidate(object $object)
+    public function tryValidate($value, array $additionalData = [])
     {
-        $errors = $this->validator->validate($object);
+        $this->validateParameters($value);
+
+        $constraints = (isset($additionalData['constraints'])) ? $additionalData['constraints'] : null;
+        $groups = (isset($additionalData['groups'])) ? $additionalData['groups'] : null;
+
+        $errors = $this->validator->validate($value, $constraints, $groups);
 
         $errorsArray = [];
         $errorsString = null;
@@ -49,12 +56,15 @@ class ModelValidator
         $this->errorsString = $errorsString;
     }
     /**
-     * @param object $object
+     * @param object|array $value
+     * @param array $additionalData
      * @throws \RuntimeException
      */
-    public function validate(object $object)
+    public function validate($value, array $additionalData = [])
     {
-        $this->tryValidate($object);
+        $this->validateParameters($value);
+
+        $this->tryValidate($value);
 
         if ($this->hasErrors()) {
             throw new \RuntimeException($this->getErrorsString());
@@ -80,5 +90,20 @@ class ModelValidator
     public function getErrorsArray(): ?array
     {
         return $this->errorsArray;
+    }
+    /**
+     * @param $value
+     * @throws \RuntimeException
+     */
+    private function validateParameters($value)
+    {
+        if (!is_object($value) and !is_array($value)) {
+            $message = sprintf(
+                'Invalid validation value given. Validation value has to be an object or array, \'%s\' given',
+                gettype($value)
+            );
+
+            throw new \RuntimeException($message);
+        }
     }
 }

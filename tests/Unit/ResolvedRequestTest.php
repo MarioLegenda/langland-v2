@@ -4,6 +4,7 @@ namespace App\Tests\Unit;
 
 use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
+use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Validation\SymfonyValidatorFacade;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -28,17 +29,17 @@ class ResolvedRequestTest extends WebTestCase
             'method' => 'get',
         ];
 
-        /** @var SymfonyValidatorFacade $symfonyValidator */
-        $symfonyValidator = static::$container->get('library.facade.symfony_validator');
         /** @var RequestDataModel $requestDataModel */
         $requestDataModel = static::$container
             ->get(SerializerWrapper::class)
-            ->getDeserializer()
-            ->create($validRequest, RequestDataModel::class);
+            ->deserialize($validRequest, RequestDataModel::class);
+
+        $modelValidator = static::$container->get(ModelValidator::class);
+        $modelValidator->validate($requestDataModel);
 
         $resolvedRequest = new ResolvedRequest(
             $requestDataModel,
-            $symfonyValidator
+            $modelValidator
         );
 
         static::assertEquals($validRequest['method'], $resolvedRequest->getMethod());
@@ -59,8 +60,7 @@ class ResolvedRequestTest extends WebTestCase
 
         $requestKeys = array_keys($validRequest);
 
-        /** @var SymfonyValidatorFacade $symfonyValidator */
-        $symfonyValidator = static::$container->get('library.facade.symfony_validator');
+        $modelValidator = static::$container->get(ModelValidator::class);
 
         foreach ($requestKeys as $key) {
             $entersException = false;
@@ -77,7 +77,7 @@ class ResolvedRequestTest extends WebTestCase
 
                 new ResolvedRequest(
                     $requestDataModel,
-                    $symfonyValidator
+                    $modelValidator
                 );
 
             } catch (\RuntimeException $e) {

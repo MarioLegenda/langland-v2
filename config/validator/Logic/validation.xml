@@ -17,10 +17,9 @@
         </property>
         
         <property name="showOnPage">
-            <constraint name="NotBlank">
-                <option name="message">'showOnPage' should not be blank</option>
+            <constraint name="NotNull">
+                <option name="message">'showOnPage' cannot be null</option>
             </constraint>
-
             <constraint name="Type">
                 <option name="type">bool</option>
                 <option name="message">'showOnPage' should be a boolean</option>

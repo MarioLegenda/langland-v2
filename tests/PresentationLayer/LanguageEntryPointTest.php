@@ -48,22 +48,13 @@ class LanguageEntryPointTest extends BasicSetup
 
         $languageModel = $presentationModelDataProvider->getInvalidLanguageModel();
 
-        $modelValidator->validate($languageModel);
+        $enteredException = false;
+        try {
+            $modelValidator->validate($languageModel);
+        } catch (\RuntimeException $e) {
+            $enteredException = true;
+        }
 
-        /** @var Language $languageEntryPoint */
-        $languageEntryPoint = $this->locator->get(Language::class);
-
-        /** @var Response $response */
-        $response = $languageEntryPoint->create($languageModel);
-
-        $data = json_decode($response->getContent(), true);
-
-        $apiResponseData = new ApiResponseData($data);
-
-        static::assertEquals($apiResponseData->getMethod(), 'GET');
-        static::assertEquals($apiResponseData->getStatusCode(), 201);
-        static::assertTrue($apiResponseData->isResource());
-        static::assertFalse($apiResponseData->isCollection());
-        static::assertEmpty($apiResponseData->getData()['data']);
+        static::assertTrue($enteredException);
     }
 }

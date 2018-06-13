@@ -33,9 +33,6 @@ class SymfonyValidatorFacade implements ValidatorInterface
      */
     public function validate($value, array $additionalData = [])
     {
-        $constraints = (isset($additionalData['constraints'])) ? $additionalData['constraints'] : null;
-        $groups = (isset($additionalData['groups'])) ? $additionalData['groups'] : null;
-
         $this->validator->validate($value, $constraints, $groups);
 
         $errors = $this->validator->validate($value);

@@ -14,20 +14,13 @@ class Deserializer
      */
     private $serializer;
     /**
-     * @var Validation $validation
-     */
-    private $validation;
-    /**
      * Deserializer constructor.
      * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validation
      */
     public function __construct(
-        SerializerInterface $serializer,
-        ValidatorInterface $validation
+        SerializerInterface $serializer
     ) {
         $this->serializer = $serializer;
-        $this->validation = $validation;
     }
     /**
      * @param $data
