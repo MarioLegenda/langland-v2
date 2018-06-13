@@ -18,10 +18,14 @@ class BasicSetup extends WebTestCase
      */
     protected $locator;
 
-    protected function setup()
+    protected function setUp()
     {
         $this->client = static::createClient();
 
         $this->locator = $this->client->getContainer();
+
+        exec('/var/www/vendor/bin/doctrine orm:schema-tool:drop --force');
+        exec('/var/www/vendor/bin/doctrine orm:schema-tool:create');
+        exec('/var/www/vendor/bin/doctrine orm:schema-tool:update --force');
     }
 }

@@ -16,6 +16,7 @@ use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
 
 class LanguageEntryPointTest extends BasicSetup
 {
+
     public function test_language_create()
     {
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
