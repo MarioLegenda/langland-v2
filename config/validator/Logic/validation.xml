@@ -9,15 +9,43 @@
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
             </constraint>
-            
-            <constraint name="NotNull">
-                <option name="message">'name' should not be null</option>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
             </constraint>
         </property>
         
         <property name="showOnPage">
-            <constraint name="NotNull">
+            <constraint name="NotBlank">
+                <option name="message">'showOnPage' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">bool</option>
                 <option name="message">'showOnPage' should be a boolean</option>
+            </constraint>
+        </property>
+
+        <property name="description">
+            <constraint name="NotBlank">
+                <option name="message">'description' should be a boolean</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'description' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="images">
+            <constraint name="NotBlank">
+                <option name="message">'images' should be an array</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">array</option>
+                <option name="message">'images' should be an array</option>
             </constraint>
         </property>
     </class>
@@ -27,29 +55,17 @@
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
             </constraint>
-            
-            <constraint name="NotNull">
-                <option name="message">'name' should not be null</option>
-            </constraint>
         </property>
 
         <property name="internalType">
             <constraint name="NotBlank">
                 <option name="message">'internalType' should not be blank</option>
             </constraint>
-            
-            <constraint name="NotNull">
-                <option name="message">'name' should not be null</option>
-            </constraint>
         </property>
 
         <property name="method">
             <constraint name="NotBlank">
                 <option name="message">'internalType' should not be blank</option>
-            </constraint>
-            
-            <constraint name="NotNull">
-                <option name="message">'name' should not be null</option>
             </constraint>
 
             <constraint name="Choice">

@@ -32,7 +32,6 @@ services:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
             $logic: '@App\LogicLayer\LearningMetadata\Logic\LanguageLogic'
 
-
     App\DataSourceGateway\:
         resource: '../src/DataSourceGateway'
 
@@ -42,6 +41,11 @@ services:
         exclude: '../src/Library/Http/Request'
 
     library.facade.symfony_validator: '@Library\Validation\SymfonyValidatorFacade'
+
+    Library\Http\Request\ResolvedRequestResolver:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+            $validator: 'library.facade.symfony_validator'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -59,6 +63,10 @@ services:
     App\Symfony\Resolver\LanguageResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }
+
+    App\Symfony\Serializer\BooleanDeserializationFix:
+        tags:
+            - { name: jms_serializer.event_subscriber }
 
 
 

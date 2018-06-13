@@ -2,6 +2,8 @@
 
 namespace App\PresentationLayer\Model;
 
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 class Language implements PresentationModelInterface
 {
     /**
@@ -30,7 +32,7 @@ class Language implements PresentationModelInterface
     /**
      * @return bool
      */
-    public function getShowOnPage(): bool
+    public function getShowOnPage()
     {
         return $this->showOnPage;
     }

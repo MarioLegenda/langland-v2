@@ -5,6 +5,7 @@ namespace App\Symfony\Resolver;
 use App\PresentationLayer\Model\Language;
 use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
+use Library\Http\Request\ResolvedRequestResolver;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Validation\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,28 +16,21 @@ class LanguageResolver implements ArgumentValueResolverInterface
 {
     use ResolvableRequestValidator;
     /**
-     * @var ValidatorInterface $validator
+     * @var ResolvedRequestResolver $resolvedRequestResolver
      */
-    private $validator;
-    /**
-     * @var SerializerWrapper $serializerWrapper
-     */
-    private $serializerWrapper;
+    private $resolvedRequestResolver;
     /**
      * @var Language
      */
     private $languageModel;
     /**
      * LanguageResolver constructor.
-     * @param ValidatorInterface $validator
-     * @param SerializerWrapper $serializerWrapper
+     * @param ResolvedRequestResolver $resolvedRequestResolver
      */
     public function __construct(
-        ValidatorInterface $validator,
-        SerializerWrapper $serializerWrapper
+        ResolvedRequestResolver $resolvedRequestResolver
     ) {
-        $this->validator = $validator;
-        $this->serializerWrapper = $serializerWrapper;
+        $this->resolvedRequestResolver = $resolvedRequestResolver;
     }
     /**
      * @param Request $request
@@ -51,21 +45,14 @@ class LanguageResolver implements ArgumentValueResolverInterface
             return false;
         }
 
-        /** @var RequestDataModel $requestDataModel */
-        $requestDataModel = $this->serializerWrapper->getDeserializer()->create($httpData, RequestDataModel::class);
-
-        $resolvedRequest = new ResolvedRequest(
-            $requestDataModel,
-            $this->validator
+        $resolvedData = $this->resolvedRequestResolver->resolveTo(
+            Language::class,
+            $httpData
         );
 
-        $request->request->set('resolved_request', $resolvedRequest);
+        $request->request->set('resolved_request', $resolvedData['resolvedRequest']);
 
-        /** @var Language languageModel */
-        $this->languageModel = $this->serializerWrapper->convertFromToByArray(
-            $resolvedRequest->toArray(),
-            Language::class
-        );
+        $this->languageModel = $resolvedData['model'];
 
         return true;
     }

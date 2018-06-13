@@ -43,4 +43,19 @@ class PresentationModelDataProvider
         return $language;
     }
 
+    public function getInvalidLanguageModel(): Language
+    {
+        $modelBlueprint = [
+            'name' => '',
+            'showOnPage' => 'čsdfjlksadjf',
+            'description' => $this->faker()->sentence(30),
+            'images' => [],
+        ];
+
+        /** @var Language $language */
+        $language = $this->deserializer->create($modelBlueprint, Language::class);
+
+        return $language;
+    }
+
 }
