@@ -8,9 +8,15 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
 
 /**
- * @Entity @Table(name="languages")
+ * @Entity @Table(
+ *     name="languages",
+ *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
+ *     indexes={ @Index(name="language_name_idx", columns={"name"}) }
+ * )
  **/
 class Language implements DataSourceEntity
 {
