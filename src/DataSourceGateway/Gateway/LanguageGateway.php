@@ -2,20 +2,55 @@
 
 namespace App\DataSourceGateway\Gateway;
 
-use App\DataSourceLayer\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\DataSourceEntity;
+use App\DataSourceLayer\LearningMetadata\Language;
 use App\DataSourceLayer\RepositoryFactory;
 use App\DataSourceLayer\Type\MysqlType;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
+use Library\Infrastructure\Helper\ModelValidator;
+use Library\Infrastructure\Helper\SerializerWrapper;
 
 class LanguageGateway
 {
-    public function create(DomainModelInterface $model)
+    /**
+     * @var SerializerWrapper $serializerWrapper
+     */
+    private $serializerWrapper;
+    /**
+     * @var ModelValidator $modelValidator
+     */
+    private $modelValidator;
+    /**
+     * @var Language $language
+     */
+    private $language;
+    /**
+     * LanguageGateway constructor.
+     * @param SerializerWrapper $serializerWrapper
+     * @param ModelValidator $modelValidator
+     * @param Language $language
+     */
+    public function __construct(
+        SerializerWrapper $serializerWrapper,
+        ModelValidator $modelValidator,
+        Language $language
+    ) {
+        $this->serializerWrapper = $serializerWrapper;
+        $this->modelValidator = $modelValidator;
+        $this->language = $language;
+    }
+    /**
+     * @param DomainModelInterface $domainModel
+     */
+    public function create(DomainModelInterface $domainModel)
     {
-        /** @var LanguageRepository $repository */
-        $repository = RepositoryFactory::create(get_class($model), MysqlType::fromValue());
+        /** @var DataSourceEntity $dataSourceModel */
+        $dataSourceModel = $this->serializerWrapper
+            ->convertFromToByGroup($domainModel, 'default', LanguageDataSource::class);
 
-        // todo: conversion to a data source model goes here along with any validation
+        $this->modelValidator->validate($dataSourceModel);
 
-        $repository->save($model);
+        $this->language->create($dataSourceModel);
     }
 }

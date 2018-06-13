@@ -2,6 +2,7 @@
 
 namespace App\Tests\PresentationLayer\DataProvider;
 
+use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\FakerTrait;
 use Library\Infrastructure\Helper\Deserializer;
@@ -42,7 +43,9 @@ class PresentationModelDataProvider
 
         return $language;
     }
-
+    /**
+     * @return Language
+     */
     public function getInvalidLanguageModel(): Language
     {
         $modelBlueprint = [
@@ -56,6 +59,20 @@ class PresentationModelDataProvider
         $language = $this->deserializer->create($modelBlueprint, Language::class);
 
         return $language;
+    }
+    /**
+     * @return Category
+     */
+    public function getCategoryModel(): Category
+    {
+        $modelBlueprint = [
+            'name' => 'category',
+        ];
+
+        /** @var Category $category */
+        $category = $this->deserializer->create($modelBlueprint, Category::class);
+
+        return $category;
     }
 
 }

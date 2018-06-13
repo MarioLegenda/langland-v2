@@ -2,6 +2,7 @@
 
 namespace App\DataSourceLayer\Doctrine\Entity;
 
+use App\DataSourceLayer\DataSourceEntity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping\Table;
 /**
  * @Entity @Table(name="languages")
  **/
-class Language
+class Language implements DataSourceEntity
 {
     /**
      * @var int $id
@@ -21,7 +22,7 @@ class Language
     protected $id;
     /**
      * @var string $name
-     * @Column(type="string")
+     * @Column(type="string", unique=true)
      */
     protected $name;
     /**

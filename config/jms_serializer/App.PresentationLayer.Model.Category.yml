@@ -1,0 +1,7 @@
+App\PresentationLayer\Model\Category:
+    exclusion_policy: all
+    properties:
+        name:
+            expose: true
+            groups: [default]
+            type: string

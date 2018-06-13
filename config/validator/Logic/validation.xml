@@ -20,6 +20,7 @@
             <constraint name="NotNull">
                 <option name="message">'showOnPage' cannot be null</option>
             </constraint>
+
             <constraint name="Type">
                 <option name="type">bool</option>
                 <option name="message">'showOnPage' should be a boolean</option>
@@ -74,6 +75,5 @@
                 <value>put</value>
             </constraint>
         </property>
-
     </class>
 </constraint-mapping>

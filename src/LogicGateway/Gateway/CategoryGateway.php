@@ -2,27 +2,21 @@
 
 namespace App\LogicGateway\Gateway;
 
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\LogicLayer\LearningMetadata\Domain\Language;
+use App\LogicLayer\LearningMetadata\Domain\Category;
+use App\LogicLayer\LearningMetadata\Logic\CategoryLogic;
 use App\LogicLayer\LogicInterface;
-use App\LogicLayer\LearningMetadata\Logic\LanguageLogic;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
 
-use App\DataSourceLayer\Doctrine\Entity\Language as DataSourceModel;
-
-class LanguageGateway
+class CategoryGateway
 {
     /**
      * @var SerializerWrapper $serializerWrapper
      */
     private $serializerWrapper;
     /**
-     * @var LogicInterface|LanguageLogic
+     * @var LogicInterface|CategoryLogic
      */
     private $logic;
     /**
@@ -45,17 +39,15 @@ class LanguageGateway
         $this->modelValidator = $modelValidator;
     }
     /**
-     * @param PresentationModelInterface $model
+     * @param PresentationModelInterface $presentationModel
      */
-    public function create(PresentationModelInterface $model): void
+    public function create(PresentationModelInterface $presentationModel)
     {
-        /** @var DomainModelInterface $logicModel */
-        $logicModel = $this->serializerWrapper
-            ->convertFromToByGroup($model, 'default', Language::class);
+        /** @var Category $logicModel */
+        $logicModel = $this->serializerWrapper->convertFromToByGroup($presentationModel, 'default', Category::class);
 
         $this->modelValidator->validate($logicModel);
 
-        /** @var DomainModelInterface $domainLogicModel */
         $this->logic->create($logicModel);
     }
 }

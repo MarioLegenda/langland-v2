@@ -5,7 +5,6 @@ parameters:
     doctrine_env: '%env(APP_ENV)%'
 
 services:
-    # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -13,7 +12,7 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
-    # layers
+    # LAYERS
     App\PresentationLayer\:
         resource: '../src/PresentationLayer'
 
@@ -23,7 +22,7 @@ services:
     App\DataSourceLayer\:
         resource: '../src/DataSourceLayer'
 
-    # gateways
+    # GATEWAYS
     App\LogicGateway\:
         resource: '../src/LogicGateway'
 
@@ -32,10 +31,15 @@ services:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
             $logic: '@App\LogicLayer\LearningMetadata\Logic\LanguageLogic'
 
+    App\LogicGateway\Gateway\CategoryGateway:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+            $logic: '@App\LogicLayer\LearningMetadata\Logic\CategoryLogic'
+
     App\DataSourceGateway\:
         resource: '../src/DataSourceGateway'
 
-    # library
+    # LIBRARY
     Library\:
         resource: '../src/Library'
         exclude: '../src/Library/Http/Request'
@@ -48,16 +52,16 @@ services:
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
 
-    # controllers
+    # CONTROLLERS
     App\PresentationLayer\LearningMetadata\EntryPoint\:
         resource: '../src/PresentationLayer/LearningMetadata/EntryPoint'
         tags: ['controller.service_arguments']
 
-    # symfony specific services
+    # SYMFONY SPECIFIC SERVICES
     App\Symfony\:
         resource: '../src/Symfony'
 
-    # symfony argument resolvers
+    # SYMFONY ARGUMENT RESOLVERS
     App\Symfony\Resolver\LanguageResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }

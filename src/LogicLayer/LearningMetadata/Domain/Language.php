@@ -7,6 +7,10 @@ use Library\Util\Util;
 class Language implements DomainModelInterface
 {
     /**
+     * @var int $id
+     */
+    private $id;
+    /**
      * @var string $name
      */
     private $name;
@@ -30,6 +34,13 @@ class Language implements DomainModelInterface
      * @var \DateTime $updatedAt
      */
     private $updatedAt;
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
     /**
      * @param string $name
      */
