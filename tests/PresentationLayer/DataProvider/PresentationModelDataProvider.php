@@ -4,8 +4,10 @@ namespace App\Tests\PresentationLayer\DataProvider;
 
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
 use Library\Infrastructure\Helper\Deserializer;
+use Library\Infrastructure\Helper\TypedArray;
 
 class PresentationModelDataProvider
 {
@@ -87,6 +89,27 @@ class PresentationModelDataProvider
         $category = $this->deserializer->create($modelBlueprint, Category::class);
 
         return $category;
+    }
+    /**
+     * @param int $languageId
+     * @param int|null $level
+     * @param TypedArray $categories
+     * @return Word
+     */
+    public function getWordModel(
+        int $languageId,
+        int $level = null,
+        TypedArray $categories
+    ): Word {
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'type' => $this->faker()->name,
+            'language' => $languageId,
+            'description' => $this->faker()->sentence(20),
+            'level' => (is_null($level)) ? rand(1, 5) : $level,
+            'pluralForm' => $this->faker()->name,
+            'categories' => $categories->toArray(),
+        ];
     }
 
 }

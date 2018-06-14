@@ -2,7 +2,9 @@
 
 namespace Library\Infrastructure\Helper;
 
-class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+
+class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, ArrayNotationInterface
 {
     /**
      * @var string $keyType
@@ -103,6 +105,14 @@ class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess
 
         unset($this->data[$offset]);
     }
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
     /**
      * @param mixed $type
      * @return bool

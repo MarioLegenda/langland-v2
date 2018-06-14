@@ -17,7 +17,10 @@ class DoctrineDataSource implements DataSourceInterface
     {
         $isDevMode = true;
 
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/Entity"), $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration([
+            __DIR__ . "/Entity",
+            __DIR__.'/Entity/Word',
+        ], $isDevMode);
 
         $conn = array(
             'driver' => 'pdo_mysql',

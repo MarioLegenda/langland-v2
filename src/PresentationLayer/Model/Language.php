@@ -5,6 +5,10 @@ namespace App\PresentationLayer\Model;
 class Language implements PresentationModelInterface
 {
     /**
+     * @var int $id
+     */
+    private $id;
+    /**
      * @var string $name
      */
     private $name;
@@ -20,6 +24,13 @@ class Language implements PresentationModelInterface
      * @var array $images
      */
     private $images;
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
     /**
      * @return string
      */
