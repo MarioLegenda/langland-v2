@@ -15,29 +15,12 @@ class RepositoryFactory
      * @var array $repositories
      */
     private $repositories = [];
-    /**
-     * @var RepositoryFactory $instance
-     */
-    private static $instance;
-    /**
-     * @param TypeInterface $type
-     * @param string $class
-     * @return RepositoryInterface
-     */
-    public static function create(string $class, TypeInterface $type): RepositoryInterface
-    {
-        static::resolveInstance();
 
+    public function create(string $class, TypeInterface $type)
+    {
         if ($type instanceof MysqlType) {
-            return static::$instance->resolveMysqlRepository($class, $type);
+            return $this->resolveMysqlRepository($class, $type);
         }
-    }
-
-    private function __construct() {}
-
-    private static function resolveInstance(): void
-    {
-        static::$instance = (static::$instance instanceof static) ? static::$instance : new static();
     }
     /**
      * @param string $class

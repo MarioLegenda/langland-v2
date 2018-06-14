@@ -11,10 +11,12 @@ class RepositoryFactoryTest extends BasicSetup
 {
     public function test_repository_singleton()
     {
-        $object1 = RepositoryFactory::create(Language::class, MysqlType::fromValue());
-        $object2 = RepositoryFactory::create(Language::class, MysqlType::fromValue());
-        $object3 = RepositoryFactory::create(Language::class, MysqlType::fromValue());
-        $object4 = RepositoryFactory::create(Language::class, MysqlType::fromValue());
+        $repositoryFactory = static::$container->get(RepositoryFactory::class);
+
+        $object1 = $repositoryFactory->create(Language::class, MysqlType::fromValue());
+        $object2 = $repositoryFactory->create(Language::class, MysqlType::fromValue());
+        $object3 = $repositoryFactory->create(Language::class, MysqlType::fromValue());
+        $object4 = $repositoryFactory->create(Language::class, MysqlType::fromValue());
 
         static::assertEquals($object1, $object2);
         static::assertEquals($object2, $object3);
