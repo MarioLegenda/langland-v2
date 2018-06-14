@@ -3,7 +3,7 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\LearningMetadata\Language;
+use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -20,23 +20,23 @@ class LanguageGateway
      */
     private $modelValidator;
     /**
-     * @var Language $language
+     * @var LanguageDataSourceService $languageDataSourceService
      */
-    private $language;
+    private $languageDataSourceService;
     /**
      * LanguageGateway constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param ModelValidator $modelValidator
-     * @param Language $language
+     * @param LanguageDataSourceService $languageDataSourceService
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
         ModelValidator $modelValidator,
-        Language $language
+        LanguageDataSourceService $languageDataSourceService
     ) {
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
-        $this->language = $language;
+        $this->languageDataSourceService = $languageDataSourceService;
     }
     /**
      * @param DomainModelInterface $domainModel
@@ -49,6 +49,6 @@ class LanguageGateway
 
         $this->modelValidator->validate($dataSourceModel);
 
-        $this->language->createIfNotExists($dataSourceModel);
+        $this->languageDataSourceService->createIfNotExists($dataSourceModel);
     }
 }

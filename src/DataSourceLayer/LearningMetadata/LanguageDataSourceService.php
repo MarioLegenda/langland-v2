@@ -8,7 +8,7 @@ use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Library\Infrastructure\Helper\ModelValidator;
 
-class Language
+class LanguageDataSourceService
 {
     /**
      * @var RepositoryFactory $repositoryFactory

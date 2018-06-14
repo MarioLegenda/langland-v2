@@ -3,7 +3,7 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
-use App\DataSourceLayer\LearningMetadata\Category;
+use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
@@ -19,23 +19,23 @@ class CategoryGateway
      */
     private $modelValidator;
     /**
-     * @var Category $category
+     * @var CategoryDataSource $categoryDataSourceService
      */
-    private $category;
+    private $categoryDataSourceService;
     /**
      * CategoryGateway constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param ModelValidator $modelValidator
-     * @param Category $category
+     * @param CategoryDataSourceService $categoryDataSourceService
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
         ModelValidator $modelValidator,
-        Category $category
+        CategoryDataSourceService $categoryDataSourceService
     ) {
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
-        $this->category = $category;
+        $this->categoryDataSourceService = $categoryDataSourceService;
     }
     /**
      * @param DomainModelInterface $domainModel
@@ -50,6 +50,6 @@ class CategoryGateway
 
         $this->modelValidator->validate($categoryDataSource);
 
-        $this->category->createIfNotExists($categoryDataSource);
+        $this->categoryDataSourceService->createIfNotExists($categoryDataSource);
     }
 }

@@ -57,6 +57,13 @@ class RepositoryFactory
                 $repoClass = CategoryRepository::class;
 
                 return $this->saveAndReturnRepository($repoClass, $repository);
+            default:
+                $message = sprintf(
+                    'Repository for class \'%s\' could not be found',
+                    $class
+                );
+
+                throw new \RuntimeException($message);
         }
     }
     /**
