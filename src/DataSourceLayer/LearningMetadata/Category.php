@@ -3,12 +3,12 @@
 namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Library\Infrastructure\Helper\ModelValidator;
 
-class Language
+class Category
 {
     /**
      * @var RepositoryFactory $repositoryFactory
@@ -31,35 +31,35 @@ class Language
         $this->modelValidator = $modelValidator;
     }
     /**
-     * @param DataSourceEntity|LanguageDataSource $language
+     * @param DataSourceEntity|CategoryDataSource $category
      */
-    public function create(DataSourceEntity $language)
+    public function create(DataSourceEntity $category)
     {
         $this->repositoryFactory
-            ->create(LanguageDataSource::class, MysqlType::fromValue())
-            ->save($language);
+            ->create(CategoryDataSource::class, MysqlType::fromValue())
+            ->save($category);
     }
     /**
-     * @param DataSourceEntity|LanguageDataSource $language
+     * @param DataSourceEntity|CategoryDataSource $category
      */
-    public function createIfNotExists(DataSourceEntity $language)
+    public function createIfNotExists(DataSourceEntity $category)
     {
-        $repository = $this->repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue());
+        $repository = $this->repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue());
 
-        /** @var LanguageDataSource $existingLanguage */
-        $existingLanguage = $repository->findOneBy([
-            'name' => $language->getName(),
+        /** @var CategoryDataSource $existingCategory */
+        $existingCategory = $repository->findOneBy([
+            'name' => $category->getName(),
         ]);
 
-        if ($existingLanguage instanceof DataSourceEntity) {
+        if ($existingCategory instanceof DataSourceEntity) {
             $message = sprintf(
-                'Language with name \'%s\' already exists',
-                $existingLanguage->getName()
+                'Category with name \'%s\' already exists',
+                $existingCategory->getName()
             );
 
             throw new \RuntimeException($message);
         }
 
-        $this->create($language);
+        $this->create($category);
     }
 }

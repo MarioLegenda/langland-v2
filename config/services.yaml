@@ -31,6 +31,11 @@ services:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
             $logic: '@App\LogicLayer\LearningMetadata\Logic\LanguageLogic'
 
+    App\LogicGateway\Gateway\CategoryGateway:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+            $logic: '@App\LogicLayer\LearningMetadata\Logic\CategoryLogic'
+
     App\DataSourceGateway\:
         resource: '../src/DataSourceGateway'
 

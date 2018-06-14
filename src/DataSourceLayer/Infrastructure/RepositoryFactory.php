@@ -2,7 +2,9 @@
 
 namespace App\DataSourceLayer\Infrastructure;
 
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,6 +45,16 @@ class RepositoryFactory
                 );
 
                 $repoClass = LanguageRepository::class;
+
+                return $this->saveAndReturnRepository($repoClass, $repository);
+
+            case Category::class:
+                $repository = new CategoryRepository(
+                    $dataSource,
+                    $classMetadata
+                );
+
+                $repoClass = CategoryRepository::class;
 
                 return $this->saveAndReturnRepository($repoClass, $repository);
         }

@@ -42,4 +42,4 @@ framework:
 
     validation:
         mapping:
-            paths: ['%kernel.root_dir%/../config/validator/Logic/validation.xml']
+            paths: ['%kernel.root_dir%/../config/validator/validation.xml', '%kernel.root_dir%/../config/validator/LogicLayer/validation.xml', '%kernel.root_dir%/../config/validator/PresentationLayer/validation.xml']

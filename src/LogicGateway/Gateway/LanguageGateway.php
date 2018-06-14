@@ -49,6 +49,8 @@ class LanguageGateway
      */
     public function create(PresentationModelInterface $model): void
     {
+        $this->modelValidator->validate($model);
+
         /** @var DomainModelInterface $logicModel */
         $logicModel = $this->serializerWrapper
             ->convertFromToByGroup($model, 'default', Language::class);

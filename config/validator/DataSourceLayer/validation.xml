@@ -4,7 +4,7 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-    <class name="App\PresentationLayer\Model\Language">
+    <class name="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -15,7 +15,7 @@
                 <option name="message">'name' should be a boolean</option>
             </constraint>
         </property>
-        
+
         <property name="showOnPage">
             <constraint name="NotNull">
                 <option name="message">'showOnPage' cannot be null</option>
@@ -48,32 +48,35 @@
                 <option name="message">'images' should be an array</option>
             </constraint>
         </property>
+
+        <property name="createdAt">
+            <constraint name="NotBlank">
+                <option name="message">'createdAt' should be an object of \DateTime</option>
+            </constraint>
+
+            <constraint name="DateTime" />
+        </property>
     </class>
 
-    <class name="Library\Http\Request\RequestDataModel">
+    <class name="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
             </constraint>
-        </property>
 
-        <property name="internalType">
-            <constraint name="NotBlank">
-                <option name="message">'internalType' should not be blank</option>
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
             </constraint>
         </property>
 
-        <property name="method">
+        <property name="createdAt">
             <constraint name="NotBlank">
-                <option name="message">'internalType' should not be blank</option>
+                <option name="message">'createdAt' should be an object of \DateTime</option>
             </constraint>
 
-            <constraint name="Choice">
-                <value>get</value>
-                <value>post</value>
-                <value>patch</value>
-                <value>put</value>
-            </constraint>
+            <constraint name="DateTime" />
         </property>
     </class>
+
 </constraint-mapping>

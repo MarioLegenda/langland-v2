@@ -33,8 +33,27 @@ class ApiResponseWrapper
         /** @var ApiResponseData $responseData */
         $responseData = $this->apiSdk
             ->create($data)
-            ->method('GET')
-            ->addMessage('LanguageEntryPoint created')
+            ->method('PUT')
+            ->addMessage('Language created')
+            ->isResource()
+            ->setStatusCode(201)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
+
+    public function createCategoryCreate($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('PUT')
+            ->addMessage('Category created')
             ->isResource()
             ->setStatusCode(201)
             ->build();

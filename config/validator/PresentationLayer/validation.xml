@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\PresentationLayer\Model\Language">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
+            </constraint>
+        </property>
+
+        <property name="showOnPage">
+            <constraint name="NotNull">
+                <option name="message">'showOnPage' cannot be null</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">bool</option>
+                <option name="message">'showOnPage' should be a boolean</option>
+            </constraint>
+        </property>
+
+        <property name="description">
+            <constraint name="NotBlank">
+                <option name="message">'description' should be a boolean</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'description' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="images">
+            <constraint name="NotBlank">
+                <option name="message">'images' should be an array</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">array</option>
+                <option name="message">'images' should be an array</option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="App\PresentationLayer\Model\Category">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
+            </constraint>
+        </property>
+    </class>
+
+</constraint-mapping>

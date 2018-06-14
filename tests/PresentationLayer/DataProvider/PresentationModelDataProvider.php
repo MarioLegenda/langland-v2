@@ -66,7 +66,21 @@ class PresentationModelDataProvider
     public function getCategoryModel(): Category
     {
         $modelBlueprint = [
-            'name' => 'category',
+            'name' => $this->faker()->name,
+        ];
+
+        /** @var Category $category */
+        $category = $this->deserializer->create($modelBlueprint, Category::class);
+
+        return $category;
+    }
+    /**
+     * @return Category
+     */
+    public function getInvalidCategoryModel(): Category
+    {
+        $modelBlueprint = [
+            'name' => null,
         ];
 
         /** @var Category $category */
