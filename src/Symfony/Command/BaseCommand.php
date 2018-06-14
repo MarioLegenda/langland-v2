@@ -3,6 +3,7 @@
 namespace App\Symfony\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -77,6 +78,19 @@ class BaseCommand extends Command
         }
 
         return $answers;
+    }
+    /**
+     * @return ProgressBar
+     */
+    protected function getDefaultProgressBar(): ProgressBar
+    {
+        $progressBar = new ProgressBar($this->output);
+
+        $progressBar->setMaxSteps(100);
+
+        $progressBar->setFormat('%current%/%max% %percent:3s%% %elapsed:6s% %memory:6s%');
+
+        return $progressBar;
     }
     /**
      * @param string $message
