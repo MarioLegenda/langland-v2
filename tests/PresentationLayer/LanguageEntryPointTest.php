@@ -57,6 +57,55 @@ class LanguageEntryPointTest extends BasicSetup
         static::assertEquals($languageModel->getName(), $languageDataSource->getName());
     }
 
+    public function test_existing_language_fail()
+    {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+        /** @var ModelValidator $deserializer */
+        $modelValidator = $this->locator->get(ModelValidator::class);
+
+        /** @var Language $languageModel */
+        $languageModel = $presentationModelDataProvider->getLanguageModel();
+
+        $modelValidator->validate($languageModel);
+
+        /** @var LanguageEntryPoint $languageEntryPoint */
+        $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
+
+        /** @var Response $response */
+        $response = $languageEntryPoint->create($languageModel);
+
+        $data = json_decode($response->getContent(), true);
+
+        $apiResponseData = new ApiResponseData($data);
+
+        static::assertEquals($apiResponseData->getMethod(), 'GET');
+        static::assertEquals($apiResponseData->getStatusCode(), 201);
+        static::assertTrue($apiResponseData->isResource());
+        static::assertFalse($apiResponseData->isCollection());
+        static::assertEmpty($apiResponseData->getData()['data']);
+
+        /** @var RepositoryFactory $repositoryFactory */
+        $repositoryFactory = static::$container->get(RepositoryFactory::class);
+
+        /** @var LanguageDataSource|DataSourceEntity $languageDataSource */
+        $languageDataSource = $repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue())->findOneBy([
+            'name' => $languageModel->getName(),
+        ]);
+
+        static::assertInstanceOf(LanguageDataSource::class, $languageDataSource);
+        static::assertEquals($languageModel->getName(), $languageDataSource->getName());
+
+        $existingLanguageException = false;
+        try {
+            $languageEntryPoint->create($languageModel);
+        } catch (\RuntimeException $e) {
+            $existingLanguageException = true;
+        }
+
+        static::assertTrue($existingLanguageException);
+    }
+
     public function test_fail_language_create()
     {
         /** @var PresentationModelDataProvider $presentationModelDataProvider */

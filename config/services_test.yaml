@@ -12,6 +12,3 @@ services:
     App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider:
         arguments:
             $deserializer: '@Library\Infrastructure\Helper\Deserializer'
-
-
-

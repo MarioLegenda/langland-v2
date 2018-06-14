@@ -49,6 +49,6 @@ class LanguageGateway
 
         $this->modelValidator->validate($dataSourceModel);
 
-        $this->language->create($dataSourceModel);
+        $this->language->createIfNotExists($dataSourceModel);
     }
 }

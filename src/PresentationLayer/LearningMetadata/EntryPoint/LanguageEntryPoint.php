@@ -8,6 +8,11 @@ use App\PresentationLayer\Model\PresentationModelInterface;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class LanguageEntryPoint
+ * @package App\PresentationLayer\LearningMetadata\EntryPoint
+ * @AnnotationEngine
+ */
 class LanguageEntryPoint
 {
     /**
@@ -31,6 +36,7 @@ class LanguageEntryPoint
         $this->apiResponseWrapper = $apiResponseWrapper;
     }
     /**
+     * @AnnotationEngine\Exists (repositoryClass="App\Infrastructure\Doctrine\Entity\Language")
      * @param LanguageModel|PresentationModelInterface $language
      * @return Response
      */
