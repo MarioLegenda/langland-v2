@@ -102,6 +102,7 @@ class CategoryEntryPointTest extends BasicSetup
         /** @var ModelValidator $deserializer */
         $modelValidator = $this->locator->get(ModelValidator::class);
 
+        /** @var Category $categoryModel */
         $categoryModel = $presentationModelDataProvider->getInvalidCategoryModel();
 
         $enteredException = false;

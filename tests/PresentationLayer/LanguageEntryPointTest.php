@@ -104,6 +104,7 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var ModelValidator $deserializer */
         $modelValidator = $this->locator->get(ModelValidator::class);
 
+        /** @var Language $languageModel */
         $languageModel = $presentationModelDataProvider->getInvalidLanguageModel();
 
         $enteredException = false;
