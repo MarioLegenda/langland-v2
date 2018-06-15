@@ -28,7 +28,7 @@ class LanguageEntryPointTest extends BasicSetup
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
 
         /** @var Response $response */
-        $response = $languageEntryPoint->create($languageModel);
+        $response = $languageEntryPoint->put($languageModel);
 
         $data = json_decode($response->getContent(), true);
 
@@ -64,7 +64,7 @@ class LanguageEntryPointTest extends BasicSetup
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
 
         /** @var Response $response */
-        $response = $languageEntryPoint->create($languageModel);
+        $response = $languageEntryPoint->put($languageModel);
 
         $data = json_decode($response->getContent(), true);
 
@@ -89,7 +89,7 @@ class LanguageEntryPointTest extends BasicSetup
 
         $existingLanguageException = false;
         try {
-            $languageEntryPoint->create($languageModel);
+            $languageEntryPoint->put($languageModel);
         } catch (\RuntimeException $e) {
             $existingLanguageException = true;
         }

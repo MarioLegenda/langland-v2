@@ -98,8 +98,8 @@ class PresentationModelDataProvider
      */
     public function getWordModel(
         int $languageId,
-        int $level = null,
-        TypedArray $categories
+        TypedArray $categories,
+        int $level = null
     ): Word {
         $modelBlueprint = [
             'name' => $this->faker()->name,

@@ -34,7 +34,7 @@ class CategoryEntryPoint
      * @param CategoryModel $category
      * @return Response
      */
-    public function create(CategoryModel $category): Response
+    public function put(CategoryModel $category): Response
     {
         $this->categoryGateway->create($category);
 

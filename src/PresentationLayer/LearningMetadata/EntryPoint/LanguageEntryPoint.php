@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class LanguageEntryPoint
  * @package App\PresentationLayer\LearningMetadata\EntryPoint
- * @AnnotationEngine
  */
 class LanguageEntryPoint
 {
@@ -36,11 +35,10 @@ class LanguageEntryPoint
         $this->apiResponseWrapper = $apiResponseWrapper;
     }
     /**
-     * @AnnotationEngine\Exists (repositoryClass="App\Infrastructure\Doctrine\Entity\Language")
      * @param LanguageModel|PresentationModelInterface $language
      * @return Response
      */
-    public function create(LanguageModel $language): Response
+    public function put(LanguageModel $language): Response
     {
         $this->languageGateway->create($language);
 
