@@ -3,6 +3,9 @@
 namespace App\LogicGateway\Gateway;
 
 use App\LogicLayer\LearningMetadata\Domain\Category;
+use App\PresentationLayer\Model\Category as PresentationModelCategory;
+use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\LearningMetadata\Logic\CategoryLogic;
 use App\LogicLayer\LogicInterface;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -26,7 +29,7 @@ class CategoryGateway
      * CategoryGateway constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param ModelValidator $modelValidator
-     * @param LogicInterface|Category $logic
+     * @param LogicInterface|CategoryLogic $logic
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
@@ -39,8 +42,9 @@ class CategoryGateway
     }
     /**
      * @param PresentationModelInterface $presentationModel
+     * @return PresentationModelInterface|PresentationModelCategory
      */
-    public function create(PresentationModelInterface $presentationModel)
+    public function create(PresentationModelInterface $presentationModel): PresentationModelInterface
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -49,6 +53,13 @@ class CategoryGateway
 
         $this->modelValidator->validate($categoryDomainModel);
 
-        $this->logic->create($categoryDomainModel);
+        /** @var DomainModelInterface|Category $createdCategoryDomainModel */
+        $createdCategoryDomainModel = $this->logic->create($categoryDomainModel);
+
+        /** @var PresentationModelInterface|PresentationModelCategory $createdPresentationCategory */
+        $createdPresentationCategory = $this->serializerWrapper
+            ->convertFromToByGroup($createdCategoryDomainModel, 'default', PresentationModelCategory::class);
+
+        return $createdPresentationCategory;
     }
 }

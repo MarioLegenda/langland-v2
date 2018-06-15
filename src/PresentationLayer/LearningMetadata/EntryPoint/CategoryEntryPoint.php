@@ -4,8 +4,8 @@ namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
 use App\LogicGateway\Gateway\CategoryGateway;
 use App\PresentationLayer\Model\Category as CategoryModel;
+use App\PresentationLayer\Model\PresentationModelInterface;
 use App\Symfony\ApiResponseWrapper;
-use Library\Infrastructure\Helper\ModelValidator;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryEntryPoint
@@ -36,8 +36,9 @@ class CategoryEntryPoint
      */
     public function create(CategoryModel $category): Response
     {
-        $this->categoryGateway->create($category);
+        /** @var PresentationModelInterface|CategoryModel $createdCategory */
+        $createdCategory = $this->categoryGateway->create($category);
 
-        return $this->apiResponseWrapper->createCategoryCreate();
+        return $this->apiResponseWrapper->createCategoryCreate($createdCategory->toArray());
     }
 }

@@ -4,6 +4,7 @@ namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -32,17 +33,22 @@ class CategoryDataSourceService
     }
     /**
      * @param DataSourceEntity|CategoryDataSource $category
+     * @return DataSourceEntity
      */
-    public function create(DataSourceEntity $category)
+    public function create(DataSourceEntity $category): DataSourceEntity
     {
-        $this->repositoryFactory
+        /** @var Category $newCategory */
+        $newCategory = $this->repositoryFactory
             ->create(CategoryDataSource::class, MysqlType::fromValue())
             ->save($category);
+
+        return $newCategory;
     }
     /**
      * @param DataSourceEntity|CategoryDataSource $category
+     * @return DataSourceEntity
      */
-    public function createIfNotExists(DataSourceEntity $category)
+    public function createIfNotExists(DataSourceEntity $category): DataSourceEntity
     {
         $repository = $this->repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue());
 
@@ -60,6 +66,6 @@ class CategoryDataSourceService
             throw new \RuntimeException($message);
         }
 
-        $this->create($category);
+        return $this->create($category);
     }
 }

@@ -6,6 +6,7 @@ use App\DataSourceGateway\Gateway\CategoryGateway;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
+use App\PresentationLayer\Model\PresentationModelInterface;
 
 class CategoryLogic implements LogicInterface
 {
@@ -24,11 +25,12 @@ class CategoryLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Category $domainModel
+     * @return DomainModelInterface
      */
-    public function create(DomainModelInterface $domainModel)
+    public function create(DomainModelInterface $domainModel): DomainModelInterface
     {
         $domainModel->handleDates();
 
-        $this->categoryGateway->create($domainModel);
+        return $this->categoryGateway->create($domainModel);
     }
 }

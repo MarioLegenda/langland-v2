@@ -37,7 +37,7 @@ class CategoryEntryPointTest extends BasicSetup
         static::assertEquals($apiResponseData->getStatusCode(), 201);
         static::assertTrue($apiResponseData->isResource());
         static::assertFalse($apiResponseData->isCollection());
-        static::assertEmpty($apiResponseData->getData()['data']);
+        static::assertNotEmpty($apiResponseData->getData()['data']);
 
         /** @var RepositoryFactory $repositoryFactory */
         $repositoryFactory = static::$container->get(RepositoryFactory::class);
@@ -72,7 +72,7 @@ class CategoryEntryPointTest extends BasicSetup
         static::assertEquals($apiResponseData->getStatusCode(), 201);
         static::assertTrue($apiResponseData->isResource());
         static::assertFalse($apiResponseData->isCollection());
-        static::assertEmpty($apiResponseData->getData()['data']);
+        static::assertNotEmpty($apiResponseData->getData()['data']);
 
         /** @var RepositoryFactory $repositoryFactory */
         $repositoryFactory = static::$container->get(RepositoryFactory::class);
