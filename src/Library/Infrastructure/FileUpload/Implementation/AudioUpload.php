@@ -32,10 +32,10 @@ class AudioUpload implements FileUploadInterface
     /**
      * @inheritdoc
      */
-    public function upload(\SplFileInfo $file, array $options = array())
+    public function upload(UploadedFile $file, array $options = array())
     {
         $fileName = $this->fileNamer->createName($options).'.mp3';
-        $originalName = $file->getClientOriginalName();
+        $originalName = $file->getFilename();
 
         $file->move($this->soundDir.'/temp', $fileName);
 

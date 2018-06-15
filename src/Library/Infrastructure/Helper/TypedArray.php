@@ -2,6 +2,7 @@
 
 namespace Library\Infrastructure\Helper;
 
+use Library\Util\TypedRecursion;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 
 class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, ArrayNotationInterface
@@ -91,6 +92,21 @@ class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, Arr
      */
     public function offsetSet($offset, $value)
     {
+        if (is_null($offset)) {
+            if ($this->keyType !== 'integer') {
+                $message = sprintf(
+                    'Invalid offset NULL. NULL offsets only work on integer keys'
+                );
+
+                throw new \RuntimeException($message);
+            }
+
+            $integerKeys = array_keys($this->data);
+            sort($integerKeys);
+
+            $offset = (int) end($integerKeys) + 1;
+        }
+
         $this->validateOffset($offset);
         $this->validateValue($value);
 
@@ -106,11 +122,17 @@ class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, Arr
         unset($this->data[$offset]);
     }
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function toArray(): array
+    public function toArray(): iterable
     {
-        return $this->data;
+        if (empty($this->data)) {
+            return [];
+        }
+
+        $typedRecursion = new TypedRecursion($this->data);
+
+        return $typedRecursion->iterate();
     }
 
     /**

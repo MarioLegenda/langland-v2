@@ -67,7 +67,7 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
     public function toArray(): iterable
     {
         return [
-            'id' => $this->getId(),
+            'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
             'showOnPage' => $this->getShowOnPage(),
             'description' => $this->getDescription(),

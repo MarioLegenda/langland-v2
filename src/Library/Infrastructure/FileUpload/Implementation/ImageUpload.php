@@ -2,6 +2,7 @@
 
 namespace Library\Infrastructure\FileUpload\Implementation;
 
+use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\FileUpload\FileUploadInterface;
 use Library\Infrastructure\FileUpload\FileNamerInterface;
 use Library\Infrastructure\FileUpload\ImageResizeInterface;
@@ -44,10 +45,10 @@ class ImageUpload implements FileUploadInterface
     /**
      * @inheritdoc
      */
-    public function upload(\SplFileInfo $fileInfo, array $options = array())
+    public function upload(UploadedFile $fileInfo, array $options = array())
     {
-        $fileName = $this->fileNamer->createName($options).'.'.$fileInfo->guessExtension();
-        $originalName = $fileInfo->getClientOriginalName();
+        $fileName = $this->fileNamer->createName($options).'.'.$fileInfo->getExtension();
+        $originalName = $fileInfo->getFilename();
 
         $path = $this->imageDir.'/'.$fileName;
 

@@ -2,10 +2,16 @@
 
 namespace App\PresentationLayer\Model\Word;
 
+use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\PresentationModelInterface;
 
-class Word
+class Word implements PresentationModelInterface
 {
+    /**
+     * @var int $id
+     */
+    private $id;
     /**
      * @var string $name
      */
@@ -42,6 +48,13 @@ class Word
      * @var Image $image
      */
     private $image;
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
     /**
      * @return string
      */
@@ -85,9 +98,9 @@ class Word
         return $this->pluralForm;
     }
     /**
-     * @return iterable
+     * @return Category[]
      */
-    public function getCategories(): iterable
+    public function getCategories(): array
     {
         return $this->categories;
     }
@@ -97,6 +110,13 @@ class Word
     public function getTranslations(): array
     {
         return $this->translations;
+    }
+    /**
+     * @param Image $image
+     */
+    public function setImage(Image $image)
+    {
+        $this->image = $image;
     }
     /**
      * @return Image

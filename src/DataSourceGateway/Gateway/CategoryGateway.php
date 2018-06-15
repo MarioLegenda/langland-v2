@@ -3,8 +3,8 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
-use App\LogicLayer\LearningMetadata\Domain\Category as CategoryDomainModel;
 use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
+use App\LogicLayer\LearningMetadata\Domain\Category as CategoryDomainModel;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;

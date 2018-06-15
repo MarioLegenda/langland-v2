@@ -4,6 +4,7 @@ jms_serializer:
             format_output: '%kernel.debug%'
 
     metadata:
+        auto_detection: false
         directories:
             entire_application:
                 path: '%kernel.root_dir%/../config/jms_serializer'

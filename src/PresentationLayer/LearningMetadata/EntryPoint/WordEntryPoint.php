@@ -11,6 +11,6 @@ class WordEntryPoint
      */
     public function create(Word $word)
     {
-
+        
     }
 }

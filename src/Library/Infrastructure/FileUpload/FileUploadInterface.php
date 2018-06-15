@@ -2,14 +2,16 @@
 
 namespace Library\Infrastructure\FileUpload;
 
+use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
+
 interface FileUploadInterface
 {
     /**
-     * @param \SplFileInfo $fileInfo
+     * @param UploadedFile $fileInfo
      * @param array $options
      * @return mixed
      */
-    public function upload(\SplFileInfo $fileInfo, array $options = array());
+    public function upload(UploadedFile $fileInfo, array $options = array());
     /**
      * @return array
      */

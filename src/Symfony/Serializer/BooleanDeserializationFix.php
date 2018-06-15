@@ -35,10 +35,13 @@ class BooleanDeserializationFix implements EventSubscriberInterface
             ->getMetadataForClass($class)
             ->propertyMetadata;
 
+        if (empty($data)) {
+            return;
+        }
+
         /** @var PropertyMetadata $property */
         foreach ($propertyMetadata as $propName => $property) {
             if ($property->type['name'] === 'bool') {
-
                 $propValue = $data[$propName];
 
                 if (!is_bool($propValue) and $propValue !== 'true' and $propValue !== 'false') {

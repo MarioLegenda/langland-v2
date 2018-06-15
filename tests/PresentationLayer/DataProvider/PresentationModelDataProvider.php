@@ -4,8 +4,11 @@ namespace App\Tests\PresentationLayer\DataProvider;
 
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Word\Image;
+use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
+use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
 
@@ -91,25 +94,68 @@ class PresentationModelDataProvider
         return $category;
     }
     /**
-     * @param int $languageId
+     * @param Language $language
      * @param int|null $level
      * @param TypedArray $categories
+     * @param TypedArray $translations
+     * @param Image $image
      * @return Word
      */
     public function getWordModel(
-        int $languageId,
+        Language $language,
         TypedArray $categories,
+        Image $image,
+        TypedArray $translations = null,
         int $level = null
     ): Word {
+
+        if (!$translations instanceof TypedArray) {
+            $translations = TypedArray::create('integer', Translation::class);
+            for ($i = 0; $i < 5; $i++) {
+                $translations[] = $this->getTranslationModel();
+            }
+        }
+
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'type' => $this->faker()->name,
-            'language' => $languageId,
+            'language' => $language->toArray(),
             'description' => $this->faker()->sentence(20),
             'level' => (is_null($level)) ? rand(1, 5) : $level,
             'pluralForm' => $this->faker()->name,
             'categories' => $categories->toArray(),
+            'translations' => $translations->toArray(),
         ];
+
+        /** @var Word $word */
+        $word = $this->deserializer->create($modelBlueprint, Word::class);
+        $word->setImage($image);
+
+        return $word;
+    }
+    /**
+     * @return Translation
+     */
+    public function getTranslationModel(): Translation
+    {
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'valid' => (bool) rand(0, 1),
+        ];
+
+        /** @var Translation $translation */
+        $translation = $this->deserializer->create($modelBlueprint, Translation::class);
+
+        return $translation;
+    }
+    /**
+     * @return Image
+     */
+    public function getImageModel(): Image
+    {
+        $file = $this->faker()->image();
+
+        return new Image(new UploadedFile($file));
     }
 
 }
