@@ -1,6 +1,10 @@
 App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language:
     exclusion_policy: all
     properties:
+        id:
+            expose: true
+            groups: [default]
+            type: string
         name:
             expose: true
             groups: [default]

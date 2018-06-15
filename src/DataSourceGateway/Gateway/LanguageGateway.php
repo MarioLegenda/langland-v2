@@ -8,6 +8,7 @@ use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use App\LogicLayer\LearningMetadata\Domain\Language as DomainModelLanguage;
 
 class LanguageGateway
 {
@@ -40,8 +41,9 @@ class LanguageGateway
     }
     /**
      * @param DomainModelInterface $domainModel
+     * @return DomainModelInterface
      */
-    public function create(DomainModelInterface $domainModel)
+    public function create(DomainModelInterface $domainModel): DomainModelInterface
     {
         /** @var DataSourceEntity $dataSourceModel */
         $dataSourceModel = $this->serializerWrapper
@@ -49,6 +51,12 @@ class LanguageGateway
 
         $this->modelValidator->validate($dataSourceModel);
 
-        $this->languageDataSourceService->createIfNotExists($dataSourceModel);
+        $newLanguage = $this->languageDataSourceService->createIfNotExists($dataSourceModel);
+
+        /** @var DomainModelInterface|DomainModelLanguage $createdDomainModel */
+        $createdDomainModel = $this->serializerWrapper
+            ->convertFromToByGroup($newLanguage, 'default', DomainModelLanguage::class);
+
+        return $createdDomainModel;
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\PresentationLayer\Model;
 
-class Language implements PresentationModelInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+
+class Language implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -58,5 +60,18 @@ class Language implements PresentationModelInterface
     public function getImages(): array
     {
         return $this->images;
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'showOnPage' => $this->getShowOnPage(),
+            'description' => $this->getDescription(),
+            'images' => $this->getImages(),
+        ];
     }
 }

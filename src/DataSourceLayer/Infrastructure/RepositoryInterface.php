@@ -38,7 +38,7 @@ interface RepositoryInterface
     public function markToBeSaved(object $object): void;
     /**
      * @param object|null $object
-     * @void
+     * @return object
      */
-    public function save(object $object = null): void;
+    public function save(object $object = null): object;
 }

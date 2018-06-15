@@ -2,8 +2,6 @@
 
 namespace App\LogicGateway\Gateway;
 
-use App\DataSourceLayer\RepositoryFactory;
-use App\DataSourceLayer\Type\MysqlType;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LogicInterface;
@@ -11,9 +9,7 @@ use App\LogicLayer\LearningMetadata\Logic\LanguageLogic;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\DataSourceLayer\Doctrine\Entity\Language as LanguageDataSource;
-
-use App\DataSourceLayer\Doctrine\Entity\Language as DataSourceModel;
+use App\PresentationLayer\Model\Language as PresentationModelLanguage;
 
 class LanguageGateway
 {
@@ -46,8 +42,9 @@ class LanguageGateway
     }
     /**
      * @param PresentationModelInterface $model
+     * @return PresentationModelInterface
      */
-    public function create(PresentationModelInterface $model): void
+    public function create(PresentationModelInterface $model): PresentationModelInterface
     {
         $this->modelValidator->validate($model);
 
@@ -58,6 +55,12 @@ class LanguageGateway
         $this->modelValidator->validate($logicModel);
 
         /** @var DomainModelInterface $domainLogicModel */
-        $this->logic->create($logicModel);
+        $languageDomainModel = $this->logic->create($logicModel);
+
+        /** @var PresentationModelInterface|PresentationModelLanguage $presentationModelLanguage */
+        $presentationModelLanguage = $this->serializerWrapper
+            ->convertFromToByGroup($languageDomainModel, 'default', PresentationModelLanguage::class);
+
+        return $presentationModelLanguage;
     }
 }

@@ -183,8 +183,9 @@ class BaseRepository implements RepositoryInterface
     /**
      * @param object|null $object
      * @throws ORMException
+     * @return object
      */
-    public function save(object $object = null): void
+    public function save(object $object = null): object
     {
         if (!is_object($object)) {
             $message = sprintf(
@@ -196,6 +197,8 @@ class BaseRepository implements RepositoryInterface
 
         $this->_em->persist($object);
         $this->_em->flush();
+
+        return $object;
     }
     /**
      * @return string

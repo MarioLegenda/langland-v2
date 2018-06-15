@@ -5,7 +5,7 @@ namespace Library\Infrastructure\Notation;
 interface ArrayNotationInterface
 {
     /**
-     * @return array
+     * @return iterable
      */
-    public function toArray(): array;
+    public function toArray(): iterable;
 }

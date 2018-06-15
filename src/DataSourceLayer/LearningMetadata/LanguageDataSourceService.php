@@ -32,17 +32,22 @@ class LanguageDataSourceService
     }
     /**
      * @param DataSourceEntity|LanguageDataSource $language
+     * @return LanguageDataSource
      */
-    public function create(DataSourceEntity $language)
+    public function create(DataSourceEntity $language): LanguageDataSource
     {
-        $this->repositoryFactory
+        /** @var LanguageDataSource $language */
+        $language = $this->repositoryFactory
             ->create(LanguageDataSource::class, MysqlType::fromValue())
             ->save($language);
+
+        return $language;
     }
     /**
      * @param DataSourceEntity|LanguageDataSource $language
+     * @return LanguageDataSource
      */
-    public function createIfNotExists(DataSourceEntity $language)
+    public function createIfNotExists(DataSourceEntity $language): LanguageDataSource
     {
         $repository = $this->repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue());
 
@@ -60,6 +65,6 @@ class LanguageDataSourceService
             throw new \RuntimeException($message);
         }
 
-        $this->create($language);
+        return $this->create($language);
     }
 }

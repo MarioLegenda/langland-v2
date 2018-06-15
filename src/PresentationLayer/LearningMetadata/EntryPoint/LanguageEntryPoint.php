@@ -40,8 +40,9 @@ class LanguageEntryPoint
      */
     public function put(LanguageModel $language): Response
     {
-        $this->languageGateway->create($language);
+        /** @var LanguageModel $createdLanguage */
+        $createdLanguage = $this->languageGateway->create($language);
 
-        return $this->apiResponseWrapper->createLanguageCreate();
+        return $this->apiResponseWrapper->createLanguageCreate($createdLanguage->toArray());
     }
 }

@@ -21,11 +21,12 @@ class LanguageLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Language $model
+     * @return DomainModelInterface|Language
      */
-    public function create(DomainModelInterface $model)
+    public function create(DomainModelInterface $model): DomainModelInterface
     {
         $model->handleDates();
 
-        $this->languageGateway->create($model);
+        return $this->languageGateway->create($model);
     }
 }
