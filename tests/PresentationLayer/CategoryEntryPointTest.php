@@ -27,7 +27,7 @@ class CategoryEntryPointTest extends BasicSetup
         $categoryModel = $presentationModelDataProvider->getCategoryModel();
 
         /** @var Response $response */
-        $response = $categoryEntryPoint->put($categoryModel);
+        $response = $categoryEntryPoint->create($categoryModel);
 
         $data = json_decode($response->getContent(), true);
 
@@ -62,7 +62,7 @@ class CategoryEntryPointTest extends BasicSetup
         $categoryModel = $presentationModelDataProvider->getCategoryModel();
 
         /** @var Response $response */
-        $response = $categoryEntryPoint->put($categoryModel);
+        $response = $categoryEntryPoint->create($categoryModel);
 
         $data = json_decode($response->getContent(), true);
 
@@ -87,7 +87,7 @@ class CategoryEntryPointTest extends BasicSetup
 
         $existingCategoryException = false;
         try {
-            $categoryEntryPoint->put($categoryModel);
+            $categoryEntryPoint->create($categoryModel);
         } catch (\RuntimeException $e) {
             $existingCategoryException = true;
         }

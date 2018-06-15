@@ -38,7 +38,7 @@ class LanguageEntryPoint
      * @param LanguageModel|PresentationModelInterface $language
      * @return Response
      */
-    public function put(LanguageModel $language): Response
+    public function create(LanguageModel $language): Response
     {
         /** @var LanguageModel $createdLanguage */
         $createdLanguage = $this->languageGateway->create($language);
