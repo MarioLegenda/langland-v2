@@ -1,0 +1,75 @@
+<?php
+
+namespace App\LogicGateway\Gateway;
+
+use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\LearningMetadata\Domain\Word\Image;
+use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
+use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Word\Word as WordPresentationModel;
+use App\LogicLayer\LearningMetadata\Logic\WordLogic;
+use App\LogicLayer\LogicInterface;
+use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Model\Word\Word;
+use Library\Infrastructure\Helper\ModelValidator;
+use Library\Infrastructure\Helper\SerializerWrapper;
+
+class WordGateway
+{
+    /**
+     * @var SerializerWrapper $serializerWrapper
+     */
+    private $serializerWrapper;
+    /**
+     * @var ModelValidator $modelValidator
+     */
+    private $modelValidator;
+    /**
+     * @var WordLogic|LogicInterface $wordLogic
+     */
+    private $wordLogic;
+    /**
+     * WordGateway constructor.
+     * @param SerializerWrapper $serializerWrapper
+     * @param ModelValidator $modelValidator
+     * @param LogicInterface|WordLogic $logic
+     */
+    public function __construct(
+        SerializerWrapper $serializerWrapper,
+        ModelValidator $modelValidator,
+        LogicInterface $logic
+    ) {
+        $this->serializerWrapper = $serializerWrapper;
+        $this->modelValidator = $modelValidator;
+        $this->wordLogic = $logic;
+    }
+    /**
+     * @param PresentationModelInterface|Word $presentationModel
+     * @return PresentationModelInterface
+     */
+    public function create(PresentationModelInterface $presentationModel): PresentationModelInterface
+    {
+        $this->modelValidator->validate($presentationModel);
+
+        /** @var WordDomainModel|DomainModelInterface $wordDomainModel */
+        $wordDomainModel = $this->serializerWrapper->convertFromToByGroup(
+            $presentationModel,
+            'default',
+            WordDomainModel::class
+        );
+
+        /** @var Image $domainImage */
+        $domainImage = $this->serializerWrapper->convertFromToByGroup(
+            $presentationModel->getImage(),
+            'default',
+            Image::class
+        );
+
+        $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
+        $wordDomainModel->setImage($domainImage);
+
+        $this->modelValidator->validate($wordDomainModel);
+
+        $this->wordLogic->create($wordDomainModel);
+    }
+}

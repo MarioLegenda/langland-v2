@@ -3,6 +3,9 @@
 parameters:
     locale: 'en'
     doctrine_env: '%env(APP_ENV)%'
+    image_dirs:
+        relative_image_path: /assets/images/
+        image_upload_dir: '%kernel.root_dir%/../public/assets/images'
 
 services:
     _defaults:
@@ -36,6 +39,11 @@ services:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
             $logic: '@App\LogicLayer\LearningMetadata\Logic\CategoryLogic'
 
+    App\LogicGateway\Gateway\WordGateway:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+            $logic: '@App\LogicLayer\LearningMetadata\Logic\WordLogic'
+
     App\DataSourceGateway\:
         resource: '../src/DataSourceGateway'
 
@@ -48,6 +56,11 @@ services:
         arguments:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
             $validator: 'library.facade.symfony_validator'
+
+    Library\Infrastructure\FileUpload\Implementation\ImageUpload:
+        arguments:
+            $imageDirs: '%image_dirs%'
+            $resizer: '@Library\Infrastructure\FileUpload\Implementation\ImageResize'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

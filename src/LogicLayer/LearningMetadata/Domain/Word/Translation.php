@@ -1,10 +1,11 @@
 <?php
 
-namespace App\PresentationLayer\Model;
+namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
+use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 
-class Category implements PresentationModelInterface, ArrayNotationInterface
+class Translation implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -14,6 +15,10 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
      * @var string $name
      */
     private $name;
+    /**
+     * @var bool $valid
+     */
+    private $valid;
     /**
      * @return int
      */
@@ -29,6 +34,13 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+    /**
      * @return iterable
      */
     public function toArray(): iterable
@@ -36,6 +48,7 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
+            'valid' => $this->isValid(),
         ];
     }
 }

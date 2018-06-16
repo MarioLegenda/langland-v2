@@ -1,5 +1,5 @@
-App\PresentationLayer\Model\Word\Image:
-    exclusion_policy: all
+App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation:
+    exlusion_policy: all
     properties:
         id:
             expose: true
@@ -11,10 +11,10 @@ App\PresentationLayer\Model\Word\Image:
             groups: [default]
             type: string
 
-        relativePath:
+        valid:
             expose: true
             groups: [default]
-            type: string
+            type: boolean
 
         createdAt:
             expose: true

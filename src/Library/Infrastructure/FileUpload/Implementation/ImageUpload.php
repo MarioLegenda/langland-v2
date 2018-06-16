@@ -6,6 +6,8 @@ use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\FileUpload\FileUploadInterface;
 use Library\Infrastructure\FileUpload\FileNamerInterface;
 use Library\Infrastructure\FileUpload\ImageResizeInterface;
+use Library\Infrastructure\Helper\TypedArray;
+use Ramsey\Uuid\Uuid;
 
 class ImageUpload implements FileUploadInterface
 {
@@ -18,10 +20,6 @@ class ImageUpload implements FileUploadInterface
      */
     private $imageResize;
     /**
-     * @var FileNamerInterface $fileNamer
-     */
-    private $fileNamer;
-    /**
      * @var mixed $relativePath
      */
     private $relativePath;
@@ -31,45 +29,54 @@ class ImageUpload implements FileUploadInterface
     private $data = [];
     /**
      * FileUploader constructor.
-     * @param array $uploadDirs
-     * @param ImageResizeInterface $imageResize
-     * @param FileNamerInterface $fileNamer
+     * @param array $imageDirs
+     * @param ImageResizeInterface $resizer
      */
-    public function __construct(array $uploadDirs, ImageResizeInterface $imageResize, FileNamerInterface $fileNamer)
-    {
-        $this->imageDir = realpath($uploadDirs['image_upload_dir']);
-        $this->relativePath = $uploadDirs['relative_image_path'];
-        $this->imageResize = $imageResize;
-        $this->fileNamer = $fileNamer;
+    public function __construct(
+        array $imageDirs,
+        ImageResizeInterface $resizer
+    ) {
+        $this->imageDir = realpath($imageDirs['image_upload_dir']);
+        $this->relativePath = $imageDirs['relative_image_path'];
+        $this->imageResize = $resizer;
     }
     /**
      * @inheritdoc
      */
     public function upload(UploadedFile $fileInfo, array $options = array())
     {
-        $fileName = $this->fileNamer->createName($options).'.'.$fileInfo->getExtension();
+        $fileName = sprintf(
+            '%s.%s',
+            Uuid::uuid4()->toString(), $fileInfo->getExtension()
+        );
+
+        $fileName = preg_replace('#-#', '', $fileName);
+
         $originalName = $fileInfo->getFilename();
 
-        $path = $this->imageDir.'/'.$fileName;
+        $destination = $this->imageDir.'/'.$fileName;
 
         if (array_key_exists('resize', $options)) {
-            $this->resizeAndSave($options['resize'], $fileInfo, $path);
+            $this->resizeAndSave($options['resize'], $fileInfo, $destination);
         } else {
-            $fileInfo->move($this->imageDir, $fileName);
+            $fileInfo->move($fileInfo->getRealPath(), $destination);
         }
 
-        $this->data = array(
+        $data = TypedArray::create('string', 'string', [
             'fileName' => $fileName,
             'relativePath' => $this->relativePath,
+            'fullRelativePath' => sprintf('%s.%s', $this->relativePath, $fileName),
             'targetDir' => $this->imageDir,
             'originalName' => $originalName,
             'fullPath' => $this->imageDir.'/'.$fileName,
-        );
+        ]);
+
+        $this->data = $data;
     }
     /**
      * @inheritdoc
      */
-    public function getData(): array
+    public function getData(): iterable
     {
         if (empty($this->data)) {
             $message = sprintf('Image upload data did not formulate correctly.');

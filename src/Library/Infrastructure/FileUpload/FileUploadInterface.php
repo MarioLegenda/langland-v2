@@ -13,7 +13,7 @@ interface FileUploadInterface
      */
     public function upload(UploadedFile $fileInfo, array $options = array());
     /**
-     * @return array
+     * @return iterable
      */
-    public function getData(): array;
+    public function getData(): iterable;
 }

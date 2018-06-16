@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Word\Word:
+App\LogicLayer\LearningMetadata\Domain\Word\Word:
     exclusion_policy: all
     properties:
         id:
@@ -19,7 +19,7 @@ App\PresentationLayer\Model\Word\Word:
         language:
             expose: true
             groups: [default]
-            type: App\PresentationLayer\Model\Language
+            type: App\LogicLayer\LearningMetadata\Domain\Language
 
         description:
             expose: true
@@ -40,14 +40,24 @@ App\PresentationLayer\Model\Word\Word:
         categories:
             expose: true
             groups: [default]
-            type: array<App\PresentationLayer\Model\Category>
+            type: array<App\LogicLayer\LearningMetadata\Domain\Category>
 
         translations:
             expose: true
             groups: [default]
-            type: array<App\PresentationLayer\Model\Word\Translation>
+            type: array<App\LogicLayer\LearningMetadata\Domain\Word\Translation>
 
         image:
             expose: true
             groups: [default]
-            type: App\PresentationLayer\Model\Word\Image
+            type: App\LogicLayer\LearningMetadata\Domain\Word\Image
+
+        createdAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>
+
+        updatedAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>

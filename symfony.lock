@@ -77,6 +77,9 @@
     "nikic/php-parser": {
         "version": "v4.0.2"
     },
+    "paragonie/random_compat": {
+        "version": "v2.0.15"
+    },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
     },
@@ -106,6 +109,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ramsey/uuid": {
+        "version": "3.7.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",

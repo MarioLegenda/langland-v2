@@ -4,8 +4,12 @@ namespace App\DataSourceLayer\Infrastructure;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\ImageRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -55,6 +59,26 @@ class RepositoryFactory
                 );
 
                 $repoClass = CategoryRepository::class;
+
+                return $this->saveAndReturnRepository($repoClass, $repository);
+
+            case Image::class:
+                $repository = new ImageRepository(
+                    $dataSource,
+                    $classMetadata
+                );
+
+                $repoClass = ImageRepository::class;
+
+                return $this->saveAndReturnRepository($repoClass, $repository);
+
+            case Word::class:
+                $repository = new WordRepository(
+                    $dataSource,
+                    $classMetadata
+                );
+
+                $repoClass = WordRepository::class;
 
                 return $this->saveAndReturnRepository($repoClass, $repository);
             default:

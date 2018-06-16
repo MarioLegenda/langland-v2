@@ -75,10 +75,11 @@ class WordEntryPointTest extends BasicSetup
             $categoryPresentationModel = $presentationModelDataProvider->getCategoryModel();
 
             $response = $categoryEntryPoint->create($categoryPresentationModel);
+            $data = json_decode($response->getContent(), true)['resource']['data'];
 
             /** @var Category $createdLanguageModel */
             $createdCategoryModel = $serializerWrapper->deserialize(
-                json_decode($response->getContent(), true)['resource']['data'],
+                $data,
                 Category::class
             );
 
