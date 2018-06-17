@@ -2,8 +2,10 @@
 
 namespace App\Tests\PresentationLayer\DataProvider;
 
+use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Word\Categories;
 use App\PresentationLayer\Model\Word\Image;
 use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;
@@ -92,6 +94,45 @@ class PresentationModelDataProvider
         $category = $this->deserializer->create($modelBlueprint, Category::class);
 
         return $category;
+    }
+    /**
+     * @param Language $language
+     * @param CollectionEntity $categories
+     * @param Image $image
+     * @param TypedArray|null $translations
+     * @param int|null $level
+     * @return Word
+     */
+    public function getCreateWordModel(
+        Language $language,
+        CollectionEntity $categories,
+        Image $image,
+        TypedArray $translations = null,
+        int $level = null
+    ): Word {
+        if (!$translations instanceof TypedArray) {
+            $translations = TypedArray::create('integer', Translation::class);
+            for ($i = 0; $i < 5; $i++) {
+                $translations[] = $this->getTranslationModel();
+            }
+        }
+
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'type' => $this->faker()->name,
+            'language' => $language->toArray(),
+            'description' => $this->faker()->sentence(20),
+            'level' => (is_null($level)) ? rand(1, 5) : $level,
+            'pluralForm' => $this->faker()->name,
+            'translations' => $translations->toArray(),
+        ];
+
+        /** @var Word $word */
+        $word = $this->deserializer->create($modelBlueprint, Word::class);
+        $word->setImage($image);
+        $word->setCategories($categories);
+
+        return $word;
     }
     /**
      * @param Language $language

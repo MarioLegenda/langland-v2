@@ -47,7 +47,8 @@
             "App\\": "src/"
         },
         "psr-0": {
-            "Library\\": "src/"
+            "Library\\": "src/",
+            "Infrastructure\\": "src/"
         }
     },
     "autoload-dev": {

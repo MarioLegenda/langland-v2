@@ -3,6 +3,8 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\WordGateway;
+use App\Infrastructure\Model\CollectionEntity;
+use App\Infrastructure\Model\CollectionMetadata;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
@@ -35,10 +37,10 @@ class WordLogic implements LogicInterface
     /**
      * @param DomainModelInterface|Word $wordDomainModel
      * @return DomainModelInterface
+     * @throws \Doctrine\ORM\ORMException
      */
     public function create(DomainModelInterface $wordDomainModel): DomainModelInterface
     {
-        // todo: check if all required data exists here
         $this->fileUpload->upload($wordDomainModel->getImage()->getUploadedFile());
 
         $data = $this->fileUpload->getData();

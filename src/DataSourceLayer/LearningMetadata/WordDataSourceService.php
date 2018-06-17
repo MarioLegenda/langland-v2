@@ -44,12 +44,6 @@ class WordDataSourceService
         /** @var CategoryRepository $categoryRepository */
         $categoryRepository = $this->repositoryFactory->create(Category::class, MysqlType::fromValue());
 
-        $dbCategories = $categoryRepository->findCategoriesInBulkById(
-            $wordDataSourceEntity->getCategories()
-        );
-
-        $wordDataSourceEntity->setCategories($dbCategories);
-
         $imageRepository->markToBeSaved($image);
 
         /** @var Word $newWord */

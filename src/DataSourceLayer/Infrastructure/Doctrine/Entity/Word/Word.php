@@ -5,6 +5,7 @@ namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\PresentationLayer\Model\Word\Categories;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
@@ -62,15 +63,7 @@ class Word implements DataSourceEntity
      * @Column(type="string")
      */
     private $pluralForm;
-    /**
-     * @var ArrayCollection $categories
-     * @ManyToMany(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category", cascade={"persist"})
-     * @JoinTable(name="word_categories",
-     *      joinColumns={@JoinColumn(name="word_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="category_id", referencedColumnName="id")}
-     * )
-     */
-    private $categories;
+
     /**
      * @var ArrayCollection $translations
      * @OneToMany(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation", mappedBy="product", cascade={"persist"})
@@ -171,7 +164,7 @@ class Word implements DataSourceEntity
         return $this;
     }
     /**
-     * @param iterable $categories
+     * @param Categories $categories
      */
     public function setCategories(iterable $categories): void
     {

@@ -22,6 +22,7 @@ class WordEntryPoint
     }
     /**
      * @param Word $word
+     * @throws \Doctrine\ORM\ORMException
      */
     public function create(Word $word)
     {

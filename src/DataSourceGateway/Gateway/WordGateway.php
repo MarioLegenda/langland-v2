@@ -41,18 +41,21 @@ class WordGateway
         $this->wordDataSourceService = $wordDataSourceService;
     }
     /**
-     * @param DomainModelInterface $domainModel
+     * @param DomainModelInterface|Word $domainModel
      * @return DomainModelInterface
      * @throws \Doctrine\ORM\ORMException
      */
     public function create(DomainModelInterface $domainModel): DomainModelInterface
     {
+        $categories = $domainModel->getCategories();
         /** @var WordDataSource $wordDataSource */
         $wordDataSource = $this->serializerWrapper->convertFromToByGroup(
             $domainModel,
             'default',
             WordDataSource::class
         );
+
+        $wordDataSource->setCategories($categories);
 
         $this->modelValidator->validate($wordDataSource);
 

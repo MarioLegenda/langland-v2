@@ -37,11 +37,6 @@ App\LogicLayer\LearningMetadata\Domain\Word\Word:
             type: string
             serialized_name: pluralForm
 
-        categories:
-            expose: true
-            groups: [default]
-            type: array<App\LogicLayer\LearningMetadata\Domain\Category>
-
         translations:
             expose: true
             groups: [default]

@@ -37,11 +37,6 @@ App\PresentationLayer\Model\Word\Word:
             type: string
             serialized_name: pluralForm
 
-        categories:
-            expose: true
-            groups: [default]
-            type: array<App\PresentationLayer\Model\Category>
-
         translations:
             expose: true
             groups: [default]

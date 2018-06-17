@@ -2,9 +2,10 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
+use App\Infrastructure\Model\CollectionEntity;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Word\Categories;
 use Library\Util\Util;
 
 class Word implements DomainModelInterface
@@ -38,7 +39,7 @@ class Word implements DomainModelInterface
      */
     private $pluralForm;
     /**
-     * @var iterable $categories
+     * @var CollectionEntity $categories
      */
     private $categories;
     /**
@@ -149,11 +150,18 @@ class Word implements DomainModelInterface
         $this->pluralForm = $pluralForm;
     }
     /**
-     * @return Category[]
+     * @return CollectionEntity
      */
-    public function getCategories(): array
+    public function getCategories(): CollectionEntity
     {
         return $this->categories;
+    }
+    /**
+     * @param CollectionEntity $categories
+     */
+    public function setCategories(CollectionEntity $categories)
+    {
+        $this->categories = $categories;
     }
     /**
      * @return Translation[]

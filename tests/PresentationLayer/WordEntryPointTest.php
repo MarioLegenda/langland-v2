@@ -2,6 +2,8 @@
 
 namespace App\Tests\PresentationLayer;
 
+use App\Infrastructure\Model\CollectionEntity;
+use App\Infrastructure\Model\CollectionMetadata;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
@@ -9,8 +11,8 @@ use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
+use Infrastructure\Model\ActionType;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use Library\Infrastructure\Helper\TypedArray;
 
 class WordEntryPointTest extends BasicSetup
 {
@@ -22,9 +24,9 @@ class WordEntryPointTest extends BasicSetup
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
 
         $createdLanguageModel = $this->createLanguage();
-        $categories = $this->createCategories();
+        $categories = $this->getCreateCategoryMetadata();
 
-        $wordPresentationModel = $presentationModelDataProvider->getWordModel(
+        $wordPresentationModel = $presentationModelDataProvider->getCreateWordModel(
             $createdLanguageModel,
             $categories,
             $presentationModelDataProvider->getImageModel()
@@ -57,9 +59,9 @@ class WordEntryPointTest extends BasicSetup
         return $createdLanguageModel;
     }
     /**
-     * @return iterable|TypedArray|Category[]
+     * @return CollectionEntity
      */
-    public function createCategories(): iterable
+    public function getCreateCategoryMetadata(): CollectionEntity
     {
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
@@ -68,7 +70,7 @@ class WordEntryPointTest extends BasicSetup
         /** @var CategoryEntryPoint $categoryEntryPoint */
         $categoryEntryPoint = static::$container->get(CategoryEntryPoint::class);
 
-        $categories = TypedArray::create('integer', Category::class);
+        $categories = new CollectionEntity();
 
         for ($i = 0; $i < 5; $i++) {
             /** @var Category $categoryPresentationModel */
@@ -83,7 +85,12 @@ class WordEntryPointTest extends BasicSetup
                 Category::class
             );
 
-            $categories[] = $createdCategoryModel;
+            $categoryMetadata = new CollectionMetadata(
+                $createdCategoryModel->getId(),
+                ActionType::fromValue('create')
+            );
+
+            $categories->addMetadata($categoryMetadata);
         }
 
         return $categories;

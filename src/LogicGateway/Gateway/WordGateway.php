@@ -5,8 +5,6 @@ namespace App\LogicGateway\Gateway;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
-use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Word\Word as WordPresentationModel;
 use App\LogicLayer\LearningMetadata\Logic\WordLogic;
 use App\LogicLayer\LogicInterface;
 use App\PresentationLayer\Model\PresentationModelInterface;
@@ -46,10 +44,13 @@ class WordGateway
     /**
      * @param PresentationModelInterface|Word $presentationModel
      * @return PresentationModelInterface
+     * @throws \Doctrine\ORM\ORMException
      */
     public function create(PresentationModelInterface $presentationModel): PresentationModelInterface
     {
         $this->modelValidator->validate($presentationModel);
+
+        $categories = $presentationModel->getCategories();
 
         /** @var WordDomainModel|DomainModelInterface $wordDomainModel */
         $wordDomainModel = $this->serializerWrapper->convertFromToByGroup(
@@ -67,8 +68,7 @@ class WordGateway
 
         $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
         $wordDomainModel->setImage($domainImage);
-
-        $this->modelValidator->validate($wordDomainModel);
+        $wordDomainModel->setCategories($categories);
 
         $this->wordLogic->create($wordDomainModel);
     }

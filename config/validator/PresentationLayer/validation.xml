@@ -71,6 +71,9 @@
     </class>
 
     <class name="App\PresentationLayer\Model\Word\Word">
+
+        <constraint name="Callback">validate</constraint>
+
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -120,16 +123,6 @@
             <constraint name="Type">
                 <option name="type">int</option>
                 <option name="message">'level' should be a string</option>
-            </constraint>
-        </property>
-
-        <property name="categories">
-            <constraint name="Valid">
-                <option name="traverse">true</option>
-            </constraint>
-
-            <constraint name="NotBlank">
-                <option name="message">'categories' should not be blank</option>
             </constraint>
         </property>
 

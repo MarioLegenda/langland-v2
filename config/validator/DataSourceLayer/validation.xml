@@ -58,6 +58,66 @@
         </property>
     </class>
 
+    <class name="App\DataSourceLayer\Domain\Word\Word">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="type">
+            <constraint name="NotBlank">
+                <option name="message">'type' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'type' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="language">
+            <constraint name="Valid" />
+
+            <constraint name="NotBlank">
+                <option name="message">'language' should not be blank</option>
+            </constraint>
+        </property>
+
+        <property name="description">
+            <constraint name="NotBlank">
+                <option name="message">'description' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'description' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="level">
+            <constraint name="NotBlank">
+                <option name="message">'level' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">int</option>
+                <option name="message">'level' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="translations">
+            <constraint name="Valid">
+                <option name="traverse">true</option>
+            </constraint>
+        </property>
+    </class>
+
     <class name="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category">
         <property name="name">
             <constraint name="NotBlank">

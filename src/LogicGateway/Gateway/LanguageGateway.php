@@ -2,6 +2,7 @@
 
 namespace App\LogicGateway\Gateway;
 
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LogicInterface;
@@ -42,9 +43,9 @@ class LanguageGateway
     }
     /**
      * @param PresentationModelInterface $model
-     * @return PresentationModelInterface
+     * @return LayerPropagationResponse
      */
-    public function create(PresentationModelInterface $model): PresentationModelInterface
+    public function create(PresentationModelInterface $model): LayerPropagationResponse
     {
         $this->modelValidator->validate($model);
 

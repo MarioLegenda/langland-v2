@@ -37,11 +37,6 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word:
             type: string
             serialized_name: pluralForm
 
-        categories:
-            expose: true
-            groups: [default]
-            type: array<App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category>
-
         translations:
             expose: true
             groups: [default]

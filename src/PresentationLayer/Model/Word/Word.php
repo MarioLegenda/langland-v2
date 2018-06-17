@@ -2,9 +2,11 @@
 
 namespace App\PresentationLayer\Model\Word;
 
+use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\PresentationModelInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class Word implements PresentationModelInterface
 {
@@ -37,7 +39,7 @@ class Word implements PresentationModelInterface
      */
     private $pluralForm;
     /**
-     * @var iterable $categories
+     * @var CollectionEntity $categories
      */
     private $categories;
     /**
@@ -98,13 +100,6 @@ class Word implements PresentationModelInterface
         return $this->pluralForm;
     }
     /**
-     * @return Category[]
-     */
-    public function getCategories(): array
-    {
-        return $this->categories;
-    }
-    /**
      * @return Translation[]
      */
     public function getTranslations(): array
@@ -124,5 +119,32 @@ class Word implements PresentationModelInterface
     public function getImage(): Image
     {
         return $this->image;
+    }
+    /**
+     * @param CollectionEntity $categories
+     */
+    public function setCategories(CollectionEntity $categories)
+    {
+        $this->categories = $categories;
+    }
+    /**
+     * @return CollectionEntity
+     */
+    public function getCategories(): CollectionEntity
+    {
+        return $this->categories;
+    }
+    /**
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        $validation = $this->getCategories()->validate();
+
+        if (!$validation['valid']) {
+            $context
+                ->buildViolation($validation['messages'])
+                ->addViolation();
+        }
     }
 }
