@@ -7,7 +7,9 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataS
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use Library\Infrastructure\Helper\ModelValidator;
+use App\DataSourceLayer\Model\Category as CategoryModel;
 
 class CategoryDataSourceService
 {
@@ -46,9 +48,9 @@ class CategoryDataSourceService
     }
     /**
      * @param DataSourceEntity|CategoryDataSource $category
-     * @return DataSourceEntity
+     * @return LayerPropagationResponse
      */
-    public function createIfNotExists(DataSourceEntity $category): DataSourceEntity
+    public function createIfNotExists(DataSourceEntity $category): LayerPropagationResponse
     {
         $repository = $this->repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue());
 
@@ -66,6 +68,8 @@ class CategoryDataSourceService
             throw new \RuntimeException($message);
         }
 
-        return $this->create($category);
+        $newCategory = $this->create($category);
+
+        return new CategoryModel($newCategory);
     }
 }

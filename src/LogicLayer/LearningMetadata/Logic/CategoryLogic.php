@@ -3,6 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\CategoryGateway;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
@@ -25,9 +26,9 @@ class CategoryLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Category $domainModel
-     * @return DomainModelInterface
+     * @return LayerPropagationResponse
      */
-    public function create(DomainModelInterface $domainModel): DomainModelInterface
+    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
     {
         $domainModel->handleDates();
 

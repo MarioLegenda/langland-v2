@@ -4,6 +4,7 @@ namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category as CategoryDomainModel;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -40,9 +41,9 @@ class CategoryGateway
     }
     /**
      * @param DomainModelInterface $domainModel
-     * @return DomainModelInterface
+     * @return LayerPropagationResponse
      */
-    public function create(DomainModelInterface $domainModel): DomainModelInterface
+    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
     {
         $this->modelValidator->validate($domainModel);
 
@@ -52,12 +53,6 @@ class CategoryGateway
 
         $this->modelValidator->validate($categoryDataSource);
 
-        $newCategory = $this->categoryDataSourceService->createIfNotExists($categoryDataSource);
-
-        /** @var DomainModelInterface|CategoryDomainModel $domainModelCategory */
-        $domainModelCategory = $this->serializerWrapper
-            ->convertFromToByGroup($newCategory, 'default', CategoryDomainModel::class);
-
-        return $domainModelCategory;
+        return $this->categoryDataSourceService->createIfNotExists($categoryDataSource);
     }
 }
