@@ -40,6 +40,18 @@ class Util
         return $dateTime;
     }
     /**
+     * @param \DateTime $dateTime
+     * @return string
+     */
+    public static function formatFromDate(\DateTime $dateTime = null): ?string
+    {
+        if (!$dateTime instanceof \DateTime) {
+            return null;
+        }
+
+        return $dateTime->format('Y-m-d H:m:s');
+    }
+    /**
      * @param object $object
      * @param string $field
      * @return mixed

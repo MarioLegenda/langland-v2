@@ -55,13 +55,9 @@ class LanguageGateway
 
         $this->modelValidator->validate($logicModel);
 
-        /** @var DomainModelInterface $domainLogicModel */
-        $languageDomainModel = $this->logic->create($logicModel);
+        /** @var LayerPropagationResponse $domainLogicModel */
+        $layerPropagationResponse = $this->logic->create($logicModel);
 
-        /** @var PresentationModelInterface|PresentationModelLanguage $presentationModelLanguage */
-        $presentationModelLanguage = $this->serializerWrapper
-            ->convertFromToByGroup($languageDomainModel, 'default', PresentationModelLanguage::class);
-
-        return $presentationModelLanguage;
+        return $layerPropagationResponse;
     }
 }

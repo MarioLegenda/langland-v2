@@ -4,6 +4,8 @@ namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
+use App\DataSourceLayer\Model\Language;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -41,9 +43,9 @@ class LanguageGateway
     }
     /**
      * @param DomainModelInterface $domainModel
-     * @return DomainModelInterface
+     * @return LayerPropagationResponse
      */
-    public function create(DomainModelInterface $domainModel): DomainModelInterface
+    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
     {
         /** @var DataSourceEntity $dataSourceModel */
         $dataSourceModel = $this->serializerWrapper
@@ -53,10 +55,6 @@ class LanguageGateway
 
         $newLanguage = $this->languageDataSourceService->createIfNotExists($dataSourceModel);
 
-        /** @var DomainModelInterface|DomainModelLanguage $createdDomainModel */
-        $createdDomainModel = $this->serializerWrapper
-            ->convertFromToByGroup($newLanguage, 'default', DomainModelLanguage::class);
-
-        return $createdDomainModel;
+        return new Language($newLanguage);
     }
 }

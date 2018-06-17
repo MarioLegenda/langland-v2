@@ -3,6 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\LanguageGateway;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LogicInterface;
@@ -21,9 +22,9 @@ class LanguageLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Language $model
-     * @return DomainModelInterface|Language
+     * @return LayerPropagationResponse
      */
-    public function create(DomainModelInterface $model): DomainModelInterface
+    public function create(DomainModelInterface $model): LayerPropagationResponse
     {
         $model->handleDates();
 
