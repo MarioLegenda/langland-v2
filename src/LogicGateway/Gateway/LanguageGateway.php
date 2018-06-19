@@ -10,7 +10,6 @@ use App\LogicLayer\LearningMetadata\Logic\LanguageLogic;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\PresentationLayer\Model\Language as PresentationModelLanguage;
 
 class LanguageGateway
 {

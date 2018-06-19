@@ -4,13 +4,10 @@ namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
-use App\DataSourceLayer\Model\Language;
-use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\LogicLayer\LearningMetadata\Domain\Language as DomainModelLanguage;
 
 class LanguageGateway
 {

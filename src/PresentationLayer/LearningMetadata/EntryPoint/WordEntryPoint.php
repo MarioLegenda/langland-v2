@@ -37,8 +37,5 @@ class WordEntryPoint
     public function create(Word $word): Response
     {
         $layerPropagationModel = $this->wordGateway->create($word);
-
-        dump($layerPropagationModel);
-        die();
     }
 }

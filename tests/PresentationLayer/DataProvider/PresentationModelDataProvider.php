@@ -5,7 +5,6 @@ namespace App\Tests\PresentationLayer\DataProvider;
 use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Word\Categories;
 use App\PresentationLayer\Model\Word\Image;
 use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;

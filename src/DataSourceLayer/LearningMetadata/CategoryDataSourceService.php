@@ -6,11 +6,7 @@ use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
-use App\DataSourceLayer\Infrastructure\RepositoryFactory;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
-use App\Infrastructure\Response\LayerPropagationResponse;
 use Library\Infrastructure\Helper\ModelValidator;
-use App\DataSourceLayer\Model\Category as CategoryModel;
 
 class CategoryDataSourceService
 {

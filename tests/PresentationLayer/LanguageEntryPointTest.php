@@ -2,9 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
