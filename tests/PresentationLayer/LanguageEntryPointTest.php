@@ -3,8 +3,8 @@
 namespace App\Tests\PresentationLayer;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\RepositoryFactory;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
@@ -16,9 +16,9 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataS
 
 class LanguageEntryPointTest extends BasicSetup
 {
-
     public function test_language_create()
     {
+        $languageRepository = $this->locator->get(LanguageRepository::class);
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
         /** @var Language $languageModel */
@@ -40,16 +40,13 @@ class LanguageEntryPointTest extends BasicSetup
         static::assertFalse($apiResponseData->isCollection());
         static::assertNotEmpty($apiResponseData->getData()['data']);
 
-        /** @var RepositoryFactory $repositoryFactory */
-        $repositoryFactory = static::$container->get(RepositoryFactory::class);
+        $data = $apiResponseData->getData()['data'];
 
-        /** @var LanguageDataSource|DataSourceEntity $languageDataSource */
-        $languageDataSource = $repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue())->findOneBy([
-            'name' => $languageModel->getName(),
+        $createdLanguage = $languageRepository->findOneBy([
+            'name' => $data['name'],
         ]);
 
-        static::assertInstanceOf(LanguageDataSource::class, $languageDataSource);
-        static::assertEquals($languageModel->getName(), $languageDataSource->getName());
+        static::assertInstanceOf(LanguageDataSource::class, $createdLanguage);
     }
 
     public function test_existing_language_fail()
@@ -76,18 +73,8 @@ class LanguageEntryPointTest extends BasicSetup
         static::assertFalse($apiResponseData->isCollection());
         static::assertNotEmpty($apiResponseData->getData()['data']);
 
-        /** @var RepositoryFactory $repositoryFactory */
-        $repositoryFactory = static::$container->get(RepositoryFactory::class);
-
-        /** @var LanguageDataSource|DataSourceEntity $languageDataSource */
-        $languageDataSource = $repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue())->findOneBy([
-            'name' => $languageModel->getName(),
-        ]);
-
-        static::assertInstanceOf(LanguageDataSource::class, $languageDataSource);
-        static::assertEquals($languageModel->getName(), $languageDataSource->getName());
-
         $existingLanguageException = false;
+
         try {
             $languageEntryPoint->create($languageModel);
         } catch (\RuntimeException $e) {

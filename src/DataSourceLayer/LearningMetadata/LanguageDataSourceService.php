@@ -4,55 +4,43 @@ namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
-use App\DataSourceLayer\Infrastructure\RepositoryFactory;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use Library\Infrastructure\Helper\ModelValidator;
 
 class LanguageDataSourceService
 {
     /**
-     * @var RepositoryFactory $repositoryFactory
+     * @var LanguageRepository $languageRepository
      */
-    private $repositoryFactory;
+    private $languageRepository;
     /**
      * @var ModelValidator $modelValidator
      */
     private $modelValidator;
     /**
      * Language constructor.
-     * @param RepositoryFactory $repositoryFactory
+     * @param LanguageRepository $languageRepository
      * @param ModelValidator $modelValidator
      */
     public function __construct(
-        RepositoryFactory $repositoryFactory,
+        LanguageRepository $languageRepository,
         ModelValidator $modelValidator
     ) {
-        $this->repositoryFactory = $repositoryFactory;
+        $this->languageRepository = $languageRepository;
         $this->modelValidator = $modelValidator;
     }
     /**
-     * @param DataSourceEntity|LanguageDataSource $language
+     * @param DataSourceEntity|Language $language
      * @return LanguageDataSource
-     */
-    public function create(DataSourceEntity $language): LanguageDataSource
-    {
-        /** @var LanguageDataSource $language */
-        $language = $this->repositoryFactory
-            ->create(LanguageDataSource::class, MysqlType::fromValue())
-            ->save($language);
-
-        return $language;
-    }
-    /**
-     * @param DataSourceEntity|LanguageDataSource $language
-     * @return LanguageDataSource
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createIfNotExists(DataSourceEntity $language): LanguageDataSource
     {
-        $repository = $this->repositoryFactory->create(LanguageDataSource::class, MysqlType::fromValue());
 
         /** @var LanguageDataSource $existingLanguage */
-        $existingLanguage = $repository->findOneBy([
+        $existingLanguage = $this->languageRepository->findOneBy([
             'name' => $language->getName(),
         ]);
 
@@ -65,6 +53,6 @@ class LanguageDataSourceService
             throw new \RuntimeException($message);
         }
 
-        return $this->create($language);
+        return $this->languageRepository->persistAndFlush($language);
     }
 }

@@ -21,7 +21,6 @@ class BaseRepository implements RepositoryInterface
      * @var string
      */
     protected $_entityName;
-
     /**
      * @var EntityManager
      */
@@ -181,6 +180,14 @@ class BaseRepository implements RepositoryInterface
         $this->_em->persist($object);
     }
     /**
+     * @param object $object
+     * @throws ORMException
+     */
+    public function markToBeRemoved(object $object): void
+    {
+        $this->_em->remove($object);
+    }
+    /**
      * @param object|null $object
      * @throws ORMException
      * @return object
@@ -199,6 +206,14 @@ class BaseRepository implements RepositoryInterface
         $this->_em->flush();
 
         return $object;
+    }
+    /**
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveAll(): void
+    {
+        $this->_em->flush();
     }
     /**
      * @return string

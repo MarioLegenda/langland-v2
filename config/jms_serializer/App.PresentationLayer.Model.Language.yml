@@ -20,8 +20,3 @@ App\PresentationLayer\Model\Language:
             expose: true
             groups: [default]
             type: string
-
-        images:
-            expose: true
-            groups: [default]
-            type: array

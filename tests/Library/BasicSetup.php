@@ -24,8 +24,8 @@ class BasicSetup extends WebTestCase
 
         $this->locator = $this->client->getContainer();
 
-        exec('/var/www/vendor/bin/doctrine orm:schema-tool:drop --force');
-        exec('/var/www/vendor/bin/doctrine orm:schema-tool:create');
-        exec('/var/www/vendor/bin/doctrine orm:schema-tool:update --force');
+        exec('/usr/bin/php bin/console do:da:dr --force');
+        exec('/usr/bin/php bin/console do:da:cr');
+        exec('/usr/bin/php bin/console do:sc:up --force');
     }
 }

@@ -37,17 +37,6 @@
                 <option name="message">'description' should be a string</option>
             </constraint>
         </property>
-
-        <property name="images">
-            <constraint name="NotBlank">
-                <option name="message">'images' should be an array</option>
-            </constraint>
-
-            <constraint name="Type">
-                <option name="type">array</option>
-                <option name="message">'images' should be an array</option>
-            </constraint>
-        </property>
     </class>
 
     <class name="App\PresentationLayer\Model\Word\Translation">

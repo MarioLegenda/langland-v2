@@ -8,6 +8,7 @@ use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
 use App\PresentationLayer\Model\PresentationModelInterface;
+use App\LogicLayer\LearningMetadata\Model\Category as CategoryModel;
 
 class CategoryLogic implements LogicInterface
 {
@@ -27,11 +28,15 @@ class CategoryLogic implements LogicInterface
     /**
      * @param DomainModelInterface|Category $domainModel
      * @return LayerPropagationResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create(DomainModelInterface $domainModel): LayerPropagationResponse
     {
         $domainModel->handleDates();
 
-        return $this->categoryGateway->create($domainModel);
+        $newCategory = $this->categoryGateway->create($domainModel);
+
+        return new CategoryModel($newCategory);
     }
 }

@@ -39,10 +39,6 @@ class PresentationModelDataProvider
             'name' => $this->faker()->name,
             'showOnPage' => false,
             'description' => $this->faker()->sentence(30),
-            'images' => [
-                'image1',
-                'image2',
-            ],
         ];
 
         /** @var Language $language */
@@ -59,7 +55,6 @@ class PresentationModelDataProvider
             'name' => '',
             'showOnPage' => 'čsdfjlksadjf',
             'description' => $this->faker()->sentence(30),
-            'images' => [],
         ];
 
         /** @var Language $language */

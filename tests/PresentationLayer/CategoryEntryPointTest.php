@@ -2,9 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\RepositoryFactory;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\Model\Category;
 use App\Tests\Library\BasicSetup;
@@ -18,6 +16,8 @@ class CategoryEntryPointTest extends BasicSetup
 {
     public function test_category_create_success()
     {
+        /** @var CategoryRepository $categoryRepository */
+        $categoryRepository = static::$container->get(CategoryRepository::class);
         /** @var CategoryEntryPoint $categoryEntryPoint */
         $categoryEntryPoint = static::$container->get(CategoryEntryPoint::class);
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
@@ -39,16 +39,13 @@ class CategoryEntryPointTest extends BasicSetup
         static::assertFalse($apiResponseData->isCollection());
         static::assertNotEmpty($apiResponseData->getData()['data']);
 
-        /** @var RepositoryFactory $repositoryFactory */
-        $repositoryFactory = static::$container->get(RepositoryFactory::class);
+        $data = $apiResponseData->getData()['data'];
 
-        /** @var CategoryDataSource|DataSourceEntity $categoryDataSource */
-        $categoryDataSource = $repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue())->findOneBy([
-            'name' => $categoryModel->getName(),
+        $createdCategory = $categoryRepository->findOneBy([
+            'name' => $data['name'],
         ]);
 
-        static::assertInstanceOf(CategoryDataSource::class, $categoryDataSource);
-        static::assertEquals($categoryModel->getName(), $categoryDataSource->getName());
+        static::assertInstanceOf(CategoryDataSource::class, $createdCategory);
     }
 
     public function test_existing_category_fail()
@@ -74,18 +71,8 @@ class CategoryEntryPointTest extends BasicSetup
         static::assertFalse($apiResponseData->isCollection());
         static::assertNotEmpty($apiResponseData->getData()['data']);
 
-        /** @var RepositoryFactory $repositoryFactory */
-        $repositoryFactory = static::$container->get(RepositoryFactory::class);
-
-        /** @var CategoryDataSource|DataSourceEntity $categoryDataSource */
-        $categoryDataSource = $repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue())->findOneBy([
-            'name' => $categoryModel->getName(),
-        ]);
-
-        static::assertInstanceOf(CategoryDataSource::class, $categoryDataSource);
-        static::assertEquals($categoryModel->getName(), $categoryDataSource->getName());
-
         $existingCategoryException = false;
+
         try {
             $categoryEntryPoint->create($categoryModel);
         } catch (\RuntimeException $e) {

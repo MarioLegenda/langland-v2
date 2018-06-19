@@ -2,6 +2,7 @@
 
 namespace App\LogicGateway\Gateway;
 
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
@@ -43,10 +44,10 @@ class WordGateway
     }
     /**
      * @param PresentationModelInterface|Word $presentationModel
-     * @return PresentationModelInterface
+     * @return LayerPropagationResponse
      * @throws \Doctrine\ORM\ORMException
      */
-    public function create(PresentationModelInterface $presentationModel): PresentationModelInterface
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResponse
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -70,6 +71,6 @@ class WordGateway
         $wordDomainModel->setImage($domainImage);
         $wordDomainModel->setCategories($categories);
 
-        $this->wordLogic->create($wordDomainModel);
+        return $this->wordLogic->create($wordDomainModel);
     }
 }

@@ -83,6 +83,20 @@ services:
         tags:
             - { name: jms_serializer.event_subscriber }
 
+    # REPOSITORY
+
+    App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository:
+        arguments:
+            $registry: '@doctrine'
+
+    App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository:
+        arguments:
+            $registry: '@doctrine'
+
+    App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository:
+        arguments:
+            $registry: '@doctrine'
+
 
 
 

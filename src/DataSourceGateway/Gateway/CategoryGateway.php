@@ -2,10 +2,9 @@
 
 namespace App\DataSourceGateway\Gateway;
 
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
-use App\Infrastructure\Response\LayerPropagationResponse;
-use App\LogicLayer\LearningMetadata\Domain\Category as CategoryDomainModel;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
@@ -41,9 +40,11 @@ class CategoryGateway
     }
     /**
      * @param DomainModelInterface $domainModel
-     * @return LayerPropagationResponse
+     * @return DataSourceEntity|CategoryDataSource
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
+    public function create(DomainModelInterface $domainModel): DataSourceEntity
     {
         $this->modelValidator->validate($domainModel);
 

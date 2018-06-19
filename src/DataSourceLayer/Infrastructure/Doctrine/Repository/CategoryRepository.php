@@ -2,31 +2,31 @@
 
 namespace App\DataSourceLayer\Infrastructure\Doctrine\Repository;
 
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class CategoryRepository extends BaseRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     /**
-     * @param iterable $categories
-     * @return iterable
+     * CategoryRepository constructor.
+     * @param ManagerRegistry $registry
      */
-    public function findCategoriesInBulkById(iterable $categories): iterable
+    public function __construct(ManagerRegistry $registry)
     {
-        $qb = $this->createQueryBuilder('c');
+        parent::__construct($registry, Category::class);
+    }
+    /**
+     * @param Category $language
+     * @return Category
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function persistAndFlush(Category $language): Category
+    {
+        $this->getEntityManager()->persist($language);
+        $this->getEntityManager()->flush();
 
-        $ids = [];
-        /** @var DataSourceEntity|Category $category */
-        foreach ($categories as $category) {
-            $ids[] = $category->getId();
-        }
-
-        return $qb
-            ->andWhere('c.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->getQuery()
-            ->getResult();
+        return $language;
     }
 }

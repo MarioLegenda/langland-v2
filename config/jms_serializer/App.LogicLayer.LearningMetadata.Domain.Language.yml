@@ -21,11 +21,6 @@ App\LogicLayer\LearningMetadata\Domain\Language:
             groups: [default]
             type: string
 
-        images:
-            expose: true
-            groups: [default]
-            type: array
-
         createdAt:
             expose: true
             groups: [default]

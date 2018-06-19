@@ -5,6 +5,7 @@ namespace App\DataSourceLayer\LearningMetadata;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\DataSourceLayer\Infrastructure\RepositoryFactory;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use App\Infrastructure\Response\LayerPropagationResponse;
@@ -14,48 +15,35 @@ use App\DataSourceLayer\Model\Category as CategoryModel;
 class CategoryDataSourceService
 {
     /**
-     * @var RepositoryFactory $repositoryFactory
+     * @var CategoryRepository $categoryRepository
      */
-    private $repositoryFactory;
+    private $categoryRepository;
     /**
      * @var ModelValidator $modelValidator
      */
     private $modelValidator;
     /**
      * Language constructor.
-     * @param RepositoryFactory $repositoryFactory
+     * @param CategoryRepository $categoryRepository
      * @param ModelValidator $modelValidator
      */
     public function __construct(
-        RepositoryFactory $repositoryFactory,
+        CategoryRepository $categoryRepository,
         ModelValidator $modelValidator
     ) {
-        $this->repositoryFactory = $repositoryFactory;
+        $this->categoryRepository = $categoryRepository;
         $this->modelValidator = $modelValidator;
     }
     /**
-     * @param DataSourceEntity|CategoryDataSource $category
-     * @return DataSourceEntity
+     * @param DataSourceEntity|Category $category
+     * @return DataSourceEntity|Category
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DataSourceEntity $category): DataSourceEntity
+    public function createIfNotExists(DataSourceEntity $category): DataSourceEntity
     {
-        /** @var Category $newCategory */
-        $newCategory = $this->repositoryFactory
-            ->create(CategoryDataSource::class, MysqlType::fromValue())
-            ->save($category);
-
-        return $newCategory;
-    }
-    /**
-     * @param DataSourceEntity|CategoryDataSource $category
-     * @return LayerPropagationResponse
-     */
-    public function createIfNotExists(DataSourceEntity $category): LayerPropagationResponse
-    {
-        $repository = $this->repositoryFactory->create(CategoryDataSource::class, MysqlType::fromValue());
-
         /** @var CategoryDataSource $existingCategory */
-        $existingCategory = $repository->findOneBy([
+        $existingCategory = $this->categoryRepository->findOneBy([
             'name' => $category->getName(),
         ]);
 
@@ -68,8 +56,6 @@ class CategoryDataSourceService
             throw new \RuntimeException($message);
         }
 
-        $newCategory = $this->create($category);
-
-        return new CategoryModel($newCategory);
+        return $this->categoryRepository->persistAndFlush($category);
     }
 }

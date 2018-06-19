@@ -43,9 +43,11 @@ class LanguageGateway
     }
     /**
      * @param DomainModelInterface $domainModel
-     * @return LayerPropagationResponse
+     * @return DataSourceEntity|Language
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
+    public function create(DomainModelInterface $domainModel): DataSourceEntity
     {
         /** @var DataSourceEntity $dataSourceModel */
         $dataSourceModel = $this->serializerWrapper
@@ -55,6 +57,6 @@ class LanguageGateway
 
         $newLanguage = $this->languageDataSourceService->createIfNotExists($dataSourceModel);
 
-        return new Language($newLanguage);
+        return $newLanguage;
     }
 }

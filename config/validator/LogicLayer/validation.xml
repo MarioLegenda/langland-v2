@@ -38,17 +38,6 @@
             </constraint>
         </property>
 
-        <property name="images">
-            <constraint name="NotBlank">
-                <option name="message">'images' should be an array</option>
-            </constraint>
-
-            <constraint name="Type">
-                <option name="type">array</option>
-                <option name="message">'images' should be an array</option>
-            </constraint>
-        </property>
-
         <property name="createdAt">
             <constraint name="NotBlank">
                 <option name="message">'createdAt' should be an object of \DateTime</option>

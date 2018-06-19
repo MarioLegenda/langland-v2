@@ -3,13 +3,16 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\LearningMetadata\WordCategoryDataSourceService;
 use App\DataSourceLayer\LearningMetadata\WordDataSourceService;
+use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
+use App\DataSourceLayer\Model\Word as WordModel;
 
 class WordGateway
 {
@@ -26,28 +29,36 @@ class WordGateway
      */
     private $wordDataSourceService;
     /**
+     * @var WordCategoryDataSourceService $wordCategoryDataSource
+     */
+    private $wordCategoryDataSource;
+    /**
      * WordGateway constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param ModelValidator $modelValidator
      * @param WordDataSourceService $wordDataSourceService
+     * @param WordCategoryDataSourceService $wordCategoryDataSource
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
         ModelValidator $modelValidator,
-        WordDataSourceService $wordDataSourceService
+        WordDataSourceService $wordDataSourceService,
+        WordCategoryDataSourceService $wordCategoryDataSource
     ) {
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
         $this->wordDataSourceService = $wordDataSourceService;
+        $this->wordCategoryDataSource = $wordCategoryDataSource;
     }
     /**
      * @param DomainModelInterface|Word $domainModel
-     * @return DomainModelInterface
+     * @return DataSourceEntity|Language
      * @throws \Doctrine\ORM\ORMException
      */
-    public function create(DomainModelInterface $domainModel): DomainModelInterface
+    public function create(DomainModelInterface $domainModel): DataSourceEntity
     {
         $categories = $domainModel->getCategories();
+
         /** @var WordDataSource $wordDataSource */
         $wordDataSource = $this->serializerWrapper->convertFromToByGroup(
             $domainModel,
@@ -55,10 +66,15 @@ class WordGateway
             WordDataSource::class
         );
 
-        $wordDataSource->setCategories($categories);
+        $newWord = $this->wordDataSourceService->create($wordDataSource);
+
+        $this->wordCategoryDataSource->handleCollectionEntity(
+            $newWord,
+            $categories
+        );
 
         $this->modelValidator->validate($wordDataSource);
 
-        $newWord = $this->wordDataSourceService->create($wordDataSource);
+        return $newWord;
     }
 }

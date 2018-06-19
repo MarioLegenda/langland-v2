@@ -3,21 +3,17 @@
 namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
-use App\PresentationLayer\Model\Word\Categories;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * @Entity @Table(
@@ -45,7 +41,8 @@ class Word implements DataSourceEntity
     private $type;
     /**
      * @var Language $language
-     * @ORM\ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language")
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language")
+     * @JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
     /**
@@ -63,7 +60,6 @@ class Word implements DataSourceEntity
      * @Column(type="string")
      */
     private $pluralForm;
-
     /**
      * @var ArrayCollection $translations
      * @OneToMany(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation", mappedBy="product", cascade={"persist"})
@@ -71,7 +67,7 @@ class Word implements DataSourceEntity
     private $translations;
     /**
      * @var Image $image
-     * @ORM\ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image")
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image")
      */
     private $image;
     /**
@@ -154,34 +150,6 @@ class Word implements DataSourceEntity
         return $this->translations;
     }
     /**
-     * @param Category $category
-     * @return Word
-     */
-    public function addCategory(Category $category): Word
-    {
-        $this->categories->add($category);
-
-        return $this;
-    }
-    /**
-     * @param Categories $categories
-     */
-    public function setCategories(iterable $categories): void
-    {
-        $this->initializeCategories();
-
-        foreach ($categories as $category) {
-            $this->categories->add($category);
-        }
-    }
-    /**
-     * @return ArrayCollection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    /**
      * @return Image
      */
     public function getImage(): Image
@@ -194,12 +162,5 @@ class Word implements DataSourceEntity
     public function setImage(Image $image): void
     {
         $this->image = $image;
-    }
-
-    private function initializeCategories(): void
-    {
-        if (!$this->categories instanceof ArrayCollection) {
-            $this->categories = new ArrayCollection();
-        }
     }
 }

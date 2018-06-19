@@ -6,9 +6,11 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\ImageRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordCategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
 use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +23,11 @@ class RepositoryFactory
      * @var array $repositories
      */
     private $repositories = [];
-
+    /**
+     * @param string $class
+     * @param TypeInterface $type
+     * @return RepositoryInterface
+     */
     public function create(string $class, TypeInterface $type)
     {
         if ($type instanceof MysqlType) {
@@ -79,6 +85,16 @@ class RepositoryFactory
                 );
 
                 $repoClass = WordRepository::class;
+
+                return $this->saveAndReturnRepository($repoClass, $repository);
+
+            case WordCategory::class:
+                $repository = new WordCategoryRepository(
+                    $dataSource,
+                    $classMetadata
+                );
+
+                $repoClass = WordCategoryRepository::class;
 
                 return $this->saveAndReturnRepository($repoClass, $repository);
             default:

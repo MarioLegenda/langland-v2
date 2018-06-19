@@ -42,11 +42,6 @@ class Language implements DataSourceEntity
      */
     private $description;
     /**
-     * @var array $images
-     * @Column(type="json_array")
-     */
-    private $images;
-    /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
      */

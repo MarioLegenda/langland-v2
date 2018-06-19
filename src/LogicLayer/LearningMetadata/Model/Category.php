@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Model;
+namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as DataSourceCategory;
