@@ -3,6 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
 
@@ -13,12 +14,20 @@ class Word implements LayerPropagationResponse
      */
     private $word;
     /**
+     * @var WordCategory[] $wordCategories
+     */
+    private $wordCategories;
+    /**
      * Word constructor.
      * @param WordDataSource $word
+     * @param iterable|WordCategory[] $wordCategories
      */
-    public function __construct(WordDataSource $word)
-    {
+    public function __construct(
+        WordDataSource $word,
+        iterable $wordCategories
+    ) {
         $this->word = $word;
+        $this->wordCategories = $wordCategories;
     }
     /**
      * @return Word
@@ -41,6 +50,7 @@ class Word implements LayerPropagationResponse
             'level' => $this->word->getLevel(),
             'pluralForm' => $this->word->getPluralForm(),
             'translations' => $this->getTranslations(),
+            'wordCategories' => $this->getWordCategories(),
             'image' => [
                 'id' => $this->word->getImage()->getId(),
                 'name' => $this->word->getImage()->getName(),
@@ -69,5 +79,18 @@ class Word implements LayerPropagationResponse
         }
 
         return $array;
+    }
+    /**
+     * @return iterable
+     */
+    private function getWordCategories(): iterable
+    {
+        $categoryIds = [];
+        /** @var WordCategory $wordCategory */
+        foreach ($this->wordCategories as $wordCategory) {
+            $categoryIds[] = $wordCategory->getCategory()->getId();
+        }
+
+        return $categoryIds;
     }
 }

@@ -183,6 +183,8 @@ class ApiSDK
             'isResource' => false,
         ];
 
+        $this->messages = [];
+
         return $this;
     }
     /**

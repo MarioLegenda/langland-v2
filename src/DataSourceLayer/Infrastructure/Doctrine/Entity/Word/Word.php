@@ -67,7 +67,7 @@ class Word implements DataSourceEntity
     private $translations;
     /**
      * @var Image $image
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image")
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image", cascade={"persist", "remove"})
      */
     private $image;
     /**
@@ -111,6 +111,13 @@ class Word implements DataSourceEntity
     public function getLanguage(): Language
     {
         return $this->language;
+    }
+    /**
+     * @param Language $language
+     */
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
     }
     /**
      * @return string

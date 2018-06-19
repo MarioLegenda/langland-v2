@@ -3,8 +3,6 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\WordGateway;
-use App\Infrastructure\Model\CollectionEntity;
-use App\Infrastructure\Model\CollectionMetadata;
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Image;
@@ -12,6 +10,7 @@ use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use App\LogicLayer\LogicInterface;
 use Library\Infrastructure\FileUpload\FileUploadInterface;
 use Library\Infrastructure\FileUpload\Implementation\ImageUpload;
+use App\LogicLayer\LearningMetadata\Model\Word as WordPropagationResponse;
 
 class WordLogic implements LogicInterface
 {
@@ -52,6 +51,11 @@ class WordLogic implements LogicInterface
 
         $wordDomainModel->setImage($image);
 
-        return $this->wordGateway->create($wordDomainModel);
+        $createdEntries = $this->wordGateway->create($wordDomainModel);
+
+        return new WordPropagationResponse(
+            $createdEntries['word'],
+            $createdEntries['wordCategories']
+        );
     }
 }

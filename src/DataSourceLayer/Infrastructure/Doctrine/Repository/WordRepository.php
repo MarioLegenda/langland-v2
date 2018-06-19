@@ -16,4 +16,17 @@ class WordRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Word::class);
     }
+    /**
+     * @param Word $word
+     * @return Word
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function persistAndFlush(Word $word): Word
+    {
+        $this->getEntityManager()->persist($word);
+        $this->getEntityManager()->flush();
+
+        return $word;
+    }
 }

@@ -23,10 +23,6 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
      */
     private $description;
     /**
-     * @var array $images
-     */
-    private $images;
-    /**
      * @return int
      */
     public function getId(): int
@@ -55,13 +51,6 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
         return $this->description;
     }
     /**
-     * @return array
-     */
-    public function getImages(): array
-    {
-        return $this->images;
-    }
-    /**
      * @return iterable
      */
     public function toArray(): iterable
@@ -71,7 +60,6 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
             'name' => $this->getName(),
             'showOnPage' => $this->getShowOnPage(),
             'description' => $this->getDescription(),
-            'images' => $this->getImages(),
         ];
     }
 }

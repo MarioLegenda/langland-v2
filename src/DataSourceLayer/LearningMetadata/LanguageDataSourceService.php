@@ -38,7 +38,6 @@ class LanguageDataSourceService
      */
     public function createIfNotExists(DataSourceEntity $language): LanguageDataSource
     {
-
         /** @var LanguageDataSource $existingLanguage */
         $existingLanguage = $this->languageRepository->findOneBy([
             'name' => $language->getName(),

@@ -9,10 +9,9 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordCategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
-use App\DataSourceLayer\Infrastructure\RepositoryFactory;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
+use Library\Infrastructure\Helper\TypedArray;
 
 class WordCategoryDataSourceService
 {
@@ -21,28 +20,27 @@ class WordCategoryDataSourceService
      */
     private $wordCategoryRepository;
     /**
-     * @var WordRepository $wordRepository
-     */
-    private $wordRepository;
-    /**
      * @var CategoryRepository $categoryRepository
      */
     private $categoryRepository;
     /**
+     * @var WordRepository $wordRepository
+     */
+    private $wordRepository;
+    /**
      * WordCategoryDataSourceService constructor.
-     * @param RepositoryFactory $repositoryFactory
+     * @param WordCategoryRepository $wordCategoryRepository
+     * @param CategoryRepository $categoryRepository
+     * @param WordRepository $wordRepository
      */
     public function __construct(
-        RepositoryFactory $repositoryFactory
+        WordCategoryRepository $wordCategoryRepository,
+        CategoryRepository $categoryRepository,
+        WordRepository $wordRepository
     ) {
-        $this->wordCategoryRepository = $repositoryFactory
-            ->create(WordCategory::class, MysqlType::fromValue());
-
-        $this->wordRepository = $repositoryFactory
-            ->create(Word::class, MysqlType::fromValue());
-
-        $this->categoryRepository = $repositoryFactory
-            ->create(Category::class, MysqlType::fromValue());
+        $this->categoryRepository = $categoryRepository;
+        $this->wordCategoryRepository = $wordCategoryRepository;
+        $this->wordRepository = $wordRepository;
     }
     /**
      * @param $word
@@ -56,16 +54,18 @@ class WordCategoryDataSourceService
 
         $wordCategory = new WordCategory($word, $category);
 
-        $this->wordCategoryRepository->save($wordCategory);
+        $this->wordCategoryRepository->persistAndFlush($wordCategory);
     }
     /**
      * @param $word
      * @param CollectionEntity $categories
+     * @return iterable
      * @throws \Doctrine\ORM\ORMException
      */
-    public function handleCollectionEntity($word, CollectionEntity $categories)
+    public function handleCollectionEntity($word, CollectionEntity $categories): iterable
     {
         $word = $this->getWord($word);
+        $createdCategories = [];
 
         /** @var CollectionMetadata $metadata */
         foreach ($categories as $metadata) {
@@ -75,11 +75,13 @@ class WordCategoryDataSourceService
                 case 'create':
                     $wordCategory = $this->createObjectFromWordAndCategory($word, $category);
 
-                    $this->wordCategoryRepository->markToBeSaved($wordCategory);
+                    $createdCategories[] = $this->wordCategoryRepository->persist($wordCategory);
             }
         }
 
         $this->wordCategoryRepository->saveAll();
+
+        return $createdCategories;
     }
     /**
      * @param $word
@@ -124,11 +126,8 @@ class WordCategoryDataSourceService
         return $category;
     }
     /**
-     * @param Word|int $word
+     * @param int|Word $word
      * @return Word
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     private function getWord($word): Word
     {

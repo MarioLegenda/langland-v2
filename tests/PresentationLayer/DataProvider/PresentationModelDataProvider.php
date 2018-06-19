@@ -129,46 +129,6 @@ class PresentationModelDataProvider
         return $word;
     }
     /**
-     * @param Language $language
-     * @param int|null $level
-     * @param TypedArray $categories
-     * @param TypedArray $translations
-     * @param Image $image
-     * @return Word
-     */
-    public function getWordModel(
-        Language $language,
-        TypedArray $categories,
-        Image $image,
-        TypedArray $translations = null,
-        int $level = null
-    ): Word {
-
-        if (!$translations instanceof TypedArray) {
-            $translations = TypedArray::create('integer', Translation::class);
-            for ($i = 0; $i < 5; $i++) {
-                $translations[] = $this->getTranslationModel();
-            }
-        }
-
-        $modelBlueprint = [
-            'name' => $this->faker()->name,
-            'type' => $this->faker()->name,
-            'language' => $language->toArray(),
-            'description' => $this->faker()->sentence(20),
-            'level' => (is_null($level)) ? rand(1, 5) : $level,
-            'pluralForm' => $this->faker()->name,
-            'categories' => $categories->toArray(),
-            'translations' => $translations->toArray(),
-        ];
-
-        /** @var Word $word */
-        $word = $this->deserializer->create($modelBlueprint, Word::class);
-        $word->setImage($image);
-
-        return $word;
-    }
-    /**
      * @return Translation
      */
     public function getTranslationModel(): Translation

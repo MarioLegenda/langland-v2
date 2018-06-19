@@ -12,3 +12,7 @@ services:
     App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider:
         arguments:
             $deserializer: '@Library\Infrastructure\Helper\Deserializer'
+
+    App\Tests\PresentationLayer\DataProvider\LogicLayerDataProvider:
+        arguments:
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'

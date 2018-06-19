@@ -4,6 +4,7 @@ namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\LearningMetadata\WordCategoryDataSourceService;
 use App\DataSourceLayer\LearningMetadata\WordDataSourceService;
 use App\Infrastructure\Response\LayerPropagationResponse;
@@ -12,7 +13,6 @@ use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
-use App\DataSourceLayer\Model\Word as WordModel;
 
 class WordGateway
 {
@@ -52,10 +52,10 @@ class WordGateway
     }
     /**
      * @param DomainModelInterface|Word $domainModel
-     * @return DataSourceEntity|Language
+     * @return iterable
      * @throws \Doctrine\ORM\ORMException
      */
-    public function create(DomainModelInterface $domainModel): DataSourceEntity
+    public function create(DomainModelInterface $domainModel): iterable
     {
         $categories = $domainModel->getCategories();
 
@@ -66,15 +66,18 @@ class WordGateway
             WordDataSource::class
         );
 
+        /** @var WordDataSource $newWord */
         $newWord = $this->wordDataSourceService->create($wordDataSource);
 
-        $this->wordCategoryDataSource->handleCollectionEntity(
+        /** @var WordCategory[] $wordCategories */
+        $wordCategories = $this->wordCategoryDataSource->handleCollectionEntity(
             $newWord,
             $categories
         );
 
-        $this->modelValidator->validate($wordDataSource);
-
-        return $newWord;
+        return [
+            'word' => $newWord,
+            'wordCategories' => $wordCategories,
+        ];
     }
 }
