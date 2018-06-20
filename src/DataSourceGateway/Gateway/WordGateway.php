@@ -2,12 +2,9 @@
 
 namespace App\DataSourceGateway\Gateway;
 
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\LearningMetadata\WordCategoryDataSourceService;
 use App\DataSourceLayer\LearningMetadata\WordDataSourceService;
-use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;

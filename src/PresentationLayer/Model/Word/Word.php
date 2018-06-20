@@ -3,10 +3,10 @@
 namespace App\PresentationLayer\Model\Word;
 
 use App\Infrastructure\Model\CollectionEntity;
-use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use App\PresentationLayer\Model\Image;
 
 class Word implements PresentationModelInterface
 {

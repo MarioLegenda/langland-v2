@@ -1,6 +1,6 @@
 <?php
 
-namespace App\LogicLayer\LearningMetadata\Domain\Word;
+namespace App\LogicLayer\LearningMetadata\Domain;
 
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;

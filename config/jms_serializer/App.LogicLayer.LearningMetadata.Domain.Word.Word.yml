@@ -45,7 +45,7 @@ App\LogicLayer\LearningMetadata\Domain\Word\Word:
         image:
             expose: true
             groups: [default]
-            type: App\LogicLayer\LearningMetadata\Domain\Word\Image
+            type: App\LogicLayer\LearningMetadata\Domain\Image
 
         createdAt:
             expose: true

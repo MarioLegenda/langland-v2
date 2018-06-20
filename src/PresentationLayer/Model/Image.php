@@ -1,8 +1,7 @@
 <?php
 
-namespace App\PresentationLayer\Model\Word;
+namespace App\PresentationLayer\Model;
 
-use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 
 class Image implements PresentationModelInterface

@@ -45,7 +45,7 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word:
         image:
             expose: true
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image
+            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image
 
         createdAt:
             expose: true

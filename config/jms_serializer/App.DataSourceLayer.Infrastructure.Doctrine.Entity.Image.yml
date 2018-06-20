@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image:
+App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image:
     exclusion_policy: all
     properties:
         id:

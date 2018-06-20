@@ -5,13 +5,13 @@ namespace App\Tests\PresentationLayer\DataProvider;
 use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Word\Image;
 use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
+use App\PresentationLayer\Model\Image;
 
 class PresentationModelDataProvider
 {
@@ -148,9 +148,9 @@ class PresentationModelDataProvider
      */
     public function getImageModel(): Image
     {
-        $file = $this->faker()->image();
+        //$file = $this->faker()->image();
 
-        return new Image(new UploadedFile($file));
+        return new Image(new UploadedFile('sdfjkasdhfj'));
     }
 
 }

@@ -5,8 +5,8 @@ namespace App\LogicLayer\LearningMetadata\Domain\Word;
 use App\Infrastructure\Model\CollectionEntity;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Word\Categories;
 use Library\Util\Util;
+use App\LogicLayer\LearningMetadata\Domain\Image;
 
 class Word implements DomainModelInterface
 {

@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Word\Image:
+App\LogicLayer\LearningMetadata\Domain\Image:
     exclusion_policy: all
     properties:
         id:

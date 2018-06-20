@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
+namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use Doctrine\ORM\Mapping\Column;
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\Table;
 
 /**
  * @Entity @Table(
- *     name="word_images",
+ *     name="images",
  * )
  **/
 class Image implements DataSourceEntity

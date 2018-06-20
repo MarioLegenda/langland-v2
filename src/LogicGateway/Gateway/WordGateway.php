@@ -4,7 +4,6 @@ namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\LogicLayer\LearningMetadata\Domain\Word\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
 use App\LogicLayer\LearningMetadata\Logic\WordLogic;
 use App\LogicLayer\LogicInterface;
@@ -12,6 +11,7 @@ use App\PresentationLayer\Model\PresentationModelInterface;
 use App\PresentationLayer\Model\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use App\LogicLayer\LearningMetadata\Domain\Image;
 
 class WordGateway
 {

@@ -45,4 +45,4 @@ App\PresentationLayer\Model\Word\Word:
         image:
             expose: true
             groups: [default]
-            type: App\PresentationLayer\Model\Word\Image
+            type: App\PresentationLayer\Model\Image

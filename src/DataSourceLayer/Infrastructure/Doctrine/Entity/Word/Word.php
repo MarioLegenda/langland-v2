@@ -3,6 +3,7 @@
 namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
@@ -67,7 +68,7 @@ class Word implements DataSourceEntity
     private $translations;
     /**
      * @var Image $image
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Image", cascade={"persist", "remove"})
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
     /**
