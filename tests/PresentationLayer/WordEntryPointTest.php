@@ -11,7 +11,6 @@ use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\Word\Image;
 use App\Tests\Library\BasicSetup;
-use App\Tests\PresentationLayer\DataProvider\LogicLayerDataProvider;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
 use Library\Infrastructure\Helper\SerializerWrapper;
@@ -23,9 +22,7 @@ class WordEntryPointTest extends BasicSetup
     {
         /** @var WordEntryPoint $wordEntryPoint */
         $wordEntryPoint = static::$container->get(WordEntryPoint::class);
-        /** @var LogicLayerDataProvider $presentationLayerDataProvider */
-        $logicLayerDataProvider = static::$container->get(LogicLayerDataProvider::class);
-
+        /** @var PresentationModelDataProvider $presentationLayerDataProvider */
         $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
 
         /** @var Language $language */
@@ -45,10 +42,17 @@ class WordEntryPointTest extends BasicSetup
 
         static::assertInstanceOf(Response::class, $response);
 
-        $data = json_decode($response->getContent(), true);
+        $responseData = json_decode($response->getContent(), true);
 
-        dump($data);
-        die();
+        static::assertNotEmpty($responseData['resource']['data']);
+
+        $data = $responseData['resource']['data'];
+
+        static::assertInternalType('array', $data['translations']);
+        static::assertNotEmpty($data['translations']);
+
+        static::assertInternalType('array', $data['wordCategories']);
+        static::assertNotEmpty($data['wordCategories']);
     }
     /**
      * @return Language
