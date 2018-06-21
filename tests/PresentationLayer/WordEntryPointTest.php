@@ -48,14 +48,82 @@ class WordEntryPointTest extends BasicSetup
 
         $data = $responseData['resource']['data'];
 
-        static::assertInternalType('array', $data['translations']);
-        static::assertNotEmpty($data['translations']);
+        $this->assertResponse($data);
+    }
+    /**
+     * @param array $response
+     */
+    private function assertResponse(array $response)
+    {
+        static::assertInternalType('int', $response['id']);
 
-        static::assertInternalType('array', $data['wordCategories']);
-        static::assertNotEmpty($data['wordCategories']);
+        static::assertNotEmpty($response['name']);
+        static::assertInternalType('string', $response['name']);
+
+        static::assertNotEmpty($response['type']);
+        static::assertInternalType('string', $response['type']);
+
+        static::assertInternalType('array', $response['language']);
+        static::assertNotEmpty($response['language']);
+
+        $language = $response['language'];
+
+        static::assertInternalType('int', $language['id']);
+        static::assertInternalType('string', $language['name']);
+        static::assertNotEmpty($language['name']);
+        static::assertInternalType('string', $language['createdAt']);
+        static::assertNotEmpty($language['createdAt']);
+        static::assertNull($language['updatedAt']);
+
+        static::assertNotEmpty($response['description']);
+        static::assertInternalType('string', $response['description']);
+
+        static::assertInternalType('int', $response['level']);
+
+        static::assertNotEmpty($response['pluralForm']);
+        static::assertInternalType('string', $response['pluralForm']);
+
+        static::assertInternalType('array', $response['translations']);
+        static::assertNotEmpty($response['translations']);
+
+        foreach ($response['translations'] as $translation) {
+            static::assertInternalType('int', $translation['id']);
+
+            static::assertNotEmpty($translation['name']);
+            static::assertInternalType('string', $translation['name']);
+
+            static::assertInternalType('bool', $translation['valid']);
+
+            static::assertInternalType('string', $translation['createdAt']);
+            static::assertNotEmpty($translation['createdAt']);
+            static::assertNull($translation['updatedAt']);
+        }
+
+        static::assertInternalType('array', $response['wordCategories']);
+        static::assertNotEmpty($response['wordCategories']);
+
+        foreach ($response['wordCategories'] as $wordCategory) {
+            static::assertInternalType('int', $wordCategory);
+        }
+
+        static::assertInternalType('array', $response['image']);
+        static::assertNotEmpty($response['image']);
+
+        $image = $response['image'];
+
+        static::assertInternalType('int', $image['id']);
+        static::assertInternalType('string', $image['name']);
+        static::assertNotEmpty($image['name']);
+        static::assertInternalType('string', $image['relativePath']);
+        static::assertNotEmpty($image['relativePath']);
+        static::assertInternalType('string', $image['createdAt']);
+        static::assertNotEmpty($image['createdAt']);
+        static::assertNull($image['updatedAt']);
     }
     /**
      * @return Language
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function createLanguage(): Language
     {
@@ -64,7 +132,9 @@ class WordEntryPointTest extends BasicSetup
         /** @var PresentationModelDataProvider $presentationLayerDataProvider */
         $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
         /** @var Language $languageModel */
-        $languageModel = $presentationLayerDataProvider->getLanguageModel();
+        $languageModel = $presentationLayerDataProvider->getLanguageModel(
+            $presentationLayerDataProvider->getImageModel()
+        );
 
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);

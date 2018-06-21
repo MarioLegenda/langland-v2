@@ -11,7 +11,6 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordCategoryRepositor
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
-use Library\Infrastructure\Helper\TypedArray;
 
 class WordCategoryDataSourceService
 {

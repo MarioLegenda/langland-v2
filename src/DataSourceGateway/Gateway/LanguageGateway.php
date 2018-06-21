@@ -52,13 +52,13 @@ class LanguageGateway
         $dataSourceModel = $this->serializerWrapper
             ->convertFromToByGroup($domainModel, 'default', LanguageDataSource::class);
 
-        $this->modelValidator->validate($dataSourceModel);
-
         $newLanguage = $this->languageDataSourceService->createIfNotExists($dataSourceModel);
 
         /** @var LanguageDomainModel $domainModel */
         $domainModel = $this->serializerWrapper
             ->convertFromToByGroup($newLanguage, 'default', LanguageDomainModel::class);
+
+        $this->modelValidator->validate($domainModel);
 
         return $domainModel;
     }

@@ -45,11 +45,7 @@ class WordLogic implements LogicInterface
 
         $data = $this->fileUpload->getData();
 
-        $image = new Image();
-        $image->setName($data['fileName']);
-        $image->setRelativePath($data['relativePath']);
-
-        $wordDomainModel->setImage($image);
+        $wordDomainModel->setImage($this->createImageFromUploadedData($data));
 
         $createdEntries = $this->wordGateway->create($wordDomainModel);
 
@@ -57,5 +53,17 @@ class WordLogic implements LogicInterface
             $createdEntries['word'],
             $createdEntries['wordCategories']
         );
+    }
+    /**
+     * @param iterable $data
+     * @return Image
+     */
+    private function createImageFromUploadedData(iterable $data): Image
+    {
+        $image = new Image();
+        $image->setName($data['fileName']);
+        $image->setRelativePath($data['relativePath']);
+
+        return $image;
     }
 }

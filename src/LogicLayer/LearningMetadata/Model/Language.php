@@ -42,6 +42,8 @@ class Language implements LayerPropagationResponse
                 'id' => $this->language->getImage()->getId(),
                 'name' => $this->language->getImage()->getName(),
                 'relativePath' => $this->language->getImage()->getRelativePath(),
+                'createdAt' => Util::formatFromDate($this->language->getImage()->getCreatedAt()),
+                'updatedAt' => Util::formatFromDate($this->language->getImage()->getUpdatedAt()),
             ],
             'createdAt' => Util::formatFromDate($this->language->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->language->getUpdatedAt()),

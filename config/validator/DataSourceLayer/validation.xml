@@ -38,13 +38,6 @@
             </constraint>
         </property>
 
-        <property name="createdAt">
-            <constraint name="NotBlank">
-                <option name="message">'createdAt' should be an object of \DateTime</option>
-            </constraint>
-
-            <constraint name="DateTime" />
-        </property>
     </class>
 
     <class name="App\DataSourceLayer\Domain\Word\Word">
@@ -117,14 +110,6 @@
                 <option name="type">string</option>
                 <option name="message">'name' should be a boolean</option>
             </constraint>
-        </property>
-
-        <property name="createdAt">
-            <constraint name="NotBlank">
-                <option name="message">'createdAt' should be an object of \DateTime</option>
-            </constraint>
-
-            <constraint name="DateTime" />
         </property>
     </class>
 

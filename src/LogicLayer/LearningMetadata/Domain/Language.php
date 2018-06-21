@@ -2,7 +2,6 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-use Library\Util\Util;
 use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
 
 class Language implements DomainModelInterface
@@ -128,14 +127,5 @@ class Language implements DomainModelInterface
         return $this->updatedAt;
     }
 
-    public function handleDates(): void
-    {
-        if ($this->updatedAt instanceof \DateTime) {
-            $this->setUpdatedAt(Util::toDateTime());
-        }
 
-        if (!$this->createdAt instanceof \DateTime) {
-            $this->setCreatedAt(Util::toDateTime());
-        }
-    }
 }

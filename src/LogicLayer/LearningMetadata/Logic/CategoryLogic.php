@@ -33,8 +33,6 @@ class CategoryLogic implements LogicInterface
      */
     public function create(DomainModelInterface $domainModel): LayerPropagationResponse
     {
-        $domainModel->handleDates();
-
         $newCategory = $this->categoryGateway->create($domainModel);
 
         return new CategoryModel($newCategory);

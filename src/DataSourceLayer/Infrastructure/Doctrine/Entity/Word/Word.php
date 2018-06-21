@@ -9,18 +9,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
+use Library\Util\Util;
 
 /**
  * @Entity @Table(
  *     name="words",
  *     indexes={ @Index(name="word_name_idx", columns={"name"}) }
  * )
+ * @HasLifecycleCallbacks()
  **/
 class Word implements DataSourceEntity
 {
@@ -71,6 +75,16 @@ class Word implements DataSourceEntity
      * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
+    /**
+     * @var \DateTime $createdAt
+     * @Column(type="datetime")
+     */
+    private $createdAt;
+    /**
+     * @var \DateTime $updatedAt
+     * @Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
     /**
      * @return int
      */
@@ -170,5 +184,46 @@ class Word implements DataSourceEntity
     public function setImage(Image $image): void
     {
         $this->image = $image;
+    }
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+    /**
+     * @PrePersist()
+     */
+    public function handleDates(): void
+    {
+        if ($this->updatedAt instanceof \DateTime) {
+            $this->setUpdatedAt(Util::toDateTime());
+        }
+
+        if (!$this->createdAt instanceof \DateTime) {
+            $this->setCreatedAt(Util::toDateTime());
+        }
     }
 }

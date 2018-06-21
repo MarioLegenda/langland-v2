@@ -1,0 +1,27 @@
+App\LogicLayer\LearningMetadata\Domain\Word\WordCategory:
+    exclusion_policy: all
+    properties:
+        id:
+            exclude: false
+            groups: [default]
+            type: int
+
+        word:
+            exclude: false
+            groups: [default]
+            type: App\LogicLayer\LearningMetadata\Domain\Word\Word
+
+        category:
+            exclude: false
+            groups: [default]
+            type: App\LogicLayer\LearningMetadata\Domain\Category
+
+        createdAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>
+
+        updatedAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>

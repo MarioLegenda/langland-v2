@@ -10,6 +10,9 @@ use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
+use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
+use App\LogicLayer\LearningMetadata\Domain\Word\WordCategory as WordCategoryDomainModel;
+use Library\Infrastructure\Helper\TypedArray;
 
 class WordGateway
 {
@@ -72,9 +75,29 @@ class WordGateway
             $categories
         );
 
+        $domainWordCategories = $this->createDomainWordCategories($wordCategories);
+
+        $domainWord = $this->serializerWrapper
+            ->convertFromToByGroup($newWord, 'default', WordDomainModel::class);
+
         return [
-            'word' => $newWord,
+            'word' => $domainWord,
             'wordCategories' => $wordCategories,
         ];
+    }
+    /**
+     * @param iterable $wordCategories
+     * @return iterable
+     */
+    private function createDomainWordCategories(iterable $wordCategories): iterable
+    {
+        $domainWordCategories = TypedArray::create('integer', WordCategoryDomainModel::class);
+        /** @var WordCategory $wordCategory */
+        foreach ($wordCategories as $wordCategory) {
+            $domainWordCategories[] = $this->serializerWrapper
+                ->convertFromToByGroup($wordCategory, 'default', WordCategoryDomainModel::class);
+        }
+
+        return $domainWordCategories;
     }
 }

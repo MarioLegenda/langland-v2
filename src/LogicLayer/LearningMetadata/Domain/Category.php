@@ -72,15 +72,4 @@ class Category implements DomainModelInterface
     {
         return $this->updatedAt;
     }
-
-    public function handleDates(): void
-    {
-        if ($this->updatedAt instanceof \DateTime) {
-            $this->setUpdatedAt(Util::toDateTime());
-        }
-
-        if (!$this->createdAt instanceof \DateTime) {
-            $this->setCreatedAt(Util::toDateTime());
-        }
-    }
 }

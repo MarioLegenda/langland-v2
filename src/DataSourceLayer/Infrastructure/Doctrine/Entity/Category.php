@@ -3,13 +3,17 @@
 namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
+use Library\Util\Util;
 
 /**
  * @Entity @Table(
@@ -17,6 +21,7 @@ use Doctrine\ORM\Mapping\Index;
  *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
  *     indexes={ @Index(name="category_name_idx", columns={"name"}) }
  * )
+ * @HasLifecycleCallbacks()
  **/
 class Category implements DataSourceEntity
 {
@@ -89,5 +94,19 @@ class Category implements DataSourceEntity
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @PrePersist()
+     */
+    public function handleDates(): void
+    {
+        if ($this->updatedAt instanceof \DateTime) {
+            $this->setUpdatedAt(Util::toDateTime());
+        }
+
+        if (!$this->createdAt instanceof \DateTime) {
+            $this->setCreatedAt(Util::toDateTime());
+        }
     }
 }

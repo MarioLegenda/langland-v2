@@ -5,12 +5,14 @@ namespace App\LogicLayer\LearningMetadata\Model;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
 use App\Infrastructure\Response\LayerPropagationResponse;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
+use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
+use Library\Util\Util;
 
 class Word implements LayerPropagationResponse
 {
     /**
-     * @var Word $word
+     * @var WordDomainModel $word
      */
     private $word;
     /**
@@ -19,11 +21,11 @@ class Word implements LayerPropagationResponse
     private $wordCategories;
     /**
      * Word constructor.
-     * @param WordDataSource $word
+     * @param DomainModelInterface|WordDomainModel $word
      * @param iterable|WordCategory[] $wordCategories
      */
     public function __construct(
-        WordDataSource $word,
+        WordDomainModel $word,
         iterable $wordCategories
     ) {
         $this->word = $word;
@@ -45,7 +47,7 @@ class Word implements LayerPropagationResponse
             'id' => $this->word->getId(),
             'name' => $this->word->getName(),
             'type' => $this->word->getType(),
-            'language' => $this->word->getLanguage()->getId(),
+            'language' => $this->getLanguage(),
             'description' => $this->word->getDescription(),
             'level' => $this->word->getLevel(),
             'pluralForm' => $this->word->getPluralForm(),
@@ -55,7 +57,11 @@ class Word implements LayerPropagationResponse
                 'id' => $this->word->getImage()->getId(),
                 'name' => $this->word->getImage()->getName(),
                 'relativePath' => $this->word->getImage()->getRelativePath(),
+                'createdAt' => Util::formatFromDate($this->word->getImage()->getCreatedAt()),
+                'updatedAt' => Util::formatFromDate($this->word->getImage()->getUpdatedAt()),
             ],
+            'createdAt' => Util::formatFromDate($this->word->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->word->getUpdatedAt()),
         ];
     }
     /**
@@ -66,7 +72,6 @@ class Word implements LayerPropagationResponse
         $translations = $this->word->getTranslations();
 
         $array = [];
-
         /** @var Translation $translation */
         foreach ($translations as $translation) {
             $temp = [];
@@ -74,6 +79,8 @@ class Word implements LayerPropagationResponse
             $temp['id'] = $translation->getId();
             $temp['name'] = $translation->getName();
             $temp['valid'] = $translation->isValid();
+            $temp['createdAt'] = Util::formatFromDate($translation->getCreatedAt());
+            $temp['updatedAt'] = Util::formatFromDate($translation->getUpdatedAt());
 
             $array[] = $temp;
         }
@@ -92,5 +99,17 @@ class Word implements LayerPropagationResponse
         }
 
         return $categoryIds;
+    }
+    /**
+     * @return array
+     */
+    private function getLanguage(): array
+    {
+        return [
+            'id' => $this->word->getLanguage()->getId(),
+            'name' => $this->word->getLanguage()->getName(),
+            'createdAt' => Util::formatFromDate($this->word->getLanguage()->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->word->getLanguage()->getUpdatedAt()),
+        ];
     }
 }

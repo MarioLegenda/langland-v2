@@ -52,8 +52,6 @@ class CategoryGateway
         $categoryDataSource = $this->serializerWrapper
             ->convertFromToByGroup($domainModel, 'default', CategoryDataSource::class);
 
-        $this->modelValidator->validate($categoryDataSource);
-
         return $this->categoryDataSourceService->createIfNotExists($categoryDataSource);
     }
 }

@@ -4,8 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
 use App\Infrastructure\Model\CollectionEntity;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\PresentationLayer\Model\Language;
-use Library\Util\Util;
+use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Domain\Image;
 
 class Word implements DomainModelInterface
@@ -201,7 +200,7 @@ class Word implements DomainModelInterface
     /**
      * @return \DateTime
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -211,16 +210,5 @@ class Word implements DomainModelInterface
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-    }
-
-    public function handleDates(): void
-    {
-        if ($this->updatedAt instanceof \DateTime) {
-            $this->setUpdatedAt(Util::toDateTime());
-        }
-
-        if (!$this->createdAt instanceof \DateTime) {
-            $this->setCreatedAt(Util::toDateTime());
-        }
     }
 }

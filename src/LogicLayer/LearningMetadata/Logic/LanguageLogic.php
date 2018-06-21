@@ -41,8 +41,6 @@ class LanguageLogic implements LogicInterface
      */
     public function create(DomainModelInterface $model): LayerPropagationResponse
     {
-        $model->handleDates();
-
         $this->imageUpload->upload(
             $model->getImage()->getUploadedFile()
         );
