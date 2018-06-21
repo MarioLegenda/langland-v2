@@ -21,6 +21,11 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language:
             groups: [default]
             type: string
 
+        image:
+            expose: true
+            groups: [default]
+            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image
+
         createdAt:
             expose: true
             groups: [default]

@@ -2,22 +2,22 @@
 
 namespace App\LogicLayer\LearningMetadata\Model;
 
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\Infrastructure\Response\LayerPropagationResponse;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as DataSourceLanguage;
+use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Util\Util;
+use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;
 
 class Language implements LayerPropagationResponse
 {
     /**
-     * @var DataSourceLanguage $language
+     * @var DomainModelInterface|LanguageDomainModel $language
      */
     private $language;
     /**
      * Language constructor.
-     * @param DataSourceLanguage|DataSourceEntity $language
+     * @param DomainModelInterface|Language $language
      */
-    public function __construct(DataSourceLanguage $language)
+    public function __construct(DomainModelInterface $language)
     {
         $this->language = $language;
     }
@@ -28,7 +28,6 @@ class Language implements LayerPropagationResponse
     {
         return $this->language;
     }
-
     /**
      * @return iterable
      */
@@ -39,6 +38,11 @@ class Language implements LayerPropagationResponse
             'name' => $this->language->getName(),
             'showOnPage' => $this->language->isShowOnPage(),
             'description' => $this->language->getDescription(),
+            'image' => [
+                'id' => $this->language->getImage()->getId(),
+                'name' => $this->language->getImage()->getName(),
+                'relativePath' => $this->language->getImage()->getRelativePath(),
+            ],
             'createdAt' => Util::formatFromDate($this->language->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->language->getUpdatedAt()),
         ];

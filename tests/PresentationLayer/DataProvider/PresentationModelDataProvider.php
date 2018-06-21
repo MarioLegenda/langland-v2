@@ -30,18 +30,21 @@ class PresentationModelDataProvider
         $this->deserializer = $deserializer;
     }
     /**
+     * @param Image $image
      * @return Language
      */
-    public function getLanguageModel(): Language
+    public function getLanguageModel(Image $image): Language
     {
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'showOnPage' => false,
             'description' => $this->faker()->sentence(30),
+            'image' => $image,
         ];
 
         /** @var Language $language */
         $language = $this->deserializer->create($modelBlueprint, Language::class);
+        $language->setImage($image);
 
         return $language;
     }

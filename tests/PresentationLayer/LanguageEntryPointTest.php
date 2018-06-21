@@ -20,7 +20,9 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
         /** @var Language $languageModel */
-        $languageModel = $presentationModelDataProvider->getLanguageModel();
+        $languageModel = $presentationModelDataProvider->getLanguageModel(
+            $presentationModelDataProvider->getImageModel()
+        );
 
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
@@ -40,6 +42,9 @@ class LanguageEntryPointTest extends BasicSetup
 
         $data = $apiResponseData->getData()['data'];
 
+        static::assertInternalType('array', $data['image']);
+        static::assertNotEmpty($data['image']);
+
         $createdLanguage = $languageRepository->findOneBy([
             'name' => $data['name'],
         ]);
@@ -53,7 +58,9 @@ class LanguageEntryPointTest extends BasicSetup
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
 
         /** @var Language $languageModel */
-        $languageModel = $presentationModelDataProvider->getLanguageModel();
+        $languageModel = $presentationModelDataProvider->getLanguageModel(
+            $presentationModelDataProvider->getImageModel()
+        );
 
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);

@@ -20,3 +20,18 @@ App\PresentationLayer\Model\Language:
             expose: true
             groups: [default]
             type: string
+
+        image:
+            expose: true
+            groups: [default]
+            type: App\PresentationLayer\Model\Image
+
+        createdAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>
+
+        updatedAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>

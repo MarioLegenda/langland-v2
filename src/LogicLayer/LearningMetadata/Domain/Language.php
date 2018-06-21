@@ -3,6 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Domain;
 
 use Library\Util\Util;
+use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
 
 class Language implements DomainModelInterface
 {
@@ -23,9 +24,9 @@ class Language implements DomainModelInterface
      */
     private $description;
     /**
-     * @var array $images
+     * @var Image $image
      */
-    private $images;
+    private $image;
     /**
      * @var \DateTime $createdAt
      */
@@ -84,18 +85,19 @@ class Language implements DomainModelInterface
         return $this->description;
     }
     /**
-     * @param array $images
+     * @return DomainImage
      */
-    public function setImages(array $images): void
+    public function getImage(): DomainImage
     {
-        $this->images = $images;
+        return $this->image;
     }
+
     /**
-     * @return array
+     * @param DomainImage $image
      */
-    public function getImages(): array
+    public function setImage(DomainImage $image): void
     {
-        return $this->images;
+        $this->image = $image;
     }
     /**
      * @param \DateTime $createdAt

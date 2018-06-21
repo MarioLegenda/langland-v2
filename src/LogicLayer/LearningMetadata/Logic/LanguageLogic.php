@@ -3,12 +3,13 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\LanguageGateway;
-use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\LearningMetadata\Domain\Image;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LogicInterface;
 use App\LogicLayer\LearningMetadata\Model\Language as LanguageResponseModel;
+use Library\Infrastructure\FileUpload\Implementation\ImageUpload;
 
 class LanguageLogic implements LogicInterface
 {
@@ -16,11 +17,21 @@ class LanguageLogic implements LogicInterface
      * @var LanguageGateway $languageGateway
      */
     private $languageGateway;
-
+    /**
+     * @var ImageUpload $imageUpload
+     */
+    private $imageUpload;
+    /**
+     * LanguageLogic constructor.
+     * @param LanguageGateway $languageGateway
+     * @param ImageUpload $imageUpload
+     */
     public function __construct(
-        LanguageGateway $languageGateway
+        LanguageGateway $languageGateway,
+        ImageUpload $imageUpload
     ) {
         $this->languageGateway = $languageGateway;
+        $this->imageUpload = $imageUpload;
     }
     /**
      * @param DomainModelInterface|Language $model
@@ -32,7 +43,19 @@ class LanguageLogic implements LogicInterface
     {
         $model->handleDates();
 
-        /** @var DataSourceEntity $newLanguage */
+        $this->imageUpload->upload(
+            $model->getImage()->getUploadedFile()
+        );
+
+        $data = $this->imageUpload->getData();
+
+        $image = new Image();
+        $image->setName($data['fileName']);
+        $image->setRelativePath($data['relativePath']);
+
+        $model->setImage($image);
+
+        /** @var DomainModelInterface $newLanguage */
         $newLanguage = $this->languageGateway->create($model);
 
         return new LanguageResponseModel($newLanguage);

@@ -9,12 +9,12 @@ use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Word\Image;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\HttpFoundation\Response;
+use App\PresentationLayer\Model\Image;
 
 class WordEntryPointTest extends BasicSetup
 {

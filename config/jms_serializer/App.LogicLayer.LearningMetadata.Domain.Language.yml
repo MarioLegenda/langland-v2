@@ -16,6 +16,11 @@ App\LogicLayer\LearningMetadata\Domain\Language:
             type: bool
             serialized_name: showOnPage
 
+        image:
+            expose: true
+            groups: [default]
+            type: App\LogicLayer\LearningMetadata\Domain\Image
+
         description:
             expose: true
             groups: [default]

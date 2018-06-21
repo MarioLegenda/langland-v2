@@ -7,9 +7,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
 
 /**
  * @Entity @Table(
@@ -41,6 +43,11 @@ class Language implements DataSourceEntity
      * @Column(type="string")
      */
     private $description;
+    /**
+     * @var Image $image
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image", cascade={"persist", "remove"})
+     */
+    private $image;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -101,18 +108,18 @@ class Language implements DataSourceEntity
         $this->description = $description;
     }
     /**
-     * @return array
+     * @return Image
      */
-    public function getImages(): array
+    public function getImage(): Image
     {
-        return $this->images;
+        return $this->image;
     }
     /**
-     * @param array $images
+     * @param  $image
      */
-    public function setImages(array $images): void
+    public function setImage(Image $image): void
     {
-        $this->images = $images;
+        $this->image = $image;
     }
     /**
      * @return \DateTime

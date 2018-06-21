@@ -10,6 +10,9 @@ use App\LogicLayer\LearningMetadata\Logic\LanguageLogic;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
+use App\LogicLayer\LearningMetadata\Domain\Language as DomainLanguage;
+use App\PresentationLayer\Model\Language as LanguagePresentationModel;
 
 class LanguageGateway
 {
@@ -41,19 +44,31 @@ class LanguageGateway
         $this->modelValidator = $modelValidator;
     }
     /**
-     * @param PresentationModelInterface $model
+     * @param PresentationModelInterface|LanguagePresentationModel $presentationModel
      * @return LayerPropagationResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(PresentationModelInterface $model): LayerPropagationResponse
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResponse
     {
-        $this->modelValidator->validate($model);
+        $this->modelValidator->validate($presentationModel);
 
-        /** @var DomainModelInterface $logicModel */
+        /** @var DomainModelInterface|DomainLanguage $logicModel */
         $logicModel = $this->serializerWrapper
-            ->convertFromToByGroup($model, 'default', Language::class);
+            ->convertFromToByGroup($presentationModel, 'default', Language::class);
 
         $this->modelValidator->validate($logicModel);
 
+        /** @var DomainImage $domainImage */
+        $domainImage = $this->serializerWrapper->convertFromToByGroup(
+            $presentationModel->getImage(),
+            'default',
+            DomainImage::class
+        );
+
+        $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
+
+        $logicModel->setImage($domainImage);
         /** @var LayerPropagationResponse $domainLogicModel */
         $layerPropagationResponse = $this->logic->create($logicModel);
 

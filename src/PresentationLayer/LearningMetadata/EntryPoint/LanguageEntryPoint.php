@@ -36,8 +36,10 @@ class LanguageEntryPoint
         $this->apiResponseWrapper = $apiResponseWrapper;
     }
     /**
-     * @param LanguageModel|PresentationModelInterface $language
+     * @param LanguageModel $language
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create(LanguageModel $language): Response
     {
