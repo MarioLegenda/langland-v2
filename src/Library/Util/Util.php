@@ -23,14 +23,20 @@ class Util
         if (is_null($dateTime)) {
             $temp = new \DateTime();
 
-            return \DateTime::createFromFormat('Y-m-d H:m:s', $temp->format('Y-m-d H:m:s'));
+            return \DateTime::createFromFormat(
+                Util::getDateTimeApplicationFormat(),
+                $temp->format(Util::getDateTimeApplicationFormat())
+            );
         }
 
         if ($dateTime instanceof \DateTime) {
             return $dateTime;
         }
 
-        $dateTime = \DateTime::createFromFormat('Y-m-d H:m:s', $dateTime);
+        $dateTime = \DateTime::createFromFormat(
+            Util::getDateTimeApplicationFormat(),
+            $dateTime
+        );
 
         if (!$dateTime instanceof \DateTime) {
             $message = sprintf('Invalid date time');
@@ -38,6 +44,16 @@ class Util
         }
 
         return $dateTime;
+    }
+    /**
+     * @param string $dateTime
+     * @return bool
+     */
+    public static function isValidDate(string $dateTime): bool
+    {
+        $d = \DateTime::createFromFormat(Util::getDateTimeApplicationFormat(), $dateTime);
+
+        return $d && $d->format(Util::getDateTimeApplicationFormat()) === $dateTime;
     }
     /**
      * @param \DateTime $dateTime
@@ -49,7 +65,7 @@ class Util
             return null;
         }
 
-        return $dateTime->format('Y-m-d H:m:s');
+        return $dateTime->format(Util::getDateTimeApplicationFormat());
     }
     /**
      * @param object $object
@@ -85,5 +101,12 @@ class Util
         foreach ($fields as $fieldName => $fieldValue) {
             $object->{'set'.ucfirst($fieldName)}($fieldValue);
         }
+    }
+    /**
+     * @return string
+     */
+    public static function getDateTimeApplicationFormat(): string
+    {
+        return 'Y-m-d H:m:s';
     }
 }

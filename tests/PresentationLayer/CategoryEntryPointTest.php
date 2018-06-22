@@ -9,6 +9,7 @@ use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Util\ApiResponseData;
+use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
 
@@ -29,17 +30,12 @@ class CategoryEntryPointTest extends BasicSetup
         /** @var Response $response */
         $response = $categoryEntryPoint->create($categoryModel);
 
-        $data = json_decode($response->getContent(), true);
+        $data = json_decode($response->getContent(), true)['resource']['data'];
 
-        $apiResponseData = new ApiResponseData($data);
-
-        static::assertEquals($apiResponseData->getMethod(), 'PUT');
-        static::assertEquals($apiResponseData->getStatusCode(), 201);
-        static::assertTrue($apiResponseData->isResource());
-        static::assertFalse($apiResponseData->isCollection());
-        static::assertNotEmpty($apiResponseData->getData()['data']);
-
-        $data = $apiResponseData->getData()['data'];
+        static::assertInternalType('int', $data['id']);
+        static::assertNotEmpty($data['name']);
+        static::assertTrue(Util::isValidDate($data['createdAt']));
+        static::assertNull($data['updatedAt']);
 
         $createdCategory = $categoryRepository->findOneBy([
             'name' => $data['name'],

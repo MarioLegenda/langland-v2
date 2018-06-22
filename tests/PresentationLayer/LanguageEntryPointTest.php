@@ -9,6 +9,7 @@ use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Util\ApiResponseData;
+use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 
@@ -30,20 +31,24 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Response $response */
         $response = $languageEntryPoint->create($languageModel);
 
-        $data = json_decode($response->getContent(), true);
+        $data = json_decode($response->getContent(), true)['resource']['data'];
 
-        $apiResponseData = new ApiResponseData($data);
-
-        static::assertEquals($apiResponseData->getMethod(), 'PUT');
-        static::assertEquals($apiResponseData->getStatusCode(), 201);
-        static::assertTrue($apiResponseData->isResource());
-        static::assertFalse($apiResponseData->isCollection());
-        static::assertNotEmpty($apiResponseData->getData()['data']);
-
-        $data = $apiResponseData->getData()['data'];
-
+        static::assertInternalType('int', $data['id']);
+        static::assertNotEmpty($data['name']);
+        static::assertInternalType('bool', $data['showOnPage']);
+        static::assertNotEmpty($data['description']);
         static::assertInternalType('array', $data['image']);
         static::assertNotEmpty($data['image']);
+        static::assertTrue(Util::isValidDate($data['createdAt']));
+        static::assertNull($data['updatedAt']);
+
+        $image = $data['image'];
+
+        static::assertInternalType('int', $image['id']);
+        static::assertNotEmpty($image['name']);
+        static::assertNotEmpty($image['relativePath']);
+        static::assertTrue(Util::isValidDate($image['createdAt']));
+        static::assertNull($image['updatedAt']);
 
         $createdLanguage = $languageRepository->findOneBy([
             'name' => $data['name'],

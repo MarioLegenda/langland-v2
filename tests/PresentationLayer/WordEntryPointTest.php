@@ -13,6 +13,7 @@ use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\PresentationLayer\Model\Image;
 
@@ -73,6 +74,7 @@ class WordEntryPointTest extends BasicSetup
         static::assertNotEmpty($language['name']);
         static::assertInternalType('string', $language['createdAt']);
         static::assertNotEmpty($language['createdAt']);
+        static::assertTrue(Util::isValidDate($language['createdAt']));
         static::assertNull($language['updatedAt']);
 
         static::assertNotEmpty($response['description']);
@@ -95,7 +97,7 @@ class WordEntryPointTest extends BasicSetup
             static::assertInternalType('bool', $translation['valid']);
 
             static::assertInternalType('string', $translation['createdAt']);
-            static::assertNotEmpty($translation['createdAt']);
+            static::assertTrue(Util::isValidDate($translation['createdAt']));
             static::assertNull($translation['updatedAt']);
         }
 
@@ -117,7 +119,7 @@ class WordEntryPointTest extends BasicSetup
         static::assertInternalType('string', $image['relativePath']);
         static::assertNotEmpty($image['relativePath']);
         static::assertInternalType('string', $image['createdAt']);
-        static::assertNotEmpty($image['createdAt']);
+        static::assertTrue(Util::isValidDate($image['createdAt']));
         static::assertNull($image['updatedAt']);
     }
     /**
