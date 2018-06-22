@@ -6,7 +6,6 @@ use Library\Http\Request\RequestDataModel;
 use Library\Http\Request\ResolvedRequest;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use Library\Validation\SymfonyValidatorFacade;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ResolvedRequestTest extends WebTestCase

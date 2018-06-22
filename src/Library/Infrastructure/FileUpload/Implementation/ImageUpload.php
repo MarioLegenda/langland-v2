@@ -2,9 +2,7 @@
 
 namespace Library\Infrastructure\FileUpload\Implementation;
 
-use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\FileUpload\FileUploadInterface;
-use Library\Infrastructure\FileUpload\FileNamerInterface;
 use Library\Infrastructure\FileUpload\ImageResizeInterface;
 use Library\Infrastructure\Helper\TypedArray;
 use Ramsey\Uuid\Uuid;

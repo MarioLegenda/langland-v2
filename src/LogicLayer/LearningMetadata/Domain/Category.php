@@ -2,8 +2,6 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-use Library\Util\Util;
-
 class Category implements DomainModelInterface
 {
     /**

@@ -5,7 +5,6 @@ namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicGateway\Gateway\LanguageGateway;
 use App\PresentationLayer\Model\Language as LanguageModel;
-use App\PresentationLayer\Model\PresentationModelInterface;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 

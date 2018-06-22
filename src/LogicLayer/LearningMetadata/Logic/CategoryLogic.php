@@ -7,7 +7,6 @@ use App\Infrastructure\Response\LayerPropagationResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
-use App\PresentationLayer\Model\PresentationModelInterface;
 use App\LogicLayer\LearningMetadata\Model\Category as CategoryModel;
 
 class CategoryLogic implements LogicInterface

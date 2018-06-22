@@ -2,7 +2,6 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 
 class Image implements DomainModelInterface

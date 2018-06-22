@@ -12,7 +12,6 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Repository\ImageRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordCategoryRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
-use App\DataSourceLayer\Infrastructure\Type\MysqlType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Library\Infrastructure\Type\TypeInterface;

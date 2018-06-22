@@ -7,7 +7,6 @@ use Library\Http\Request\InternalType\ViewType;
 use Library\Http\Request\Type\HttpTypeFactory;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Infrastructure\Type\TypeInterface;
-use Library\Validation\SymfonyValidatorFacade;
 use Library\Validation\ValidatorInterface as LibraryValidator;
 
 class ResolvedRequest implements ArrayNotationInterface, \JsonSerializable

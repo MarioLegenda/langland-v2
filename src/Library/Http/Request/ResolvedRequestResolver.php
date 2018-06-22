@@ -2,7 +2,6 @@
 
 namespace Library\Http\Request;
 
-use App\PresentationLayer\Model\Language;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Infrastructure\Helper\TypedArray;
 use Library\Validation\ValidatorInterface;

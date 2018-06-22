@@ -3,11 +3,7 @@
 namespace App\Symfony\Resolver;
 
 use App\PresentationLayer\Model\Language;
-use Library\Http\Request\RequestDataModel;
-use Library\Http\Request\ResolvedRequest;
 use Library\Http\Request\ResolvedRequestResolver;
-use Library\Infrastructure\Helper\SerializerWrapper;
-use Library\Validation\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
