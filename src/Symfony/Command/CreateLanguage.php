@@ -3,6 +3,8 @@
 namespace App\Symfony\Command;
 
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
+use App\PresentationLayer\Model\Image;
+use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,6 +51,8 @@ class CreateLanguage extends BaseCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,7 +62,7 @@ class CreateLanguage extends BaseCommand
             'name' => 'Language name: ',
             'showOnPage' => 'Show on page: ',
             'description' => 'Description: ',
-            'images' => 'Images: ',
+            'image' => 'Image path (local): ',
         ]);
 
         $progressBar = $this->getDefaultProgressBar();
@@ -76,14 +80,16 @@ class CreateLanguage extends BaseCommand
     }
     /**
      * @param array $answers
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function createLanguageFromAnswers(array $answers): void
     {
-        $answers['images'] = $this->normalizeArrayInput($answers['images'], ',');
+        $answers['image'] = new Image(new UploadedFile($answers['image']));
 
         /** @var PresentationLanguageModel $presentationLanguageModel */
-        $presentationLanguageModel = $this->serializerWrapper->getDeserializer()->create($answers, PresentationLanguageModel::class);
-
+        $presentationLanguageModel = $this->serializerWrapper->deserialize($answers, PresentationLanguageModel::class);
+        $presentationLanguageModel->setImage($answers['image']);
         $this->modelValidator->tryValidate($presentationLanguageModel);
 
         if ($this->modelValidator->hasErrors()) {
