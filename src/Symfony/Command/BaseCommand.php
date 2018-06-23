@@ -70,7 +70,7 @@ class BaseCommand extends Command
         foreach ($fields as $field => $q) {
             $qName = sprintf('%s', $field);
 
-            $questions[$qName] = new Question($q);
+            $questions[$qName] = $this->createQuestion($q);
         }
 
         foreach ($questions as $field => $question) {
@@ -109,5 +109,35 @@ class BaseCommand extends Command
         $this->output->writeln('');
         $this->output->writeln(sprintf('<bg=red;options=bold>%s</>', $message));
         $this->output->writeln('');
+    }
+
+    /**
+     * @param $options
+     * @throws \RuntimeException
+     * @return Question
+     */
+    private function createQuestion($options): Question
+    {
+        if (is_array($options)) {
+            $qName = $options['question'];
+            $qObject = new Question($qName);
+
+            if (array_key_exists('normalizer', $options)) {
+                $qObject->setNormalizer($options['normalizer']);
+            }
+
+            if (array_key_exists('validator', $options)) {
+                $qObject->setValidator($options['validator']);
+            }
+
+            return $qObject;
+        }
+
+        if (is_string($options)) {
+            return new Question($options);
+        }
+
+        $message = sprintf('Question could not be formulated');
+        throw new \RuntimeException($message);
     }
 }

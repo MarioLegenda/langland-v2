@@ -134,7 +134,13 @@ class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, Arr
 
         return $typedRecursion->iterate();
     }
-
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->data);
+    }
     /**
      * @param mixed $type
      * @return bool

@@ -6,6 +6,7 @@ use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -224,6 +225,16 @@ class Word implements DataSourceEntity
 
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
+        }
+    }
+    /**
+     * @PrePersist()
+     */
+    public function handleTranslationsConnection()
+    {
+        /** @var Translation $translation */
+        foreach ($this->translations as $translation) {
+            $translation->setWord($this);
         }
     }
 }
