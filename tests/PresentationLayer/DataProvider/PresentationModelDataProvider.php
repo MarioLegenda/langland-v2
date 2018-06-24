@@ -5,6 +5,7 @@ namespace App\Tests\PresentationLayer\DataProvider;
 use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Lesson;
 use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
@@ -54,7 +55,7 @@ class PresentationModelDataProvider
     public function getInvalidLanguageModel(): Language
     {
         $modelBlueprint = [
-            'name' => '',
+        'name' => '',
             'showOnPage' => 'čsdfjlksadjf',
             'description' => $this->faker()->sentence(30),
         ];
@@ -132,6 +133,27 @@ class PresentationModelDataProvider
         return $word;
     }
     /**
+     * @return Word
+     */
+    public function getInvalidWordModel(): Word
+    {
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'type' => $this->faker()->name,
+            'language' => null,
+            'description' => $this->faker()->sentence(20),
+            'level' => (is_null(null)) ? rand(1, 5) : null,
+            'pluralForm' => $this->faker()->name,
+            'translations' => []
+        ];
+
+        /** @var Word $word */
+        $word = $this->deserializer->create($modelBlueprint, Word::class);
+        $word->setCategories(new CollectionEntity());
+
+        return $word;
+    }
+    /**
      * @return Translation
      */
     public function getTranslationModel(): Translation
@@ -154,6 +176,23 @@ class PresentationModelDataProvider
         //$file = $this->faker()->image();
 
         return new Image(new UploadedFile('sdfjkasdhfj'));
+    }
+    /**
+     * @param Language $language
+     * @return Lesson
+     */
+    public function getLessonModel(Language $language): Lesson
+    {
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'temporaryText' => $this->faker()->sentence(20),
+            'language' => $language->toArray(),
+        ];
+
+        /** @var Lesson $lesson */
+        $lesson = $this->deserializer->create($modelBlueprint, Lesson::class);
+
+        return $lesson;
     }
 
 }

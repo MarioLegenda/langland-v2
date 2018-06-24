@@ -92,4 +92,27 @@ class ApiResponseWrapper
             );
         }
     }
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
+    public function createLessonCreate($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('PUT')
+            ->addMessage('Lesson created')
+            ->isResource()
+            ->setStatusCode(201)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
 }

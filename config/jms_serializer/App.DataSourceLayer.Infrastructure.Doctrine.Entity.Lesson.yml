@@ -1,0 +1,32 @@
+App\DataSourceLayer\Infrastructure\Doctrine\Entity\Lesson:
+    exclusion_policy: all
+    properties:
+        id:
+            expose: true
+            groups: [default]
+            type: int
+        name:
+            expose: true
+            groups: [default]
+            type: string
+
+        temporaryText:
+            expose: true
+            groups: [default]
+            type: string
+            serialized_name: temporaryText
+
+        language:
+            expose: true
+            groups: [default]
+            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language
+
+        createdAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>
+
+        updatedAt:
+            expose: true
+            groups: [default]
+            type: DateTime<'Y-m-d H:m:s'>

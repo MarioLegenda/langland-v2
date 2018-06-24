@@ -38,12 +38,37 @@
             </constraint>
         </property>
 
-        <property name="createdAt">
+    </class>
+
+    <class name="App\PresentationLayer\Model\Lesson">
+        <property name="name">
             <constraint name="NotBlank">
-                <option name="message">'createdAt' should be an object of \DateTime</option>
+                <option name="message">'name' should not be blank</option>
             </constraint>
 
-            <constraint name="DateTime" />
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
+            </constraint>
+        </property>
+
+        <property name="temporaryText">
+            <constraint name="NotNull">
+                <option name="message">'temporaryText' cannot be null</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'temporaryText' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="language">
+            <constraint name="Valid" />
+
+            <constraint name="NotBlank">
+                <option name="message">'language' should not be blank</option>
+            </constraint>
         </property>
     </class>
 
@@ -139,13 +164,6 @@
             </constraint>
         </property>
 
-        <property name="createdAt">
-            <constraint name="NotBlank">
-                <option name="message">'createdAt' should be an object of \DateTime</option>
-            </constraint>
-
-            <constraint name="DateTime" />
-        </property>
     </class>
 
 </constraint-mapping>

@@ -126,6 +126,4 @@ class Language implements DomainModelInterface
     {
         return $this->updatedAt;
     }
-
-
 }

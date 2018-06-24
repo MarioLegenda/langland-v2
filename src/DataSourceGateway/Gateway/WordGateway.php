@@ -75,8 +75,6 @@ class WordGateway
             $categories
         );
 
-        $domainWordCategories = $this->createDomainWordCategories($wordCategories);
-
         $domainWord = $this->serializerWrapper
             ->convertFromToByGroup($newWord, 'default', WordDomainModel::class);
 
