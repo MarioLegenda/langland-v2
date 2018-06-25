@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/dist/",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "lib": ["dom", "es5", "es2015"],
+    "target": "es5",
+    "noImplicitThis": true
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "./frontend/**/*"
+  ]
+}

@@ -16,6 +16,7 @@ class Util
     }
     /**
      * @param \DateTime|string|null $dateTime
+     * @throws \RuntimeException
      * @return \DateTime
      */
     public static function toDateTime($dateTime = null): \DateTime
@@ -30,20 +31,33 @@ class Util
         }
 
         if ($dateTime instanceof \DateTime) {
-            return $dateTime;
+            return \DateTime::createFromFormat(
+                Util::getDateTimeApplicationFormat(),
+                $dateTime->format(Util::getDateTimeApplicationFormat())
+            );
         }
 
-        $dateTime = \DateTime::createFromFormat(
-            Util::getDateTimeApplicationFormat(),
-            $dateTime
-        );
+        if (is_string($dateTime)) {
+            $newDateTime = \DateTime::createFromFormat(
+                Util::getDateTimeApplicationFormat(),
+                $dateTime
+            );
 
-        if (!$dateTime instanceof \DateTime) {
-            $message = sprintf('Invalid date time');
-            throw new \RuntimeException($message);
+            if (!$newDateTime instanceof \DateTime) {
+                $message = sprintf('Invalid date time');
+                throw new \RuntimeException($message);
+            }
+
+            return $newDateTime;
         }
 
-        return $dateTime;
+        if (is_int($dateTime)) {
+            $newDateTime = new \DateTime('@'.$dateTime);
+
+            return $newDateTime;
+        }
+
+        throw new \RuntimeException('Util::toDateTime() cannot return null but does');
     }
     /**
      * @param string $dateTime
@@ -75,6 +89,20 @@ class Util
     public static function extractFieldFromObject(object $object, string $field)
     {
         return $object->{'get'.ucfirst($field)}();
+    }
+    /**
+     * @param object $object
+     * @param array $fields
+     * @return array
+     */
+    public static function extractFieldsFromObject(object $object, array $fields): array
+    {
+        $extractedFields = [];
+        foreach ($fields as $field) {
+            $extractedFields[$field] = Util::extractFieldFromObject($object, $field);
+        }
+
+        return $extractedFields;
     }
     /**
      * @param array|iterable $objects
