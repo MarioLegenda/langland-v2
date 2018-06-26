@@ -5,7 +5,7 @@ namespace Library\Infrastructure\Helper;
 use Library\Util\TypedRecursion;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 
-class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, ArrayNotationInterface
+class TypedArray implements \Countable, \ArrayAccess, \IteratorAggregate, ArrayNotationInterface
 {
     /**
      * @var string $keyType
@@ -68,6 +68,13 @@ class TypedArray extends \ArrayIterator implements \Countable, \ArrayAccess, Arr
     public function count(): int
     {
         return count($this->data);
+    }
+    /**
+     * @return \ArrayIterator
+     */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->data);
     }
     /**
      * @inheritdoc

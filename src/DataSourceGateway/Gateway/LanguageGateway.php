@@ -5,6 +5,7 @@ namespace App\DataSourceGateway\Gateway;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
+use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;
@@ -61,5 +62,24 @@ class LanguageGateway
         $this->modelValidator->validate($domainModel);
 
         return $domainModel;
+    }
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return DomainModelInterface[]|iterable
+     */
+    public function getLanguages(PaginatedRequestInterface $paginatedRequest): iterable
+    {
+        $languages = $this->languageDataSourceService->getLanguages($paginatedRequest);
+
+        $this->modelValidator->bulkValidate($languages);
+
+        /** @var DomainModelInterface[]|LanguageDomainModel[] $domainModels */
+        $domainModels = $this->serializerWrapper->convertCollectionByGroup(
+            $languages,
+            'default',
+            LanguageDomainModel::class
+        );
+
+        return $domainModels;
     }
 }

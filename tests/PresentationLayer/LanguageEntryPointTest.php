@@ -3,6 +3,7 @@
 namespace App\Tests\PresentationLayer;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\Library\Http\Request\PaginatedRequest;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
@@ -120,5 +121,73 @@ class LanguageEntryPointTest extends BasicSetup
         }
 
         static::assertTrue($enteredException);
+    }
+
+    public function test_get_languages()
+    {
+        $langNum = 10;
+        $this->createLanguages($langNum);
+
+        /** @var LanguageEntryPoint $languageEntryPoint */
+        $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
+
+        $limit = 0;
+        for ($i = 0; $i < $langNum; $i++) {
+            $paginatedRequest = new PaginatedRequest(
+                0,
+                $limit
+            );
+
+            $languages = $languageEntryPoint->getLanguages($paginatedRequest);
+
+            static::assertInstanceOf(Response::class, $languages);
+
+            $responseData = json_decode($languages->getContent(), true)['collection']['data'];
+
+            static::assertEquals(count($responseData), $limit);
+
+            foreach ($responseData as $data) {
+                static::assertInternalType('int', $data['id']);
+                static::assertNotEmpty($data['name']);
+                static::assertInternalType('bool', $data['showOnPage']);
+                static::assertNotEmpty($data['description']);
+                static::assertInternalType('array', $data['image']);
+                static::assertNotEmpty($data['image']);
+                static::assertTrue(Util::isValidDate($data['createdAt']));
+                static::assertNull($data['updatedAt']);
+
+                $image = $data['image'];
+
+                static::assertInternalType('int', $image['id']);
+                static::assertNotEmpty($image['name']);
+                static::assertNotEmpty($image['relativePath']);
+                static::assertTrue(Util::isValidDate($image['createdAt']));
+                static::assertNull($image['updatedAt']);
+            }
+
+            $limit++;
+        }
+    }
+    /**
+     * @param int $langNum
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function createLanguages(int $langNum)
+    {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        for ($i = 0; $i < $langNum; $i++) {
+            /** @var Language $languageModel */
+            $languageModel = $presentationModelDataProvider->getLanguageModel(
+                $presentationModelDataProvider->getImageModel()
+            );
+
+            /** @var LanguageEntryPoint $languageEntryPoint */
+            $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
+
+            $languageEntryPoint->create($languageModel);
+        }
     }
 }

@@ -6,6 +6,7 @@ use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 
 class LanguageDataSourceService
@@ -53,5 +54,21 @@ class LanguageDataSourceService
         }
 
         return $this->languageRepository->persistAndFlush($language);
+    }
+
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return iterable|DataSourceEntity[]
+     */
+    public function getLanguages(PaginatedRequestInterface $paginatedRequest): iterable
+    {
+        $languages = $this->languageRepository->findBy(
+            [],
+            null,
+            $paginatedRequest->getLimit(),
+            $paginatedRequest->getOffset()
+        );
+
+        return $languages;
     }
 }

@@ -115,4 +115,23 @@ class ApiResponseWrapper
             );
         }
     }
+
+    public function createGetLanguages($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('GET')
+            ->addMessage('A list of languages')
+            ->isCollection()
+            ->setStatusCode(200)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
 }

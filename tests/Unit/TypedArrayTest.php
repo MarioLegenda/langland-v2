@@ -6,7 +6,7 @@ use App\Tests\Library\BasicSetup;
 use App\Tests\Library\DummyObject;
 use Library\Infrastructure\Helper\TypedArray;
 
-class TypeArrayTest extends BasicSetup
+class TypedArrayTest extends BasicSetup
 {
     public function test_typed_array()
     {
@@ -88,6 +88,13 @@ class TypeArrayTest extends BasicSetup
                 new DummyObject(),
             ]
         );
+
+        $count = 0;
+        foreach ($objectArray as $item) {
+            $count++;
+        }
+
+        static::assertEquals(count($objectArray), $count);
 
         static::assertInstanceOf(\StdClass::class, $objectArray[0]);
         static::assertInstanceOf(\StdClass::class, $objectArray[1]);

@@ -2,6 +2,7 @@
 
 namespace Library\Infrastructure\Helper;
 
+use Library\Util\Util;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator;
 use Library\Validation\ValidatorInterface as LibraryValidator;
@@ -68,6 +69,23 @@ class ModelValidator implements LibraryValidator
 
         if ($this->hasErrors()) {
             throw new \RuntimeException($this->getErrorsString());
+        }
+    }
+    /**
+     * @param iterable $objects
+     */
+    public function bulkValidate(iterable $objects)
+    {
+        if (empty($objects)) {
+            return;
+        }
+
+        $objectsGen = Util::createGenerator($objects);
+
+        foreach ($objectsGen as $entry) {
+            $item = $entry['item'];
+
+            $this->validate($item);
         }
     }
     /**

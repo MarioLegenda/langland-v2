@@ -5,6 +5,7 @@ namespace Library\Infrastructure\Helper;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
+use Library\Util\Util;
 
 class SerializerWrapper
 {
@@ -20,7 +21,6 @@ class SerializerWrapper
      * SerializerWrapper constructor.
      * @param SerializerInterface $serializer
      * @param Deserializer $deserializer
-     * @param ModelValidator $modelValidator
      */
     public function __construct(
         SerializerInterface $serializer,
@@ -98,6 +98,28 @@ class SerializerWrapper
         $created = $this->getDeserializer()->create($data, $class);
 
         return $created;
+    }
+    /**
+     * @param iterable $collection
+     * @param string|array $groups
+     * @param string $class
+     * @return array|TypedArray|iterable
+     */
+    public function convertCollectionByGroup(
+        iterable $collection,
+        $groups,
+        string $class
+    ) {
+        $collectionGenerator = Util::createGenerator($collection);
+        $convertedObjects = TypedArray::create('integer', $class);
+
+        foreach ($collectionGenerator as $entry) {
+            $item = $entry['item'];
+
+            $convertedObjects[] = $this->convertFromToByGroup($item, $groups, $class);
+        }
+
+        return $convertedObjects;
     }
     /**
      * @param $data
