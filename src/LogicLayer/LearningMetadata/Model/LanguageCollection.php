@@ -2,10 +2,11 @@
 
 namespace App\LogicLayer\LearningMetadata\Model;
 
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResponse;
 use Library\Util\Util;
 
-class LanguageCollection implements LayerPropagationResponse
+class LanguageCollection implements LayerPropagationCollectionResponse
 {
     /**
      * @var bool $isPaginated
@@ -17,7 +18,7 @@ class LanguageCollection implements LayerPropagationResponse
     private $collection;
     /**
      * LanguageCollection constructor.
-     * @param iterable|Language $languageModels
+     * @param iterable|Language|LayerPropagationResponse $languageModels
      * @param bool $isPaginated
      */
     public function __construct(
@@ -31,8 +32,9 @@ class LanguageCollection implements LayerPropagationResponse
     /**
      * @inheritdoc
      */
-    public function getPropagationObject(): object
+    public function getPropagationObjects(): iterable
     {
+        return $this->collection;
     }
     /**
      * @inheritdoc
