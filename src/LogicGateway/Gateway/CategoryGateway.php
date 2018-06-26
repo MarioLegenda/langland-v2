@@ -2,13 +2,14 @@
 
 namespace App\LogicGateway\Gateway;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Logic\CategoryLogic;
 use App\LogicLayer\LogicInterface;
 use App\PresentationLayer\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use App\PresentationLayer\Model\Category as CategoryPresentationModel;
 
 class CategoryGateway
 {
@@ -41,9 +42,11 @@ class CategoryGateway
     }
     /**
      * @param PresentationModelInterface $presentationModel
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(PresentationModelInterface $presentationModel): LayerPropagationResponse
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResourceResponse
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -52,7 +55,9 @@ class CategoryGateway
 
         $this->modelValidator->validate($categoryDomainModel);
 
-        /** @var LayerPropagationResponse $createdCategoryDomainModel */
-        return $this->logic->create($categoryDomainModel);
+        /** @var LayerPropagationResourceResponse $propagationResponse */
+        $propagationResponse = $this->logic->create($categoryDomainModel);
+
+        return $propagationResponse;
     }
 }

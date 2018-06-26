@@ -4,12 +4,12 @@ namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
 use Library\Util\Util;
 
-class Word implements LayerPropagationResponse
+class Word implements LayerPropagationResourceResponse
 {
     /**
      * @var WordDomainModel $word

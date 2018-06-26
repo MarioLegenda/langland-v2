@@ -2,7 +2,7 @@
 
 namespace App\LogicGateway\Gateway;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Logic\LessonLogic;
 use App\PresentationLayer\Model\Lesson;
 use App\PresentationLayer\Model\PresentationModelInterface;
@@ -40,10 +40,12 @@ class LessonGateway
         $this->lessonLogic = $lessonLogic;
     }
     /**
-     * @param PresentationModelInterface|Lesson $presentationModel
-     * @return LayerPropagationResponse
+     * @param PresentationModelInterface $presentationModel
+     * @return LayerPropagationResourceResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(PresentationModelInterface $presentationModel): LayerPropagationResponse
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResourceResponse
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -53,7 +55,7 @@ class LessonGateway
 
         $this->modelValidator->validate($domainModel);
 
-        /** @var LayerPropagationResponse $layerPropagationResponse */
+        /** @var LayerPropagationResourceResponse $layerPropagationResponse */
         $layerPropagationResponse = $this->lessonLogic->create($domainModel);
 
         return $layerPropagationResponse;

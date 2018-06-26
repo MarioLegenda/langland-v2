@@ -4,7 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\LanguageGateway;
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Image;
@@ -39,11 +39,11 @@ class LanguageLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Language $model
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DomainModelInterface $model): LayerPropagationResponse
+    public function create(DomainModelInterface $model): LayerPropagationResourceResponse
     {
         $this->imageUpload->upload(
             $model->getImage()->getUploadedFile()

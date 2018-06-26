@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\WordGateway;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
@@ -36,10 +36,10 @@ class WordLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Word $wordDomainModel
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
      * @throws \Doctrine\ORM\ORMException
      */
-    public function create(DomainModelInterface $wordDomainModel): LayerPropagationResponse
+    public function create(DomainModelInterface $wordDomainModel): LayerPropagationResourceResponse
     {
         $this->fileUpload->upload($wordDomainModel->getImage()->getUploadedFile());
 

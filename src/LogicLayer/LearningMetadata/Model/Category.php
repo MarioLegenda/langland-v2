@@ -2,11 +2,11 @@
 
 namespace App\LogicLayer\LearningMetadata\Model;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as DataSourceCategory;
 use Library\Util\Util;
 
-class Category implements LayerPropagationResponse
+class Category implements LayerPropagationResourceResponse
 {
     /**
      * @var DataSourceCategory $category

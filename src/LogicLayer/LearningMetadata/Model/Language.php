@@ -2,12 +2,12 @@
 
 namespace App\LogicLayer\LearningMetadata\Model;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Util\Util;
 use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;
 
-class Language implements LayerPropagationResponse
+class Language implements LayerPropagationResourceResponse
 {
     /**
      * @var DomainModelInterface|LanguageDomainModel $language

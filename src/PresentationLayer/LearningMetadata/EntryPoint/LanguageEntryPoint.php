@@ -2,7 +2,7 @@
 
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicGateway\Gateway\LanguageGateway;
 use App\PresentationLayer\Model\Language as LanguageModel;
@@ -43,7 +43,7 @@ class LanguageEntryPoint
      */
     public function create(LanguageModel $language): Response
     {
-        /** @var LayerPropagationResponse $createdLanguage */
+        /** @var LayerPropagationResourceResponse $createdLanguage */
         $createdLanguage = $this->languageGateway->create($language);
 
         return $this->apiResponseWrapper->createLanguageCreate($createdLanguage->toArray());
@@ -54,7 +54,7 @@ class LanguageEntryPoint
      */
     public function getLanguages(PaginatedRequestInterface $paginatedRequest): Response
     {
-        /** @var LayerPropagationResponse $languageCollection */
+        /** @var LayerPropagationResourceResponse $languageCollection */
         $languageCollection = $this->languageGateway->getLanguages($paginatedRequest);
 
         return $this->apiResponseWrapper->createGetLanguages($languageCollection->toArray());

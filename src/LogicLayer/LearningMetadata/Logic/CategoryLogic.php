@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\CategoryGateway;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
@@ -26,11 +26,11 @@ class CategoryLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface|Category $domainModel
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
+    public function create(DomainModelInterface $domainModel): LayerPropagationResourceResponse
     {
         $newCategory = $this->categoryGateway->create($domainModel);
 

@@ -3,7 +3,7 @@
 namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
@@ -48,11 +48,11 @@ class LanguageGateway
     }
     /**
      * @param PresentationModelInterface|LanguagePresentationModel $presentationModel
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(PresentationModelInterface $presentationModel): LayerPropagationResponse
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResourceResponse
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -72,7 +72,7 @@ class LanguageGateway
         $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
 
         $logicModel->setImage($domainImage);
-        /** @var LayerPropagationResponse $domainLogicModel */
+        /** @var LayerPropagationResourceResponse $domainLogicModel */
         $layerPropagationResponse = $this->logic->create($logicModel);
 
         return $layerPropagationResponse;

@@ -3,10 +3,10 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\LogicLayer\LearningMetadata\Domain\Lesson as LessonDomainModel;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use Library\Util\Util;
 
-class Lesson implements LayerPropagationResponse
+class Lesson implements LayerPropagationResourceResponse
 {
     /**
      * @var LessonDomainModel $lesson

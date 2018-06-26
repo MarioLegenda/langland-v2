@@ -2,7 +2,7 @@
 
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicGateway\Gateway\LessonGateway;
 use App\Symfony\ApiResponseWrapper;
 use App\PresentationLayer\Model\Lesson as LessonPresentationModel;
@@ -36,7 +36,7 @@ class LessonEntryPoint
      */
     public function create(LessonPresentationModel $model): Response
     {
-        /** @var LayerPropagationResponse $lessonPropagationModel */
+        /** @var LayerPropagationResourceResponse $lessonPropagationModel */
         $lessonPropagationModel = $this->lessonGateway->create($model);
 
         return $this->apiResponseWrapper->createLessonCreate($lessonPropagationModel->toArray());

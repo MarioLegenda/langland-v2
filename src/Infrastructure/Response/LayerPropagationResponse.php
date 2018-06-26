@@ -2,12 +2,7 @@
 
 namespace App\Infrastructure\Response;
 
-use Library\Infrastructure\Notation\ArrayNotationInterface;
-
-interface LayerPropagationResponse extends ArrayNotationInterface
+interface LayerPropagationResponse
 {
-    /**
-     * @return object
-     */
-    public function getPropagationObject(): object;
+
 }

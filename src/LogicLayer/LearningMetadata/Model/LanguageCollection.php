@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use Library\Util\Util;
 
 class LanguageCollection implements LayerPropagationCollectionResponse
@@ -18,7 +18,7 @@ class LanguageCollection implements LayerPropagationCollectionResponse
     private $collection;
     /**
      * LanguageCollection constructor.
-     * @param iterable|Language|LayerPropagationResponse $languageModels
+     * @param iterable|Language|LayerPropagationResourceResponse $languageModels
      * @param bool $isPaginated
      */
     public function __construct(
@@ -63,10 +63,10 @@ class LanguageCollection implements LayerPropagationCollectionResponse
         foreach ($gen as $entry) {
             $item = $entry['item'];
 
-            if (!$item instanceof LayerPropagationResponse) {
+            if (!$item instanceof LayerPropagationResourceResponse) {
                 $message = sprintf(
                     'Invalid model given. Every model in a language collection should be an instance of %s',
-                    LayerPropagationResponse::class
+                    LayerPropagationResourceResponse::class
                 );
 
                 throw new \RuntimeException($message);

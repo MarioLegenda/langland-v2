@@ -2,7 +2,7 @@
 
 namespace App\LogicLayer\LearningMetadata\Logic;
 
-use App\Infrastructure\Response\LayerPropagationResponse;
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\DataSourceGateway\Gateway\LessonGateway;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Lesson;
@@ -26,11 +26,11 @@ class LessonLogic implements LogicInterface
     }
     /**
      * @param DomainModelInterface $domainModel
-     * @return LayerPropagationResponse
+     * @return LayerPropagationResourceResponse
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(DomainModelInterface $domainModel): LayerPropagationResponse
+    public function create(DomainModelInterface $domainModel): LayerPropagationResourceResponse
     {
         $newLesson = $this->lessonGateway->create($domainModel);
 
