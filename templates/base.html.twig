@@ -2,11 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Langland{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div id="vue_app">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            {% set cacheClear = 'random'~random(999999) %}
+            <script src={{ asset("dist/build.js?"~cacheClear) }}></script>
+        {% endblock %}
     </body>
 </html>

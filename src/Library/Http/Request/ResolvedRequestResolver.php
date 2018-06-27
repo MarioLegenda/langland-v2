@@ -2,9 +2,9 @@
 
 namespace Library\Http\Request;
 
+use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Infrastructure\Helper\TypedArray;
-use Library\Validation\ValidatorInterface;
 
 class ResolvedRequestResolver
 {
@@ -13,17 +13,17 @@ class ResolvedRequestResolver
      */
     private $serializerWrapper;
     /**
-     * @var ValidatorInterface $validator
+     * @var ModelValidator $validator
      */
     private $validator;
     /**
      * ResolvedRequestResolver constructor.
      * @param SerializerWrapper $serializerWrapper
-     * @param ValidatorInterface $validator
+     * @param ModelValidator $validator
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
-        ValidatorInterface $validator
+        ModelValidator $validator
     ) {
         $this->serializerWrapper = $serializerWrapper;
         $this->validator = $validator;

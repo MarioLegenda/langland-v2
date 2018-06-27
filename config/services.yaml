@@ -55,7 +55,7 @@ services:
     Library\Http\Request\ResolvedRequestResolver:
         arguments:
             $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
-            $validator: 'library.facade.symfony_validator'
+            $validator: '@Library\Infrastructure\Helper\ModelValidator'
 
     Library\Infrastructure\FileUpload\Implementation\ImageUpload:
         arguments:
@@ -76,6 +76,14 @@ services:
 
     # SYMFONY ARGUMENT RESOLVERS
     App\Symfony\Resolver\LanguageResolver:
+        arguments:
+            $resolvedRequestResolver: '@Library\Http\Request\ResolvedRequestResolver'
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    App\Symfony\Resolver\CategoryResolver:
+        arguments:
+            $resolvedRequestResolver: '@Library\Http\Request\ResolvedRequestResolver'
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }
 
