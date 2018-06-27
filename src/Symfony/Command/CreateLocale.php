@@ -9,7 +9,7 @@ use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class LocaleCreateCommand extends BaseCommand
+class CreateLocale extends BaseCommand
 {
     /**
      * @var SerializerWrapper $serializerWrapper
