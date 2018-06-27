@@ -42,6 +42,9 @@ class WordEntryPointTest extends BasicSetup
         $response = $wordEntryPoint->create($wordPresentationModel);
 
         static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(201, $response->getStatusCode());
+
+        static::assertInstanceOf(Response::class, $response);
 
         $responseData = json_decode($response->getContent(), true);
 

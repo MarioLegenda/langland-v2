@@ -31,6 +31,9 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Response $response */
         $response = $languageEntryPoint->create($languageModel);
 
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(201, $response->getStatusCode());
+
         $data = json_decode($response->getContent(), true)['resource']['data'];
 
         static::assertInternalType('int', $data['id']);
@@ -139,6 +142,9 @@ class LanguageEntryPointTest extends BasicSetup
             );
 
             $languages = $languageEntryPoint->getLanguages($paginatedRequest);
+
+            static::assertInstanceOf(Response::class, $languages);
+            static::assertEquals(200, $languages->getStatusCode());
 
             static::assertInstanceOf(Response::class, $languages);
 

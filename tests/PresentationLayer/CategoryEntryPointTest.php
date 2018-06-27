@@ -29,6 +29,9 @@ class CategoryEntryPointTest extends BasicSetup
         /** @var Response $response */
         $response = $categoryEntryPoint->create($categoryModel);
 
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(201, $response->getStatusCode());
+
         $data = json_decode($response->getContent(), true)['resource']['data'];
 
         static::assertInternalType('int', $data['id']);
