@@ -6,6 +6,7 @@ use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\Lesson;
+use App\PresentationLayer\Model\Locale;
 use App\PresentationLayer\Model\Word\Translation;
 use App\PresentationLayer\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
@@ -48,6 +49,17 @@ class PresentationModelDataProvider
         $language->setImage($image);
 
         return $language;
+    }
+    /**
+     * @param array $data
+     * @return Locale
+     */
+    public function getLocaleModel(array $data): Locale
+    {
+        /** @var Locale $localeModel */
+        $localeModel = $this->deserializer->create($data, Locale::class);
+
+        return $localeModel;
     }
     /**
      * @return Language

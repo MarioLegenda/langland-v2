@@ -13,14 +13,16 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Library\Util\Util;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @Entity @Table(
- *     name="lessons",
+ *     name="locales",
+ *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) }
  * )
  * @HasLifecycleCallbacks()
  **/
-class Lesson implements DataSourceEntity
+class Locale implements DataSourceEntity
 {
     /**
      * @var int $id
@@ -33,17 +35,6 @@ class Lesson implements DataSourceEntity
      * @Column(type="string")
      */
     private $name;
-    /**
-     * @var string $name
-     * @Column(type="string")
-     */
-    private $temporaryText;
-    /**
-     * @var Language $language
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language")
-     * @JoinColumn(name="language_id", referencedColumnName="id")
-     */
-    private $language;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -74,34 +65,6 @@ class Lesson implements DataSourceEntity
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-    /**
-     * @return string
-     */
-    public function getTemporaryText(): string
-    {
-        return $this->temporaryText;
-    }
-    /**
-     * @param string $temporaryText
-     */
-    public function setTemporaryText(string $temporaryText): void
-    {
-        $this->temporaryText = $temporaryText;
-    }
-    /**
-     * @return Language
-     */
-    public function getLanguage(): Language
-    {
-        return $this->language;
-    }
-    /**
-     * @param Language $language
-     */
-    public function setLanguage(Language $language): void
-    {
-        $this->language = $language;
     }
     /**
      * @return \DateTime

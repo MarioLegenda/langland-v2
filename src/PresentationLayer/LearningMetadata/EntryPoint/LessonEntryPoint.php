@@ -33,6 +33,8 @@ class LessonEntryPoint
     /**
      * @param LessonPresentationModel $model
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create(LessonPresentationModel $model): Response
     {

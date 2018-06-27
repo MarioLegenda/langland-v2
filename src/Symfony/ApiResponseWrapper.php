@@ -115,7 +115,11 @@ class ApiResponseWrapper
             );
         }
     }
-
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
     public function createGetLanguages($data = [], string $type = 'json')
     {
         /** @var ApiResponseData $responseData */
@@ -125,6 +129,29 @@ class ApiResponseWrapper
             ->addMessage('A list of languages')
             ->isCollection()
             ->setStatusCode(200)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
+    public function createCreateLocale($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('PUT')
+            ->addMessage('Locale created')
+            ->isCollection()
+            ->setStatusCode(201)
             ->build();
 
         switch ($type) {

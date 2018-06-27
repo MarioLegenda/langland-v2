@@ -37,7 +37,19 @@
                 <option name="message">'description' should be a string</option>
             </constraint>
         </property>
+    </class>
 
+    <class name="App\LogicLayer\Domain\Locale">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a boolean</option>
+            </constraint>
+        </property>
     </class>
 
     <class name="App\PresentationLayer\Model\Lesson">
