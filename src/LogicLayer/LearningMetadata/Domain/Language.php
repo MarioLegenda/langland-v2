@@ -15,6 +15,10 @@ class Language implements DomainModelInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var bool $showOnPage
      */
     private $showOnPage;
@@ -54,6 +58,20 @@ class Language implements DomainModelInterface
     public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @param bool $showOnPage

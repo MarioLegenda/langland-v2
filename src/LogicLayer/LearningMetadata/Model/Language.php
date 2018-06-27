@@ -36,6 +36,7 @@ class Language implements LayerPropagationResourceResponse
         return [
             'id' => $this->language->getId(),
             'name' => $this->language->getName(),
+            'locale' => $this->language->getLocale(),
             'showOnPage' => $this->language->isShowOnPage(),
             'description' => $this->language->getDescription(),
             'image' => [

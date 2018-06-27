@@ -32,12 +32,17 @@ class Language implements DataSourceEntity
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    protected $id;
+    private $id;
     /**
      * @var string $name
      * @Column(type="string", unique=true)
      */
-    protected $name;
+    private $name;
+    /**
+     * @var string $locale
+     * @Column(type="string")
+     */
+    private $locale;
     /**
      * @var bool $showOnPage
      * @Column(type="boolean")
@@ -83,6 +88,20 @@ class Language implements DataSourceEntity
     public function setName($name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return bool

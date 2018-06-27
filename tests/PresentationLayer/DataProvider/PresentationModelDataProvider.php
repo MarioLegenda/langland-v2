@@ -39,6 +39,7 @@ class PresentationModelDataProvider
     {
         $modelBlueprint = [
             'name' => $this->faker()->name,
+            'locale' => 'en',
             'showOnPage' => false,
             'description' => $this->faker()->sentence(30),
             'image' => $image,

@@ -15,6 +15,10 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var bool $showOnPage
      */
     private $showOnPage;
@@ -39,6 +43,13 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
     public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
     /**
      * @return bool
@@ -76,6 +87,7 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
+            'locale' => $this->getLocale(),
             'showOnPage' => $this->getShowOnPage(),
             'description' => $this->getDescription(),
         ];
