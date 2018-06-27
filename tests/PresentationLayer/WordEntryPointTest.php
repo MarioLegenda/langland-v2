@@ -6,9 +6,11 @@ use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Model\Locale;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
@@ -136,6 +138,15 @@ class WordEntryPointTest extends BasicSetup
         $serializerWrapper = static::$container->get(SerializerWrapper::class);
         /** @var PresentationModelDataProvider $presentationLayerDataProvider */
         $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
+
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+        /** @var Locale $localeModel */
+        $localeModel = $presentationLayerDataProvider->getLocaleModel([
+            'name' => 'en',
+        ]);
+
+        $localeEntryPoint->create($localeModel);
         /** @var Language $languageModel */
         $languageModel = $presentationLayerDataProvider->getLanguageModel(
             $presentationLayerDataProvider->getImageModel()

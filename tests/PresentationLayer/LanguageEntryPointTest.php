@@ -2,9 +2,11 @@
 
 namespace App\Tests\PresentationLayer;
 
+use App\PresentationLayer\Model\Locale;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\Library\Http\Request\PaginatedRequest;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
@@ -24,9 +26,17 @@ class LanguageEntryPointTest extends BasicSetup
         $languageModel = $presentationModelDataProvider->getLanguageModel(
             $presentationModelDataProvider->getImageModel()
         );
-
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => 'en',
+        ]);
+
+        $localeEntryPoint->create($localeModel);
 
         /** @var Response $response */
         $response = $languageEntryPoint->create($languageModel);
@@ -64,6 +74,16 @@ class LanguageEntryPointTest extends BasicSetup
     {
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => 'en',
+        ]);
+
+        $localeEntryPoint->create($localeModel);
 
         /** @var Language $languageModel */
         $languageModel = $presentationModelDataProvider->getLanguageModel(
@@ -128,6 +148,18 @@ class LanguageEntryPointTest extends BasicSetup
 
     public function test_get_languages()
     {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => 'en',
+        ]);
+
+        $localeEntryPoint->create($localeModel);
+
         $langNum = 10;
         $this->createLanguages($langNum);
 
