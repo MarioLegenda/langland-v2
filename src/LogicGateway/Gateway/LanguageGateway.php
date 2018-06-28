@@ -4,6 +4,7 @@ namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
+use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
@@ -78,13 +79,13 @@ class LanguageGateway
         return $layerPropagationResponse;
     }
     /**
-     * @param PaginatedRequestInterface $paginatedRequest
+     * @param PaginatedInternalizedRequestInterface $paginatedInternalizedRequest
      * @return LayerPropagationCollectionResponse
      */
-    public function getLanguages(PaginatedRequestInterface $paginatedRequest): LayerPropagationCollectionResponse
+    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): LayerPropagationCollectionResponse
     {
         /** @var LanguageCollection $languages */
-        $languages = $this->logic->getLanguages($paginatedRequest);
+        $languages = $this->logic->getLanguages($paginatedInternalizedRequest);
 
         return $languages;
     }

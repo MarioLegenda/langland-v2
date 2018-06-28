@@ -2,6 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
+use App\Library\Http\Request\PaginatedInternalizedRequest;
 use App\PresentationLayer\Model\Locale;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\Library\Http\Request\PaginatedRequest;
@@ -153,59 +154,74 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var LocaleEntryPoint $localeEntryPoint */
         $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
 
-        /** @var Locale $localeModel */
-        $localeModel = $presentationModelDataProvider->getLocaleModel([
+        /** @var Locale $enLocaleModel */
+        $enLocaleModel = $presentationModelDataProvider->getLocaleModel([
             'name' => 'en',
         ]);
 
-        $localeEntryPoint->create($localeModel);
+        $localeEntryPoint->create($enLocaleModel);
+
+        /** @var Locale $frLocaleModel */
+        $frLocaleModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => 'fr',
+        ]);
+
+        $localeEntryPoint->create($frLocaleModel);
 
         $langNum = 10;
-        $this->createLanguages($langNum, $localeModel);
+        $this->createLanguages($langNum, $enLocaleModel);
+        $this->createLanguages($langNum, $frLocaleModel);
 
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
 
         $limit = 0;
+        $locales = [$enLocaleModel, $frLocaleModel];
         for ($i = 0; $i < $langNum; $i++) {
-            $paginatedRequest = new PaginatedRequest(
-                0,
-                $limit
-            );
+            /** @var Locale $locale */
+            foreach ($locales as $locale) {
+                $paginatedRequest = new PaginatedInternalizedRequest(
+                    0,
+                    $limit,
+                    $locale->getName()
+                );
 
-            $languages = $languageEntryPoint->getLanguages($paginatedRequest);
+                $languages = $languageEntryPoint->getLanguages($paginatedRequest);
 
-            static::assertInstanceOf(Response::class, $languages);
-            static::assertEquals(200, $languages->getStatusCode());
+                static::assertInstanceOf(Response::class, $languages);
+                static::assertEquals(200, $languages->getStatusCode());
 
-            static::assertInstanceOf(Response::class, $languages);
+                static::assertInstanceOf(Response::class, $languages);
 
-            $responseData = json_decode($languages->getContent(), true)['collection']['data'];
+                $responseData = json_decode($languages->getContent(), true)['collection']['data'];
 
-            static::assertEquals(count($responseData), $limit);
+                static::assertEquals(count($responseData), $limit);
 
-            foreach ($responseData as $data) {
-                static::assertInternalType('int', $data['id']);
-                static::assertNotEmpty($data['name']);
-                static::assertInternalType('bool', $data['showOnPage']);
-                static::assertNotEmpty($data['description']);
-                static::assertInternalType('array', $data['image']);
-                static::assertNotEmpty($data['image']);
-                static::assertInternalType('string', $data['locale']);
-                static::assertNotEmpty($data['locale']);
-                static::assertTrue(Util::isValidDate($data['createdAt']));
-                static::assertNull($data['updatedAt']);
+                foreach ($responseData as $data) {
+                    static::assertInternalType('int', $data['id']);
+                    static::assertNotEmpty($data['name']);
+                    static::assertInternalType('bool', $data['showOnPage']);
+                    static::assertNotEmpty($data['description']);
+                    static::assertInternalType('array', $data['image']);
+                    static::assertNotEmpty($data['image']);
+                    static::assertInternalType('string', $data['locale']);
+                    static::assertNotEmpty($data['locale']);
+                    static::assertTrue(Util::isValidDate($data['createdAt']));
+                    static::assertNull($data['updatedAt']);
 
-                $image = $data['image'];
+                    $image = $data['image'];
 
-                static::assertInternalType('int', $image['id']);
-                static::assertNotEmpty($image['name']);
-                static::assertNotEmpty($image['relativePath']);
-                static::assertTrue(Util::isValidDate($image['createdAt']));
-                static::assertNull($image['updatedAt']);
+                    static::assertInternalType('int', $image['id']);
+                    static::assertNotEmpty($image['name']);
+                    static::assertNotEmpty($image['relativePath']);
+                    static::assertTrue(Util::isValidDate($image['createdAt']));
+                    static::assertNull($image['updatedAt']);
+                }
+
+                $limit++;
             }
 
-            $limit++;
+            $limit = 0;
         }
     }
     /**

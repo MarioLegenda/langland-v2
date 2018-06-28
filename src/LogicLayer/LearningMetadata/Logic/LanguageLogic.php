@@ -5,6 +5,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 use App\DataSourceGateway\Gateway\LanguageGateway;
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
+use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Image;
@@ -63,13 +64,13 @@ class LanguageLogic implements LogicInterface
         return new LanguageResponseModel($newLanguage);
     }
     /**
-     * @param PaginatedRequestInterface $paginatedRequest
+     * @param PaginatedInternalizedRequestInterface $paginatedInternalizedRequest
      * @return LayerPropagationCollectionResponse
      */
-    public function getLanguages(PaginatedRequestInterface $paginatedRequest): LayerPropagationCollectionResponse
+    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): LayerPropagationCollectionResponse
     {
         /** @var DomainModelInterface[]|Language[]|iterable $languages */
-        $languages = $this->languageGateway->getLanguages($paginatedRequest);
+        $languages = $this->languageGateway->getLanguages($paginatedInternalizedRequest);
 
         $languageModels = [];
         /** @var DomainModelInterface|Language $language */

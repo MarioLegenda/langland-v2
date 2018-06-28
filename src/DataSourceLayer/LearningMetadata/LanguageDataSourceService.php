@@ -8,6 +8,7 @@ use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
+use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 
@@ -78,16 +79,17 @@ class LanguageDataSourceService
         return $this->languageRepository->persistAndFlush($language);
     }
     /**
-     * @param PaginatedRequestInterface $paginatedRequest
+     * @param PaginatedInternalizedRequestInterface $paginatedInternalizedRequest
      * @return iterable|DataSourceEntity[]
      */
-    public function getLanguages(PaginatedRequestInterface $paginatedRequest): iterable
+    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): iterable
     {
-        $languages = $this->languageRepository->findBy(
-            [],
+        $languages = $this->languageRepository->findBy([
+                'locale' => $paginatedInternalizedRequest->getLocale(),
+            ],
             null,
-            $paginatedRequest->getLimit(),
-            $paginatedRequest->getOffset()
+            $paginatedInternalizedRequest->getLimit(),
+            $paginatedInternalizedRequest->getOffset()
         );
 
         return $languages;
