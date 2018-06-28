@@ -13,6 +13,10 @@ class Category implements DomainModelInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var \DateTime $createdAt
      */
     private $createdAt;
@@ -41,7 +45,20 @@ class Category implements DomainModelInterface
     {
         $this->name = $name;
     }
-
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
+    }
     /**
      * @param \DateTime $createdAt
      */

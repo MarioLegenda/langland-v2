@@ -15,6 +15,10 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @return int
      */
     public function getId(): int
@@ -29,6 +33,13 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
      * @return iterable
      */
     public function toArray(): iterable
@@ -36,6 +47,7 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
+            'locale' => $this->getLocale(),
         ];
     }
 }

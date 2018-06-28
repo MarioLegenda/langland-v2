@@ -4,10 +4,13 @@ namespace App\Tests\PresentationLayer;
 
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\Model\Category;
+use App\PresentationLayer\Model\Locale;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
+use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
@@ -22,9 +25,11 @@ class CategoryEntryPointTest extends BasicSetup
         $categoryEntryPoint = static::$container->get(CategoryEntryPoint::class);
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
+        /** @var Locale $localeModel */
+        $localeModel = $this->createLocale();
 
         /** @var Category $categoryModel */
-        $categoryModel = $presentationModelDataProvider->getCategoryModel();
+        $categoryModel = $presentationModelDataProvider->getCategoryModel($localeModel);
 
         /** @var Response $response */
         $response = $categoryEntryPoint->create($categoryModel);
@@ -36,6 +41,8 @@ class CategoryEntryPointTest extends BasicSetup
 
         static::assertInternalType('int', $data['id']);
         static::assertNotEmpty($data['name']);
+        static::assertInternalType('string', $data['locale']);
+        static::assertNotEmpty($data['locale']);
         static::assertTrue(Util::isValidDate($data['createdAt']));
         static::assertNull($data['updatedAt']);
 
@@ -52,9 +59,10 @@ class CategoryEntryPointTest extends BasicSetup
         $categoryEntryPoint = static::$container->get(CategoryEntryPoint::class);
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
-
+        /** @var Locale $localeModel */
+        $localeModel = $this->createLocale();
         /** @var Category $categoryModel */
-        $categoryModel = $presentationModelDataProvider->getCategoryModel();
+        $categoryModel = $presentationModelDataProvider->getCategoryModel($localeModel);
 
         /** @var Response $response */
         $response = $categoryEntryPoint->create($categoryModel);
@@ -63,6 +71,8 @@ class CategoryEntryPointTest extends BasicSetup
 
         static::assertInternalType('int', $data['id']);
         static::assertNotEmpty($data['name']);
+        static::assertInternalType('string', $data['locale']);
+        static::assertNotEmpty($data['locale']);
         static::assertTrue(Util::isValidDate($data['createdAt']));
         static::assertNull($data['updatedAt']);
 
@@ -95,5 +105,34 @@ class CategoryEntryPointTest extends BasicSetup
         }
 
         static::assertTrue($enteredException);
+    }
+    /**
+     * @param string $name
+     * @return Locale
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function createLocale(string $name = 'en'): Locale
+    {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => $name,
+        ]);
+
+        $response = $localeEntryPoint->create($localeModel);
+
+        $data = json_decode($response->getContent(), true)['resource']['data'];
+
+        /** @var SerializerWrapper $serializerWrapper */
+        $serializerWrapper = $this->locator->get(SerializerWrapper::class);
+        /** @var Locale $localeModel */
+        $localeModel = $serializerWrapper->deserialize($data, Locale::class);
+
+        return $localeModel;
     }
 }

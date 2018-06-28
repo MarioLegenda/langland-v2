@@ -82,12 +82,15 @@ class PresentationModelDataProvider
         return $language;
     }
     /**
+     * @param Locale $locale
      * @return Category
      */
-    public function getCategoryModel(): Category
-    {
+    public function getCategoryModel(
+        Locale $locale = null
+    ): Category {
         $modelBlueprint = [
             'name' => $this->faker()->name,
+            'locale' => $locale->getName(),
         ];
 
         /** @var Category $category */

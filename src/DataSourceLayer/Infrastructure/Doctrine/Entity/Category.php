@@ -37,6 +37,11 @@ class Category implements DataSourceEntity
      */
     protected $name;
     /**
+     * @var string $locale
+     * @Column(type="string")
+     */
+    protected $locale;
+    /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
      */
@@ -59,6 +64,13 @@ class Category implements DataSourceEntity
     public function getName()
     {
         return $this->name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
     /**
      * @param string $name

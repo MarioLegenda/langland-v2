@@ -30,6 +30,7 @@ class Lesson implements LayerPropagationResourceResponse
             'id' => $this->lesson->getId(),
             'name' => $this->lesson->getName(),
             'temporaryText' => $this->lesson->getTemporaryText(),
+            'locale' => $this->lesson->getLocale(),
             'createdAt' => Util::formatFromDate($this->lesson->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->lesson->getUpdatedAt()),
         ];

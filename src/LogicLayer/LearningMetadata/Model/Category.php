@@ -28,6 +28,7 @@ class Category implements LayerPropagationResourceResponse
         return [
             'id' => $this->category->getId(),
             'name' => $this->category->getName(),
+            'locale' => $this->category->getLocale(),
             'createdAt' => Util::formatFromDate($this->category->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->category->getUpdatedAt()),
         ];
