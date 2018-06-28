@@ -2,6 +2,10 @@
 
 namespace App\Symfony\Command;
 
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
@@ -24,19 +28,33 @@ class CreateCategory extends BaseCommand
      */
     private $modelValidator;
     /**
+     * @var CategoryRepository $categoryRepository
+     */
+    private $categoryRepository;
+    /**
+     * @var LocaleRepository $localeRepository
+     */
+    private $localeRepository;
+    /**
      * CreateLanguage constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param CategoryEntryPoint $categoryEntryPoint
+     * @param CategoryRepository $categoryRepository
      * @param ModelValidator $modelValidator
+     * @param LocaleRepository $localeRepository
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
         CategoryEntryPoint $categoryEntryPoint,
-        ModelValidator $modelValidator
+        CategoryRepository $categoryRepository,
+        ModelValidator $modelValidator,
+        LocaleRepository $localeRepository
     ) {
         $this->categoryEntryPoint = $categoryEntryPoint;
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
+        $this->categoryRepository = $categoryRepository;
+        $this->localeRepository = $localeRepository;
 
         parent::__construct();
     }
@@ -55,7 +73,44 @@ class CreateCategory extends BaseCommand
         $this->makeEasier($input, $output);
 
         $answers = $this->askQuestions([
-            'name' => 'Category name: ',
+            'name' => [
+                'question' => 'Category name: ',
+                'validator' => function($value) {
+                    $existingCategory = $this->categoryRepository->findOneBy([
+                        'name' => $value
+                    ]);
+
+                    if ($existingCategory instanceof Category) {
+                        $message = sprintf(
+                            'Category with name \'%s\'',
+                            $value
+                        );
+
+                        throw new \RuntimeException($message);
+                    }
+
+                    return $value;
+                }
+            ],
+            'locale' => [
+                'question' => 'Locale: ',
+                'validator' => function($value) {
+                    $existingLocale = $this->localeRepository->findOneBy([
+                        'name' => $value,
+                    ]);
+
+                    if (!$existingLocale instanceof Locale) {
+                        $message = sprintf(
+                            'Locale \'%s\' does not exist. Add it with \'php bin/console app:create-locale\' command',
+                            $value
+                        );
+
+                        throw new \RuntimeException($message);
+                    }
+
+                    return $value;
+                }
+            ],
         ]);
 
         $progressBar = $this->getDefaultProgressBar();
