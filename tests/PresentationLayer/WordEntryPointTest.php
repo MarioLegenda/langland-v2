@@ -28,8 +28,10 @@ class WordEntryPointTest extends BasicSetup
         /** @var PresentationModelDataProvider $presentationLayerDataProvider */
         $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
 
+        /** @var Locale $localeModel */
+        $localeModel = $this->createLocale();
         /** @var Language $language */
-        $language = $this->createLanguage();
+        $language = $this->createLanguage($localeModel);
         /** @var CollectionEntity $categories */
         $categories = $this->createCategoryEntityCollection();
         /** @var Image $image */
@@ -128,28 +130,25 @@ class WordEntryPointTest extends BasicSetup
         static::assertNull($image['updatedAt']);
     }
     /**
+     * @param Locale $locale
      * @return Language
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    private function createLanguage(): Language
+    private function createLanguage(Locale $locale = null): Language
     {
+        if (!$locale instanceof Locale) {
+            $locale = $this->createLocale();
+        }
+
         /** @var SerializerWrapper $serializerWrapper */
         $serializerWrapper = static::$container->get(SerializerWrapper::class);
         /** @var PresentationModelDataProvider $presentationLayerDataProvider */
         $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
-
-        /** @var LocaleEntryPoint $localeEntryPoint */
-        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
-        /** @var Locale $localeModel */
-        $localeModel = $presentationLayerDataProvider->getLocaleModel([
-            'name' => 'en',
-        ]);
-
-        $localeEntryPoint->create($localeModel);
         /** @var Language $languageModel */
         $languageModel = $presentationLayerDataProvider->getLanguageModel(
-            $presentationLayerDataProvider->getImageModel()
+            $presentationLayerDataProvider->getImageModel(),
+            $locale
         );
 
         /** @var LanguageEntryPoint $languageEntryPoint */
@@ -192,5 +191,34 @@ class WordEntryPointTest extends BasicSetup
             $categories->addMetadata($categoryMetadata);
         }
         return $categories;
+    }
+    /**
+     * @param string $name
+     * @return Locale
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function createLocale(string $name = 'en'): Locale
+    {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => $name,
+        ]);
+
+        $response = $localeEntryPoint->create($localeModel);
+
+        $data = json_decode($response->getContent(), true)['resource']['data'];
+
+        /** @var SerializerWrapper $serializerWrapper */
+        $serializerWrapper = $this->locator->get(SerializerWrapper::class);
+        /** @var Locale $localeModel */
+        $localeModel = $serializerWrapper->deserialize($data, Locale::class);
+
+        return $localeModel;
     }
 }

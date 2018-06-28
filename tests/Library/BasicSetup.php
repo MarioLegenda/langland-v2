@@ -42,9 +42,5 @@ class BasicSetup extends WebTestCase
         $conn->exec('TRUNCATE TABLE locales');
 
         $conn->exec('SET FOREIGN_KEY_CHECKS=1');
-/*
-        exec('/usr/bin/php bin/console do:da:dr --force');
-        exec('/usr/bin/php bin/console do:da:cr');
-        exec('/usr/bin/php bin/console do:sc:up --force');*/
     }
 }

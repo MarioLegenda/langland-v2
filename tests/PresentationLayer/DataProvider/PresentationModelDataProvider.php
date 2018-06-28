@@ -33,13 +33,16 @@ class PresentationModelDataProvider
     }
     /**
      * @param Image $image
+     * @param Locale $locale
      * @return Language
      */
-    public function getLanguageModel(Image $image): Language
-    {
+    public function getLanguageModel(
+        Image $image,
+        Locale $locale
+    ): Language {
         $modelBlueprint = [
             'name' => $this->faker()->name,
-            'locale' => 'en',
+            'locale' => $locale->getName(),
             'showOnPage' => false,
             'description' => $this->faker()->sentence(30),
             'image' => $image,

@@ -11,6 +11,7 @@ use App\PresentationLayer\Model\Language;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;
+use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
@@ -22,21 +23,17 @@ class LanguageEntryPointTest extends BasicSetup
         $languageRepository = $this->locator->get(LanguageRepository::class);
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        /** @var Locale $localeModel */
+        $localeModel = $this->createLocale();
+
         /** @var Language $languageModel */
         $languageModel = $presentationModelDataProvider->getLanguageModel(
-            $presentationModelDataProvider->getImageModel()
+            $presentationModelDataProvider->getImageModel(),
+            $localeModel
         );
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
-        /** @var LocaleEntryPoint $localeEntryPoint */
-        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
-
-        /** @var Locale $localeModel */
-        $localeModel = $presentationModelDataProvider->getLocaleModel([
-            'name' => 'en',
-        ]);
-
-        $localeEntryPoint->create($localeModel);
 
         /** @var Response $response */
         $response = $languageEntryPoint->create($languageModel);
@@ -87,7 +84,8 @@ class LanguageEntryPointTest extends BasicSetup
 
         /** @var Language $languageModel */
         $languageModel = $presentationModelDataProvider->getLanguageModel(
-            $presentationModelDataProvider->getImageModel()
+            $presentationModelDataProvider->getImageModel(),
+            $localeModel
         );
 
         /** @var LanguageEntryPoint $languageEntryPoint */
@@ -161,7 +159,7 @@ class LanguageEntryPointTest extends BasicSetup
         $localeEntryPoint->create($localeModel);
 
         $langNum = 10;
-        $this->createLanguages($langNum);
+        $this->createLanguages($langNum, $localeModel);
 
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
@@ -207,19 +205,52 @@ class LanguageEntryPointTest extends BasicSetup
         }
     }
     /**
-     * @param int $langNum
+     * @param string $name
+     * @return Locale
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    private function createLanguages(int $langNum)
+    private function createLocale(string $name = 'en'): Locale
     {
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
+
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = $this->locator->get(LocaleEntryPoint::class);
+        /** @var Locale $localeModel */
+        $localeModel = $presentationModelDataProvider->getLocaleModel([
+            'name' => $name,
+        ]);
+
+        $response = $localeEntryPoint->create($localeModel);
+
+        $data = json_decode($response->getContent(), true)['resource']['data'];
+
+        /** @var SerializerWrapper $serializerWrapper */
+        $serializerWrapper = $this->locator->get(SerializerWrapper::class);
+        /** @var Locale $localeModel */
+        $localeModel = $serializerWrapper->deserialize($data, Locale::class);
+
+        return $localeModel;
+    }
+    /**
+     * @param int $langNum
+     * @param Locale $locale
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function createLanguages(
+        int $langNum,
+        Locale $locale
+    ) {
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = $this->locator->get(PresentationModelDataProvider::class);
 
         for ($i = 0; $i < $langNum; $i++) {
             /** @var Language $languageModel */
             $languageModel = $presentationModelDataProvider->getLanguageModel(
-                $presentationModelDataProvider->getImageModel()
+                $presentationModelDataProvider->getImageModel(),
+                $locale
             );
 
             /** @var LanguageEntryPoint $languageEntryPoint */
