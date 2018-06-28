@@ -15,6 +15,10 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var string $temporaryText
      */
     private $temporaryText;
@@ -39,6 +43,13 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
     /**
      * @return string
      */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @return string
+     */
     public function getTemporaryText(): string
     {
         return $this->temporaryText;
@@ -59,6 +70,7 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
             'id' => $this->getId(),
             'name' => $this->getName(),
             'temporaryText' => $this->getTemporaryText(),
+            'locale' => $this->getLocale(),
         ];
     }
 }

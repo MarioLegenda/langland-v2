@@ -195,12 +195,16 @@ class PresentationModelDataProvider
     }
     /**
      * @param Language $language
+     * @param Locale $locale
      * @return Lesson
      */
-    public function getLessonModel(Language $language): Lesson
-    {
+    public function getLessonModel(
+        Language $language,
+        Locale $locale
+    ): Lesson {
         $modelBlueprint = [
             'name' => $this->faker()->name,
+            'locale' => $locale->getName(),
             'temporaryText' => $this->faker()->sentence(20),
             'language' => $language->toArray(),
         ];

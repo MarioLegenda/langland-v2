@@ -2,6 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LessonRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LessonEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
@@ -27,7 +28,8 @@ class LessonEntryPointTest extends BasicSetup
 
         /** @var LessonPresentationModel $lessonPresentationModel */
         $lessonPresentationModel = $presentationModelDataProvider->getLessonModel(
-            $this->createLanguage($localeModel)
+            $this->createLanguage($localeModel),
+            $localeModel
         );
 
         $response = $lessonEntryPoint->create($lessonPresentationModel);
@@ -47,6 +49,13 @@ class LessonEntryPointTest extends BasicSetup
 
         static::assertTrue(Util::isValidDate($responseData['createdAt']));
         static::assertNull($responseData['updatedAt']);
+        /** @var LessonRepository $lessonRepository */
+        $lessonRepository = $this->locator->get(LessonRepository::class);
+
+        $lessonRepository->findOneBy([
+            'name' => $lessonPresentationModel->getName(),
+            'locale' => $lessonPresentationModel->getLocale(),
+        ]);
     }
     /**
      * @param Locale $locale

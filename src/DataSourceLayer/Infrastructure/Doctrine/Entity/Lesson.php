@@ -34,6 +34,11 @@ class Lesson implements DataSourceEntity
      */
     private $name;
     /**
+     * @var string $locale
+     * @Column(type="string")
+     */
+    private $locale;
+    /**
      * @var string $name
      * @Column(type="string")
      */
@@ -74,6 +79,20 @@ class Lesson implements DataSourceEntity
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return string

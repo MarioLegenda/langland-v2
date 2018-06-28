@@ -13,6 +13,10 @@ class Lesson implements DomainModelInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var string $temporaryText
      */
     private $temporaryText;
@@ -41,6 +45,13 @@ class Lesson implements DomainModelInterface
     public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
     /**
      * @return string
