@@ -173,13 +173,20 @@ class PresentationModelDataProvider
         return $word;
     }
     /**
+     * @param Locale $locale
      * @return Translation
      */
-    public function getTranslationModel(): Translation
+    public function getTranslationModel(Locale $locale = null): Translation
     {
+        if (!$locale instanceof Locale) {
+            $locale = $this->getLocaleModel([
+                'name' => 'en'
+            ]);
+        }
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'valid' => (bool) rand(0, 1),
+            'locale' => $locale->getName(),
         ];
 
         /** @var Translation $translation */

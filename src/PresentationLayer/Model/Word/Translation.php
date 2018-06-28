@@ -16,6 +16,10 @@ class Translation implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var bool $valid
      */
     private $valid;
@@ -34,6 +38,13 @@ class Translation implements PresentationModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
      * @return bool
      */
     public function isValid(): bool
@@ -49,6 +60,7 @@ class Translation implements PresentationModelInterface, ArrayNotationInterface
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
             'valid' => $this->isValid(),
+            'locale' => $this->getLocale(),
         ];
     }
 }

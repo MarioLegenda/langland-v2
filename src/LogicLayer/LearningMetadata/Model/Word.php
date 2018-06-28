@@ -79,6 +79,7 @@ class Word implements LayerPropagationResourceResponse
             $temp['id'] = $translation->getId();
             $temp['name'] = $translation->getName();
             $temp['valid'] = $translation->isValid();
+            $temp['locale'] = $translation->getLocale();
             $temp['createdAt'] = Util::formatFromDate($translation->getCreatedAt());
             $temp['updatedAt'] = Util::formatFromDate($translation->getUpdatedAt());
 
@@ -107,6 +108,7 @@ class Word implements LayerPropagationResourceResponse
     {
         return [
             'id' => $this->word->getLanguage()->getId(),
+            'locale' => $this->word->getLanguage()->getLocale(),
             'name' => $this->word->getLanguage()->getName(),
             'createdAt' => Util::formatFromDate($this->word->getLanguage()->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->word->getLanguage()->getUpdatedAt()),

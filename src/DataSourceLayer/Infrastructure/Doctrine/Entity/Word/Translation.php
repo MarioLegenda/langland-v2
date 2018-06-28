@@ -34,6 +34,11 @@ class Translation implements DataSourceEntity
      */
     private $name;
     /**
+     * @var string $locale
+     * @Column(type="string")
+     */
+    private $locale;
+    /**
      * @var bool $valid
      * @Column(type="boolean")
      */
@@ -81,6 +86,20 @@ class Translation implements DataSourceEntity
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return bool

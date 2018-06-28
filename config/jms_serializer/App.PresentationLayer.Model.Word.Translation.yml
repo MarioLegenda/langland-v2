@@ -11,6 +11,11 @@ App\PresentationLayer\Model\Word\Translation:
             groups: [default]
             type: string
 
+        locale:
+            expose: true
+            groups: [default]
+            type: string
+
         valid:
             expose: true
             groups: [default]

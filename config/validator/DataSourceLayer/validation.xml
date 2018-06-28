@@ -190,4 +190,35 @@
         </property>
     </class>
 
+    <class name="App\LogicLayer\Domain\Word\Translation">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="valid">
+            <constraint name="Type">
+                <option name="type">bool</option>
+                <option name="message">'valid' should be a boolean</option>
+            </constraint>
+        </property>
+
+        <property name="locale">
+            <constraint name="NotBlank">
+                <option name="message">'locale' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'locale' should be a boolean</option>
+            </constraint>
+        </property>
+    </class>
+
 </constraint-mapping>

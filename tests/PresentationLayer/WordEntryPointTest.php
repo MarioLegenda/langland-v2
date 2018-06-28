@@ -11,10 +11,12 @@ use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
 use App\PresentationLayer\Model\Category;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\Locale;
+use App\PresentationLayer\Model\Word\Translation;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use Library\Infrastructure\Helper\TypedArray;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use App\PresentationLayer\Model\Image;
@@ -37,10 +39,16 @@ class WordEntryPointTest extends BasicSetup
         /** @var Image $image */
         $image = $presentationLayerDataProvider->getImageModel();
 
+        $translations = TypedArray::create('integer', Translation::class);
+        for ($i = 0; $i < 5; $i++) {
+            $translations[] = $presentationLayerDataProvider->getTranslationModel($localeModel);
+        }
+
         $wordPresentationModel = $presentationLayerDataProvider->getCreateWordModel(
             $language,
             $categories,
-            $image
+            $image,
+            $translations
         );
 
         $response = $wordEntryPoint->create($wordPresentationModel);
@@ -79,6 +87,8 @@ class WordEntryPointTest extends BasicSetup
         static::assertInternalType('int', $language['id']);
         static::assertInternalType('string', $language['name']);
         static::assertNotEmpty($language['name']);
+        static::assertInternalType('string', $language['locale']);
+        static::assertNotEmpty($language['locale']);
         static::assertInternalType('string', $language['createdAt']);
         static::assertNotEmpty($language['createdAt']);
         static::assertTrue(Util::isValidDate($language['createdAt']));
@@ -102,6 +112,9 @@ class WordEntryPointTest extends BasicSetup
             static::assertInternalType('string', $translation['name']);
 
             static::assertInternalType('bool', $translation['valid']);
+
+            static::assertInternalType('string', $translation['locale']);
+            static::assertNotEmpty($translation['locale']);
 
             static::assertInternalType('string', $translation['createdAt']);
             static::assertTrue(Util::isValidDate($translation['createdAt']));

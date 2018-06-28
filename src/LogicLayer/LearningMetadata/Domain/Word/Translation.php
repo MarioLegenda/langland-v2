@@ -16,6 +16,10 @@ class Translation implements DomainModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $locale
+     */
+    private $locale;
+    /**
      * @var bool $valid
      */
     private $valid;
@@ -42,22 +46,32 @@ class Translation implements DomainModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
+    }
+    /**
      * @return bool
      */
     public function isValid(): bool
     {
         return $this->valid;
-    }
-    /**
-     * @return iterable
-     */
-    public function toArray(): iterable
-    {
-        return [
-            'id' => (is_int($this->id)) ? $this->getId() : null,
-            'name' => $this->getName(),
-            'valid' => $this->isValid(),
-        ];
     }
     /**
      * @return \DateTime
@@ -86,5 +100,17 @@ class Translation implements DomainModelInterface, ArrayNotationInterface
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'valid' => $this->isValid(),
+            'locale' => $this->getLocale(),
+        ];
     }
 }
