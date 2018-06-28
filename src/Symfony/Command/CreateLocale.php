@@ -2,7 +2,9 @@
 
 namespace App\Symfony\Command;
 
+use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
 use App\PresentationLayer\Model\Locale;
+use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale as LocaleDataSourceModel;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
@@ -24,19 +26,26 @@ class CreateLocale extends BaseCommand
      */
     private $modelValidator;
     /**
+     * @var LocaleRepository $localeRepository
+     */
+    private $localeRepository;
+    /**
      * CreateLanguage constructor.
      * @param SerializerWrapper $serializerWrapper
      * @param LocaleEntryPoint $localeEntryPoint
      * @param ModelValidator $modelValidator
+     * @param LocaleRepository $localeRepository
      */
     public function __construct(
         SerializerWrapper $serializerWrapper,
         LocaleEntryPoint $localeEntryPoint,
+        LocaleRepository $localeRepository,
         ModelValidator $modelValidator
     ) {
         $this->localeEntryPoint = $localeEntryPoint;
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
+        $this->localeRepository = $localeRepository;
 
         parent::__construct();
     }
@@ -57,7 +66,25 @@ class CreateLocale extends BaseCommand
         $this->makeEasier($input, $output);
 
         $answers = $this->askQuestions([
-            'name' => 'Locale name: ',
+            'name' => [
+                'question' => 'Locale name: ',
+                'validator' => function($value) {
+                    $locale = $this->localeRepository->findOneBy([
+                        'name' => $value,
+                    ]);
+
+                    if ($locale instanceof LocaleDataSourceModel) {
+                        $message = sprintf(
+                            'Locale \'%s\' already exists',
+                            $value
+                        );
+
+                        throw new \RuntimeException($message);
+                    }
+
+                    return $value;
+                }
+            ],
         ]);
 
         $progressBar = $this->getDefaultProgressBar();
