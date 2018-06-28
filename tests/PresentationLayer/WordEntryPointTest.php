@@ -33,7 +33,7 @@ class WordEntryPointTest extends BasicSetup
         /** @var Language $language */
         $language = $this->createLanguage($localeModel);
         /** @var CollectionEntity $categories */
-        $categories = $this->createCategoryEntityCollection();
+        $categories = $this->createCategoryEntityCollection($localeModel);
         /** @var Image $image */
         $image = $presentationLayerDataProvider->getImageModel();
 
@@ -162,10 +162,12 @@ class WordEntryPointTest extends BasicSetup
         return $newLanguage;
     }
     /**
+     * @param Locale $locale
      * @return CollectionEntity
      */
-    private function createCategoryEntityCollection(): CollectionEntity
-    {
+    private function createCategoryEntityCollection(
+        Locale $locale
+    ): CollectionEntity {
         /** @var SerializerWrapper $serializerWrapper */
         $serializerWrapper = static::$container->get(SerializerWrapper::class);
         /** @var PresentationModelDataProvider $presentationLayerDataProvider */
@@ -176,7 +178,7 @@ class WordEntryPointTest extends BasicSetup
         $categories = new CollectionEntity();
         for ($i = 0; $i < 5; $i++) {
             /** @var Category $categoryModel */
-            $categoryModel = $presentationLayerDataProvider->getCategoryModel();
+            $categoryModel = $presentationLayerDataProvider->getCategoryModel($locale);
 
             $data = json_decode($categoryEntryPoint->create($categoryModel)->getContent(), true);
 

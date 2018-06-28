@@ -102,6 +102,8 @@ class LanguageEntryPointTest extends BasicSetup
         static::assertNotEmpty($data['description']);
         static::assertInternalType('array', $data['image']);
         static::assertNotEmpty($data['image']);
+        static::assertInternalType('string', $data['locale']);
+        static::assertNotEmpty($data['locale']);
         static::assertTrue(Util::isValidDate($data['createdAt']));
         static::assertNull($data['updatedAt']);
 
@@ -189,6 +191,8 @@ class LanguageEntryPointTest extends BasicSetup
                 static::assertNotEmpty($data['description']);
                 static::assertInternalType('array', $data['image']);
                 static::assertNotEmpty($data['image']);
+                static::assertInternalType('string', $data['locale']);
+                static::assertNotEmpty($data['locale']);
                 static::assertTrue(Util::isValidDate($data['createdAt']));
                 static::assertNull($data['updatedAt']);
 
