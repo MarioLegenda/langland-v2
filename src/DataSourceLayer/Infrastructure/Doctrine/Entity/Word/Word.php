@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
 /**
@@ -27,7 +28,7 @@ use Library\Util\Util;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Word implements DataSourceEntity
+class Word implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -236,5 +237,21 @@ class Word implements DataSourceEntity
         foreach ($this->translations as $translation) {
             $translation->setWord($this);
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'description' => $this->getDescription(),
+            'level' => $this->getLevel(),
+            'pluralForm' => $this->getPluralForm(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

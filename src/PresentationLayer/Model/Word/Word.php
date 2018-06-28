@@ -5,10 +5,11 @@ namespace App\PresentationLayer\Model\Word;
 use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Model\Language;
 use App\PresentationLayer\Model\PresentationModelInterface;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use App\PresentationLayer\Model\Image;
 
-class Word implements PresentationModelInterface
+class Word implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -146,5 +147,19 @@ class Word implements PresentationModelInterface
                 ->buildViolation($validation['messages'])
                 ->addViolation();
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'description' => $this->getDescription(),
+            'level' => $this->getLevel(),
+            'pluralForm' => $this->getPluralForm(),
+        ];
     }
 }

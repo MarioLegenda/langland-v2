@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
 /**
@@ -20,7 +21,7 @@ use Library\Util\Util;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Translation implements DataSourceEntity
+class Translation implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -169,5 +170,19 @@ class Translation implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'valid' => $this->isValid(),
+            'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

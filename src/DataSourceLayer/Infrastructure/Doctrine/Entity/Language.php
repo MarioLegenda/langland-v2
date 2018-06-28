@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
 /**
@@ -25,7 +26,7 @@ use Library\Util\Util;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Language implements DataSourceEntity
+class Language implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -186,5 +187,20 @@ class Language implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'locale' => $this->getLocale(),
+            'showOnPage' => $this->getShowOnPage(),
+            'description' => $this->getDescription(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

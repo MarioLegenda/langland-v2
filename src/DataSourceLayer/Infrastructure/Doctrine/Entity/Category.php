@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
 /**
@@ -23,7 +24,7 @@ use Library\Util\Util;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Category implements DataSourceEntity
+class Category implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -120,5 +121,18 @@ class Category implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

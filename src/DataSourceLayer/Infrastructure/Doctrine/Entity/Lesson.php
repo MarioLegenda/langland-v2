@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 use Doctrine\ORM\Mapping\Table;
 
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping\Table;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Lesson implements DataSourceEntity
+class Lesson implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -163,5 +164,19 @@ class Lesson implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'temporaryText' => $this->getTemporaryText(),
+            'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

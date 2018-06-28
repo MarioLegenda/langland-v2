@@ -3,8 +3,10 @@
 namespace App\LogicLayer\LearningMetadata\Domain;
 
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
-class Image implements DomainModelInterface
+class Image implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -113,5 +115,18 @@ class Image implements DomainModelInterface
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'relativePath' => $this->getRelativePath(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

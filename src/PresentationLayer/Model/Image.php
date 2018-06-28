@@ -3,8 +3,9 @@
 namespace App\PresentationLayer\Model;
 
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 
-class Image implements PresentationModelInterface
+class Image implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -57,5 +58,16 @@ class Image implements PresentationModelInterface
     public function getRelativePath(): string
     {
         return $this->relativePath;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'relativePath' => $this->getRelativePath(),
+        ];
     }
 }

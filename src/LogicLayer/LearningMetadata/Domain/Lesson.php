@@ -2,7 +2,10 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-class Lesson implements DomainModelInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
+
+class Lesson implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -94,5 +97,19 @@ class Lesson implements DomainModelInterface
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'temporaryText' => $this->getTemporaryText(),
+            'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

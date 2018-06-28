@@ -6,8 +6,10 @@ use App\Infrastructure\Model\CollectionEntity;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Domain\Image;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
-class Word implements DomainModelInterface
+class Word implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -210,5 +212,21 @@ class Word implements DomainModelInterface
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'description' => $this->getDescription(),
+            'level' => $this->getLevel(),
+            'pluralForm' => $this->getPluralForm(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

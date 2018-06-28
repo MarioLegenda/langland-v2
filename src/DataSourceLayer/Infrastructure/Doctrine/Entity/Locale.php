@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
@@ -22,7 +23,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * )
  * @HasLifecycleCallbacks()
  **/
-class Locale implements DataSourceEntity
+class Locale implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -107,5 +108,17 @@ class Locale implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

@@ -3,8 +3,10 @@
 namespace App\LogicLayer\LearningMetadata\Domain;
 
 use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
-class Language implements DomainModelInterface
+class Language implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -83,7 +85,7 @@ class Language implements DomainModelInterface
     /**
      * @return bool
      */
-    public function isShowOnPage(): bool
+    public function getShowOnPage(): bool
     {
         return $this->showOnPage;
     }
@@ -143,5 +145,20 @@ class Language implements DomainModelInterface
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'locale' => $this->getLocale(),
+            'showOnPage' => $this->getShowOnPage(),
+            'description' => $this->getDescription(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

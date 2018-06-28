@@ -2,7 +2,10 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-class Category implements DomainModelInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
+
+class Category implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -86,5 +89,18 @@ class Category implements DomainModelInterface
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

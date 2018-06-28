@@ -2,7 +2,10 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain;
 
-class Locale implements DomainModelInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
+
+class Locale implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -68,5 +71,17 @@ class Locale implements DomainModelInterface
     public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
 class Translation implements DomainModelInterface, ArrayNotationInterface
 {
@@ -102,7 +103,7 @@ class Translation implements DomainModelInterface, ArrayNotationInterface
         $this->updatedAt = $updatedAt;
     }
     /**
-     * @return iterable
+     * @inheritdoc
      */
     public function toArray(): iterable
     {
@@ -111,6 +112,8 @@ class Translation implements DomainModelInterface, ArrayNotationInterface
             'name' => $this->getName(),
             'valid' => $this->isValid(),
             'locale' => $this->getLocale(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];
     }
 }

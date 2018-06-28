@@ -50,7 +50,7 @@ services:
     # LIBRARY
     Library\:
         resource: '../src/Library'
-        exclude: '../src/Library/Http/Request'
+        exclude: '../src/Library/{Http/Request}'
 
     Library\Http\Request\ResolvedRequestResolver:
         arguments:

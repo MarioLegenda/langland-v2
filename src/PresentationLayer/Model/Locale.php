@@ -2,7 +2,9 @@
 
 namespace App\PresentationLayer\Model;
 
-class Locale implements PresentationModelInterface
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+
+class Locale implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -25,5 +27,15 @@ class Locale implements PresentationModelInterface
     public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @return iterable
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
     }
 }
