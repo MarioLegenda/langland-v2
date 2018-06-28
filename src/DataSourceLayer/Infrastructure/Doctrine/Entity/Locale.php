@@ -33,12 +33,17 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
     private $id;
     /**
      * @var string $name
-     * @Column(type="string")
+     * @Column(type="string", nullable=false)
      */
     private $name;
     /**
+     * @var bool $default
+     * @Column(type="boolean", nullable=false, name="default_locale")
+     */
+    private $default = false;
+    /**
      * @var \DateTime $createdAt
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=false)
      */
     private $createdAt;
     /**
@@ -66,6 +71,20 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->default;
+    }
+    /**
+     * @param string $default
+     */
+    public function setDefault(string $default): void
+    {
+        $this->default = $default;
     }
     /**
      * @return \DateTime
@@ -117,6 +136,7 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'default' => $this->getDefault(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];

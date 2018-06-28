@@ -110,6 +110,7 @@ class LessonEntryPointTest extends BasicSetup
         /** @var Locale $localeModel */
         $localeModel = $presentationModelDataProvider->getLocaleModel([
             'name' => $name,
+            'default' => true,
         ]);
 
         $response = $localeEntryPoint->create($localeModel);

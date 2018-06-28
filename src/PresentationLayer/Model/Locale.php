@@ -15,6 +15,10 @@ class Locale implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var bool $default
+     */
+    private $default;
+    /**
      * @return int
      */
     public function getId(): int
@@ -29,6 +33,13 @@ class Locale implements PresentationModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->default;
+    }
+    /**
      * @return iterable
      */
     public function toArray(): iterable
@@ -36,6 +47,7 @@ class Locale implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'default' => $this->isDefault(),
         ];
     }
 }

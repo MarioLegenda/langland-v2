@@ -5,7 +5,6 @@ namespace App\Tests\PresentationLayer;
 use App\Library\Http\Request\PaginatedInternalizedRequest;
 use App\PresentationLayer\Model\Locale;
 use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\Library\Http\Request\PaginatedRequest;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\Model\Language;
@@ -79,6 +78,7 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Locale $localeModel */
         $localeModel = $presentationModelDataProvider->getLocaleModel([
             'name' => 'en',
+            'default' => true,
         ]);
 
         $localeEntryPoint->create($localeModel);
@@ -157,6 +157,7 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Locale $enLocaleModel */
         $enLocaleModel = $presentationModelDataProvider->getLocaleModel([
             'name' => 'en',
+            'default' => true,
         ]);
 
         $localeEntryPoint->create($enLocaleModel);
@@ -164,6 +165,7 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Locale $frLocaleModel */
         $frLocaleModel = $presentationModelDataProvider->getLocaleModel([
             'name' => 'fr',
+            'default' => false,
         ]);
 
         $localeEntryPoint->create($frLocaleModel);
@@ -240,6 +242,7 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var Locale $localeModel */
         $localeModel = $presentationModelDataProvider->getLocaleModel([
             'name' => $name,
+            'default' => true,
         ]);
 
         $response = $localeEntryPoint->create($localeModel);

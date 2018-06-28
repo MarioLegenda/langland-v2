@@ -61,6 +61,17 @@
                 <option name="message">'name' should be a boolean</option>
             </constraint>
         </property>
+
+        <property name="default">
+            <constraint name="NotNull">
+                <option name="message">'default' should not be null</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">bool</option>
+                <option name="message">'default' should be a boolean</option>
+            </constraint>
+        </property>
     </class>
 
     <class name="App\PresentationLayer\Model\Lesson">

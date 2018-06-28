@@ -5,7 +5,13 @@ App\PresentationLayer\Model\Locale:
             expose: true
             groups: [default]
             type: int
+
         name:
             expose: true
             groups: [default]
             type: string
+
+        default:
+            expose: true
+            groups: [default]
+            type: bool

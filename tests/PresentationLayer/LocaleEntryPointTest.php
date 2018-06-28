@@ -17,7 +17,10 @@ class LocaleEntryPointTest extends BasicSetup
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
 
-        $localeData = ['name' => 'en'];
+        $localeData = [
+            'name' => 'en',
+            'default' => true,
+        ];
 
         $localeModel = $presentationModelDataProvider->getLocaleModel($localeData);
 
@@ -43,7 +46,10 @@ class LocaleEntryPointTest extends BasicSetup
         /** @var PresentationModelDataProvider $presentationModelDataProvider */
         $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
 
-        $localeData = ['name' => 'en'];
+        $localeData = [
+            'name' => 'en',
+            'default' => true,
+        ];
 
         $localeModel = $presentationModelDataProvider->getLocaleModel($localeData);
 

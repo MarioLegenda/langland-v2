@@ -29,6 +29,7 @@ class Locale implements LayerPropagationResourceResponse
         return [
             'id' => $this->locale->getId(),
             'name' => $this->locale->getName(),
+            'default' => $this->locale->isDefault(),
             'createdAt' => Util::formatFromDate($this->locale->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->locale->getUpdatedAt()),
         ];

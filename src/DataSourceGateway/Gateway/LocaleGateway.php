@@ -59,6 +59,7 @@ class LocaleGateway
 
         /** @var LocaleDataSourceModel $newLocale */
         $newLocale = $this->localeDataSourceService->create($localeDataSourceEntity);
+
         /** @var LocaleDomainModel|DomainModelInterface $domainLocale */
         $domainLocale = $this->serializerWrapper->convertFromToByGroup(
             $newLocale,

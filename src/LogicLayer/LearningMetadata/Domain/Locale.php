@@ -16,6 +16,10 @@ class Locale implements DomainModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var bool $default
+     */
+    private $default = false;
+    /**
      * @var \DateTime $createdAt
      */
     private $createdAt;
@@ -43,6 +47,20 @@ class Locale implements DomainModelInterface, ArrayNotationInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->default;
+    }
+    /**
+     * @param bool $default
+     */
+    public function setDefault(bool $default): void
+    {
+        $this->default = $default;
     }
     /**
      * @return \DateTime
@@ -80,6 +98,7 @@ class Locale implements DomainModelInterface, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'default' => $this->isDefault(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];
