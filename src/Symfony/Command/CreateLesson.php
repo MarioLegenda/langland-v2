@@ -2,10 +2,10 @@
 
 namespace App\Symfony\Command;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LessonRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LessonRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LessonEntryPoint;
 use App\PresentationLayer\Model\Language;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -13,7 +13,7 @@ use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\PresentationLayer\Model\Language as LanguagePresentationModel;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSourceModel;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language as LanguageDataSourceModel;
 use App\PresentationLayer\Model\Lesson as LessonPresentationModel;
 
 class CreateLesson extends BaseCommand

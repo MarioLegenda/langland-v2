@@ -2,10 +2,10 @@
 
 namespace App\Symfony\Command;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\CategoryRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;

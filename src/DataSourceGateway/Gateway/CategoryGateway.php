@@ -3,7 +3,7 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;

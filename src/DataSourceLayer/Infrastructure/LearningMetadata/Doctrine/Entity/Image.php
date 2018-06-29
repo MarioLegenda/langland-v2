@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use Doctrine\ORM\Mapping\Column;

@@ -2,8 +2,8 @@
 
 namespace App\Symfony\Command;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;

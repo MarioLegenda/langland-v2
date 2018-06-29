@@ -2,10 +2,10 @@
 
 namespace App\Symfony\Command;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\Model\Image;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;

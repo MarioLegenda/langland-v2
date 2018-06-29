@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\LogicLayer\LearningMetadata\Domain\Word\Translation;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\WordCategory;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;

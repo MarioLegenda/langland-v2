@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image:
     exclusion_policy: all
     properties:
         id:
@@ -11,10 +11,10 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale:
             groups: [default]
             type: string
 
-        default:
+        relativePath:
             expose: true
             groups: [default]
-            type: bool
+            type: string
 
         createdAt:
             expose: true

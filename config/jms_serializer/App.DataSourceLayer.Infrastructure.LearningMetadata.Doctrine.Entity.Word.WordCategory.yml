@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\WordCategory:
     exclusion_policy: all
     properties:
         id:
@@ -9,12 +9,12 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory:
         word:
             exclude: false
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word
 
         category:
             exclude: false
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category
 
         createdAt:
             expose: true

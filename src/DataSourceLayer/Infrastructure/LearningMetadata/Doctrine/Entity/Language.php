@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
@@ -56,7 +56,7 @@ class Language implements DataSourceEntity, ArrayNotationInterface
     private $description;
     /**
      * @var Image $image
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image", cascade={"persist", "remove"})
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
     /**

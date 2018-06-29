@@ -1,24 +1,29 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
-use Doctrine\ORM\Mapping as ORM;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\Column;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * @Entity @Table(name="word_categories")
+ * @Entity @Table(
+ *     name="locales",
+ *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) }
+ * )
  * @HasLifecycleCallbacks()
  **/
-class WordCategory
+class Locale implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -27,18 +32,18 @@ class WordCategory
      */
     private $id;
     /**
-     * @var Word $word
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word")
+     * @var string $name
+     * @Column(type="string", nullable=false)
      */
-    private $word;
+    private $name;
     /**
-     * @var Category
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category")
+     * @var bool $default
+     * @Column(type="boolean", nullable=false, name="default_locale")
      */
-    private $category;
+    private $default = false;
     /**
      * @var \DateTime $createdAt
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=false)
      */
     private $createdAt;
     /**
@@ -47,18 +52,6 @@ class WordCategory
      */
     private $updatedAt;
     /**
-     * WordCategory constructor.
-     * @param Word $word
-     * @param Category $category
-     */
-    public function __construct(
-        Word $word,
-        Category $category
-    ) {
-        $this->word = $word;
-        $this->category = $category;
-    }
-    /**
      * @return int
      */
     public function getId(): int
@@ -66,32 +59,32 @@ class WordCategory
         return $this->id;
     }
     /**
-     * @return Word
+     * @return string
      */
-    public function getWord(): Word
+    public function getName(): string
     {
-        return $this->word;
+        return $this->name;
     }
     /**
-     * @param Word $word
+     * @param string $name
      */
-    public function setWord(Word $word): void
+    public function setName(string $name): void
     {
-        $this->word = $word;
+        $this->name = $name;
     }
     /**
-     * @return Category
+     * @return bool
      */
-    public function getCategory(): Category
+    public function isDefault(): bool
     {
-        return $this->category;
+        return $this->default;
     }
     /**
-     * @param Category $category
+     * @param string $default
      */
-    public function setCategory(Category $category): void
+    public function setDefault(string $default): void
     {
-        $this->category = $category;
+        $this->default = $default;
     }
     /**
      * @return \DateTime
@@ -108,7 +101,7 @@ class WordCategory
         $this->createdAt = $createdAt;
     }
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getUpdatedAt(): ?\DateTime
     {
@@ -121,6 +114,7 @@ class WordCategory
     {
         $this->updatedAt = $updatedAt;
     }
+
     /**
      * @PrePersist()
      */
@@ -133,5 +127,18 @@ class WordCategory
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'default' => $this->getDefault(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

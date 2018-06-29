@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Lesson:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale:
     exclusion_policy: all
     properties:
         id:
@@ -11,21 +11,10 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Lesson:
             groups: [default]
             type: string
 
-        locale:
+        default:
             expose: true
             groups: [default]
-            type: string
-
-        temporaryText:
-            expose: true
-            groups: [default]
-            type: string
-            serialized_name: temporaryText
-
-        language:
-            expose: true
-            groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language
+            type: bool
 
         createdAt:
             expose: true

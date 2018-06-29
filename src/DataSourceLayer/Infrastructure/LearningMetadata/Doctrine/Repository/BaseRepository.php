@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Repository;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository;
 
 use App\DataSourceLayer\Infrastructure\RepositoryInterface;
 use Doctrine\Common\Collections\Criteria;

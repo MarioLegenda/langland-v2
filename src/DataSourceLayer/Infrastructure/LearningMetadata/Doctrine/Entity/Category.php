@@ -1,55 +1,47 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
-use Doctrine\ORM\Mapping\Table;
 
 /**
  * @Entity @Table(
- *     name="lessons",
+ *     name="categories",
+ *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
+ *     indexes={ @Index(name="category_name_idx", columns={"name"}) }
  * )
  * @HasLifecycleCallbacks()
  **/
-class Lesson implements DataSourceEntity, ArrayNotationInterface
+class Category implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
     /**
      * @var string $name
-     * @Column(type="string")
+     * @Column(type="string", unique=true)
      */
-    private $name;
+    protected $name;
     /**
      * @var string $locale
      * @Column(type="string")
      */
-    private $locale;
-    /**
-     * @var string $name
-     * @Column(type="string")
-     */
-    private $temporaryText;
-    /**
-     * @var Language $language
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language")
-     * @JoinColumn(name="language_id", referencedColumnName="id")
-     */
-    private $language;
+    protected $locale;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -63,23 +55,16 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
-    }
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
     /**
      * @return string
@@ -89,39 +74,11 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
         return $this->locale;
     }
     /**
-     * @param string $locale
+     * @param string $name
      */
-    public function setLocale(string $locale): void
+    public function setName($name): void
     {
-        $this->locale = $locale;
-    }
-    /**
-     * @return string
-     */
-    public function getTemporaryText(): string
-    {
-        return $this->temporaryText;
-    }
-    /**
-     * @param string $temporaryText
-     */
-    public function setTemporaryText(string $temporaryText): void
-    {
-        $this->temporaryText = $temporaryText;
-    }
-    /**
-     * @return Language
-     */
-    public function getLanguage(): Language
-    {
-        return $this->language;
-    }
-    /**
-     * @param Language $language
-     */
-    public function setLanguage(Language $language): void
-    {
-        $this->language = $language;
+        $this->name = $name;
     }
     /**
      * @return \DateTime
@@ -166,14 +123,13 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
         }
     }
     /**
-     * @inheritdoc
+     * @return iterable
      */
     public function toArray(): iterable
     {
         return [
-            'id' => $this->getId(),
+            'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
-            'temporaryText' => $this->getTemporaryText(),
             'locale' => $this->getLocale(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),

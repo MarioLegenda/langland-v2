@@ -2,7 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LessonRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LessonRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LessonEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;

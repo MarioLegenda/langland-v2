@@ -3,11 +3,11 @@
 namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LessonRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LessonRepository;
 use Library\Infrastructure\Helper\ModelValidator;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Lesson as LessonDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson as LessonDataSource;
 
 class LessonDataSourceService
 {

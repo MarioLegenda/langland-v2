@@ -3,12 +3,10 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
 use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
 use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
-use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language as LanguageDataSource;
 use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;

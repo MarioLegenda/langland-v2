@@ -2,14 +2,14 @@
 
 namespace App\DataSourceGateway\Gateway;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\LearningMetadata\WordCategoryDataSourceService;
 use App\DataSourceLayer\LearningMetadata\WordDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word as WordDataSource;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
 use App\LogicLayer\LearningMetadata\Domain\Word\WordCategory as WordCategoryDomainModel;
 use Library\Infrastructure\Helper\TypedArray;

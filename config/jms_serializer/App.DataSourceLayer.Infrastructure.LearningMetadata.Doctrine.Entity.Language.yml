@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language:
     exclusion_policy: all
     properties:
         id:
@@ -31,7 +31,7 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language:
         image:
             expose: true
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image
 
         createdAt:
             expose: true

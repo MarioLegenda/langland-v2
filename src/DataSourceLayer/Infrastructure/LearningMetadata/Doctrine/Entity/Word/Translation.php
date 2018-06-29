@@ -1,47 +1,55 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Doctrine\ORM\Mapping\Index;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
 /**
  * @Entity @Table(
- *     name="categories",
- *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
- *     indexes={ @Index(name="category_name_idx", columns={"name"}) }
+ *     name="word_translations",
  * )
  * @HasLifecycleCallbacks()
  **/
-class Category implements DataSourceEntity, ArrayNotationInterface
+class Translation implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    protected $id;
+    private $id;
     /**
      * @var string $name
-     * @Column(type="string", unique=true)
+     * @Column(type="string")
      */
-    protected $name;
+    private $name;
     /**
      * @var string $locale
      * @Column(type="string")
      */
-    protected $locale;
+    private $locale;
+    /**
+     * @var bool $valid
+     * @Column(type="boolean")
+     */
+    private $valid;
+    /**
+     * @var Word $word
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word", inversedBy="translations")
+     * @JoinColumn(name="word_id", referencedColumnName="id")
+     */
+    private $word;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -55,16 +63,30 @@ class Category implements DataSourceEntity, ArrayNotationInterface
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+    /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
     /**
      * @return string
@@ -74,11 +96,39 @@ class Category implements DataSourceEntity, ArrayNotationInterface
         return $this->locale;
     }
     /**
-     * @param string $name
+     * @param string $locale
      */
-    public function setName($name): void
+    public function setLocale(string $locale): void
     {
-        $this->name = $name;
+        $this->locale = $locale;
+    }
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+    /**
+     * @param bool $valid
+     */
+    public function setValid(bool $valid): void
+    {
+        $this->valid = $valid;
+    }
+    /**
+     * @return Word
+     */
+    public function getWord(): Word
+    {
+        return $this->word;
+    }
+    /**
+     * @param Word $word
+     */
+    public function setWord(Word $word): void
+    {
+        $this->word = $word;
     }
     /**
      * @return \DateTime
@@ -95,7 +145,7 @@ class Category implements DataSourceEntity, ArrayNotationInterface
         $this->createdAt = $createdAt;
     }
     /**
-     * @return \DateTime|null
+     * @return \DateTime
      */
     public function getUpdatedAt(): ?\DateTime
     {
@@ -108,7 +158,6 @@ class Category implements DataSourceEntity, ArrayNotationInterface
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * @PrePersist()
      */
@@ -123,13 +172,14 @@ class Category implements DataSourceEntity, ArrayNotationInterface
         }
     }
     /**
-     * @return iterable
+     * @inheritdoc
      */
     public function toArray(): iterable
     {
         return [
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
+            'valid' => $this->isValid(),
             'locale' => $this->getLocale(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Repository;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

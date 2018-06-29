@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
@@ -48,7 +48,7 @@ class Word implements DataSourceEntity, ArrayNotationInterface
     private $type;
     /**
      * @var Language $language
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language")
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language")
      * @JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
@@ -69,12 +69,12 @@ class Word implements DataSourceEntity, ArrayNotationInterface
     private $pluralForm;
     /**
      * @var ArrayCollection $translations
-     * @OneToMany(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation", mappedBy="product", cascade={"persist"})
+     * @OneToMany(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Translation", mappedBy="product", cascade={"persist"})
      */
     private $translations;
     /**
      * @var Image $image
-     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image", cascade={"persist", "remove"})
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
     /**

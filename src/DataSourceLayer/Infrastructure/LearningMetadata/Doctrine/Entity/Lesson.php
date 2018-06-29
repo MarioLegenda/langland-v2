@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use Doctrine\ORM\Mapping\Column;
@@ -14,16 +14,14 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @Entity @Table(
- *     name="locales",
- *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) }
+ *     name="lessons",
  * )
  * @HasLifecycleCallbacks()
  **/
-class Locale implements DataSourceEntity, ArrayNotationInterface
+class Lesson implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -33,17 +31,28 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
     private $id;
     /**
      * @var string $name
-     * @Column(type="string", nullable=false)
+     * @Column(type="string")
      */
     private $name;
     /**
-     * @var bool $default
-     * @Column(type="boolean", nullable=false, name="default_locale")
+     * @var string $locale
+     * @Column(type="string")
      */
-    private $default = false;
+    private $locale;
+    /**
+     * @var string $name
+     * @Column(type="string")
+     */
+    private $temporaryText;
+    /**
+     * @var Language $language
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language")
+     * @JoinColumn(name="language_id", referencedColumnName="id")
+     */
+    private $language;
     /**
      * @var \DateTime $createdAt
-     * @Column(type="datetime", nullable=false)
+     * @Column(type="datetime")
      */
     private $createdAt;
     /**
@@ -73,18 +82,46 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
         $this->name = $name;
     }
     /**
-     * @return bool
+     * @return string
      */
-    public function isDefault(): bool
+    public function getLocale(): string
     {
-        return $this->default;
+        return $this->locale;
     }
     /**
-     * @param string $default
+     * @param string $locale
      */
-    public function setDefault(string $default): void
+    public function setLocale(string $locale): void
     {
-        $this->default = $default;
+        $this->locale = $locale;
+    }
+    /**
+     * @return string
+     */
+    public function getTemporaryText(): string
+    {
+        return $this->temporaryText;
+    }
+    /**
+     * @param string $temporaryText
+     */
+    public function setTemporaryText(string $temporaryText): void
+    {
+        $this->temporaryText = $temporaryText;
+    }
+    /**
+     * @return Language
+     */
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+    /**
+     * @param Language $language
+     */
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
     }
     /**
      * @return \DateTime
@@ -136,7 +173,8 @@ class Locale implements DataSourceEntity, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'default' => $this->getDefault(),
+            'temporaryText' => $this->getTemporaryText(),
+            'locale' => $this->getLocale(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];

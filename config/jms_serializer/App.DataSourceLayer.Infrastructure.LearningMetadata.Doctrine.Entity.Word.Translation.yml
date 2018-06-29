@@ -1,5 +1,5 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image:
-    exclusion_policy: all
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Translation:
+    exlusion_policy: all
     properties:
         id:
             expose: true
@@ -11,10 +11,15 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image:
             groups: [default]
             type: string
 
-        relativePath:
+        locale:
             expose: true
             groups: [default]
             type: string
+
+        valid:
+            expose: true
+            groups: [default]
+            type: boolean
 
         createdAt:
             expose: true

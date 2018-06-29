@@ -3,10 +3,9 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\LogicLayer\LearningMetadata\Domain\Locale as LocaleDomainModel;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale as LocaleDataSourceModel;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale as LocaleDataSourceModel;
 use App\DataSourceLayer\LearningMetadata\LocaleDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
-use App\PresentationLayer\Model\Locale;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 

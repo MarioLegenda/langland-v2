@@ -3,11 +3,11 @@
 namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word as WordDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\WordRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word as WordDataSource;
 
 class WordDataSourceService
 {

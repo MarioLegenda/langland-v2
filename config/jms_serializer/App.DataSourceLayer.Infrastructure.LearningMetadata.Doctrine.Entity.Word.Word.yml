@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word:
     exclusion_policy: all
     properties:
         id:
@@ -19,7 +19,7 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word:
         language:
             expose: true
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language
 
         description:
             expose: true
@@ -40,12 +40,12 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word:
         translations:
             expose: true
             groups: [default]
-            type: array<App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation>
+            type: array<App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Translation>
 
         image:
             expose: true
             groups: [default]
-            type: App\DataSourceLayer\Infrastructure\Doctrine\Entity\Image
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image
 
         createdAt:
             expose: true

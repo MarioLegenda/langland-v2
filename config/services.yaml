@@ -93,15 +93,15 @@ services:
 
     # REPOSITORY
 
-    App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository:
+    App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\WordRepository:
         arguments:
             $registry: '@doctrine'
 
-    App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository:
+    App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository:
         arguments:
             $registry: '@doctrine'
 
-    App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository:
+    App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\CategoryRepository:
         arguments:
             $registry: '@doctrine'
 

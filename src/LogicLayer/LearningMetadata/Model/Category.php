@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as DataSourceCategory;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category as DataSourceCategory;
 use Library\Util\Util;
 
 class Category implements LayerPropagationResourceResponse

@@ -3,12 +3,12 @@
 namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Word;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\WordCategory;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordCategoryRepository;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\WordRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\WordCategory;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\CategoryRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\WordCategoryRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\WordRepository;
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
 

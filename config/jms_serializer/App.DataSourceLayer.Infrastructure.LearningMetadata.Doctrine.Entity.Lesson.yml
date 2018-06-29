@@ -1,4 +1,4 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category:
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson:
     exclusion_policy: all
     properties:
         id:
@@ -16,6 +16,17 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category:
             groups: [default]
             type: string
 
+        temporaryText:
+            expose: true
+            groups: [default]
+            type: string
+            serialized_name: temporaryText
+
+        language:
+            expose: true
+            groups: [default]
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language
+
         createdAt:
             expose: true
             groups: [default]
@@ -24,4 +35,4 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category:
         updatedAt:
             expose: true
             groups: [default]
-            type: DateTime<'Y-md-d H:m:s'>
+            type: DateTime<'Y-m-d H:m:s'>

@@ -4,7 +4,7 @@ namespace App\Tests\PresentationLayer;
 
 use App\Library\Http\Request\PaginatedInternalizedRequest;
 use App\PresentationLayer\Model\Locale;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LanguageRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\Model\Language;
@@ -14,7 +14,7 @@ use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language as LanguageDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language as LanguageDataSource;
 
 class LanguageEntryPointTest extends BasicSetup
 {

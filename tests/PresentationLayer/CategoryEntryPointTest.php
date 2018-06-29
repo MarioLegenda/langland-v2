@@ -2,7 +2,7 @@
 
 namespace App\Tests\PresentationLayer;
 
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\CategoryRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\CategoryRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\Model\Category;
@@ -13,7 +13,7 @@ use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category as CategoryDataSource;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category as CategoryDataSource;
 
 class CategoryEntryPointTest extends BasicSetup
 {

@@ -1,5 +1,5 @@
-App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation:
-    exlusion_policy: all
+App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category:
+    exclusion_policy: all
     properties:
         id:
             expose: true
@@ -16,11 +16,6 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation:
             groups: [default]
             type: string
 
-        valid:
-            expose: true
-            groups: [default]
-            type: boolean
-
         createdAt:
             expose: true
             groups: [default]
@@ -29,4 +24,4 @@ App\DataSourceLayer\Infrastructure\Doctrine\Entity\Word\Translation:
         updatedAt:
             expose: true
             groups: [default]
-            type: DateTime<'Y-m-d H:m:s'>
+            type: DateTime<'Y-md-d H:m:s'>

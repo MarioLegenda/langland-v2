@@ -3,8 +3,8 @@
 namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
-use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale;
-use App\DataSourceLayer\Infrastructure\Doctrine\Repository\LocaleRepository;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
 
 class LocaleDataSourceService
 {

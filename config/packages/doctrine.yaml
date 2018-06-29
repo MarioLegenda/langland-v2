@@ -21,9 +21,9 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            App:
+            LearningMetadata:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/DataSourceLayer/Infrastructure/Doctrine/Entity'
-                prefix: 'App\DataSourceLayer\Infrastructure\Doctrine\Entity'
+                dir: '%kernel.project_dir%/src/DataSourceLayer/Infrastructure/LearningMetadata/Doctrine/Entity'
+                prefix: 'App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity'
                 alias: App
