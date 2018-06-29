@@ -45,4 +45,16 @@ class LocaleDataSourceService
 
         return $this->localeRepository->persistAndFlush($dataSourceEntity);
     }
+    /**
+     * @return Locale
+     */
+    public function getDefaultLocale(): ?Locale
+    {
+        /** @var Locale $potentialLocale */
+        $potentialLocale = $this->localeRepository->findOneBy([
+            'default' => true,
+        ]);
+
+        return $potentialLocale;
+    }
 }

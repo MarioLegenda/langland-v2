@@ -6,6 +6,7 @@ use App\LogicLayer\LearningMetadata\Domain\Locale as LocaleDomainModel;
 use App\DataSourceLayer\Infrastructure\Doctrine\Entity\Locale as LocaleDataSourceModel;
 use App\DataSourceLayer\LearningMetadata\LocaleDataSourceService;
 use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\PresentationLayer\Model\Locale;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 
@@ -39,7 +40,7 @@ class LocaleGateway
         $this->serializerWrapper = $serializerWrapper;
     }
     /**
-     * @param DomainModelInterface $domainModel
+     * @param DomainModelInterface|LocaleDomainModel $domainModel
      * @return DomainModelInterface
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -47,6 +48,8 @@ class LocaleGateway
     public function create(DomainModelInterface $domainModel): DomainModelInterface
     {
         $this->modelValidator->validate($domainModel);
+
+        $this->checkExistingDefaultLocale($domainModel);
 
         /** @var LocaleDataSourceModel $localeDataSourceEntity */
         $localeDataSourceEntity = $this->serializerWrapper->convertFromToByGroup(
@@ -68,5 +71,23 @@ class LocaleGateway
         );
 
         return $domainLocale;
+    }
+    /**
+     * @param DomainModelInterface|LocaleDomainModel $domainModel
+     */
+    private function checkExistingDefaultLocale(DomainModelInterface $domainModel)
+    {
+        if ($domainModel->isDefault() === true) {
+            $existingLocale = $this->localeDataSourceService->getDefaultLocale();
+
+            if ($existingLocale instanceof LocaleDataSourceModel) {
+                $message = sprintf(
+                    'Default locale already exists. There can only be one default locale in the system. Locale selected: \'%s\'',
+                    $domainModel->getName()
+                );
+
+                throw new \RuntimeException($message);
+            }
+        }
     }
 }

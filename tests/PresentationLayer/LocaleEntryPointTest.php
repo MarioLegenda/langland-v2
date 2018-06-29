@@ -64,4 +64,40 @@ class LocaleEntryPointTest extends BasicSetup
 
         static::assertTrue($enteredExistingLocaleException);
     }
+
+    public function test_existing_default_locale_failure()
+    {
+        /** @var LocaleEntryPoint $localeEntryPoint */
+        $localeEntryPoint = static::$container->get(LocaleEntryPoint::class);
+        /** @var PresentationModelDataProvider $presentationModelDataProvider */
+        $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
+
+        $localeData = [
+            'name' => 'en',
+            'default' => true,
+        ];
+
+        $localeModel = $presentationModelDataProvider->getLocaleModel($localeData);
+
+        $localeEntryPoint->create($localeModel);
+
+        $enteredExistingLocaleException = false;
+        try {
+            /** @var PresentationModelDataProvider $presentationModelDataProvider */
+            $presentationModelDataProvider = static::$container->get(PresentationModelDataProvider::class);
+
+            $localeData = [
+                'name' => 'fr',
+                'default' => true,
+            ];
+
+            $localeModel = $presentationModelDataProvider->getLocaleModel($localeData);
+
+            $localeEntryPoint->create($localeModel);
+        } catch (\RuntimeException $e) {
+            $enteredExistingLocaleException = true;
+        }
+
+        static::assertTrue($enteredExistingLocaleException);
+    }
 }

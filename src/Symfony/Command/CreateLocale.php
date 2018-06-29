@@ -85,6 +85,28 @@ class CreateLocale extends BaseCommand
                     return $value;
                 }
             ],
+            'default' => [
+                'question' => 'Is this the default locale: ',
+                'validator' => function($value) {
+                    $toBoolean = ($value === 'true') ? true : false;
+
+                    if ($toBoolean === true) {
+                        $locale = $this->localeRepository->findOneBy([
+                            'default' => true,
+                        ]);
+
+                        if ($locale instanceof LocaleDataSourceModel) {
+                            $message = sprintf(
+                                'Default locale already exists. There can only be one default locale in the system'
+                            );
+
+                            throw new \RuntimeException($message);
+                        }
+                    }
+
+                    return $toBoolean;
+                }
+            ],
         ]);
 
         $progressBar = $this->getDefaultProgressBar();
