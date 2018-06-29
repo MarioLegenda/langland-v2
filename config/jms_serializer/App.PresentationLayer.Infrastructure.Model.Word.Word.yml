@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Word\Word:
+App\PresentationLayer\Infrastructure\Model\Word\Word:
     exclusion_policy: all
     properties:
         id:
@@ -19,7 +19,7 @@ App\PresentationLayer\Model\Word\Word:
         language:
             expose: true
             groups: [default]
-            type: App\PresentationLayer\Model\Language
+            type: App\PresentationLayer\Infrastructure\Model\Language
 
         description:
             expose: true
@@ -40,9 +40,9 @@ App\PresentationLayer\Model\Word\Word:
         translations:
             expose: true
             groups: [default]
-            type: array<App\PresentationLayer\Model\Word\Translation>
+            type: array<App\PresentationLayer\Infrastructure\Model\Word\Translation>
 
         image:
             expose: true
             groups: [default]
-            type: App\PresentationLayer\Model\Image
+            type: App\PresentationLayer\Infrastructure\Model\Image

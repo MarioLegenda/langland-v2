@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Language:
+App\PresentationLayer\Infrastructure\Model\Image:
     exclusion_policy: all
     properties:
         id:
@@ -11,23 +11,17 @@ App\PresentationLayer\Model\Language:
             groups: [default]
             type: string
 
-        locale:
+        relativePath:
             expose: true
             groups: [default]
             type: string
 
-        showOnPage:
+        createdAt:
             expose: true
             groups: [default]
-            type: bool
-            serialized_name: showOnPage
+            type: DateTime<'Y-m-d H:m:s'>
 
-        description:
+        updatedAt:
             expose: true
             groups: [default]
-            type: string
-
-        image:
-            expose: true
-            groups: [default]
-            type: App\PresentationLayer\Model\Image
+            type: DateTime<'Y-m-d H:m:s'>

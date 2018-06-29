@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Locale:
+App\PresentationLayer\Infrastructure\Model\Locale:
     exclusion_policy: all
     properties:
         id:

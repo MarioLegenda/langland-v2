@@ -5,8 +5,8 @@ namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Logic\LocaleLogic;
-use App\PresentationLayer\Model\Locale;
-use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Infrastructure\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\LogicLayer\LearningMetadata\Domain\Locale as DomainLocale;

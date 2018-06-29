@@ -1,5 +1,5 @@
-App\PresentationLayer\Model\Lesson:
-    exclusion_policy: all
+App\PresentationLayer\Infrastructure\Model\Word\Translation:
+    exlusion_policy: all
     properties:
         id:
             expose: true
@@ -16,13 +16,7 @@ App\PresentationLayer\Model\Lesson:
             groups: [default]
             type: string
 
-        temporaryText:
+        valid:
             expose: true
             groups: [default]
-            type: string
-            serialized_name: temporaryText
-
-        language:
-            expose: true
-            groups: [default]
-            type: App\PresentationLayer\Model\Language
+            type: boolean

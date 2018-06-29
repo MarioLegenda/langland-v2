@@ -11,12 +11,12 @@ use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Model\LanguageCollection;
 use App\LogicLayer\LogicInterface;
 use App\LogicLayer\LearningMetadata\Logic\LanguageLogic;
-use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
 use App\LogicLayer\LearningMetadata\Domain\Language as DomainLanguage;
-use App\PresentationLayer\Model\Language as LanguagePresentationModel;
+use App\PresentationLayer\Infrastructure\Model\Language as LanguagePresentationModel;
 
 class LanguageGateway
 {

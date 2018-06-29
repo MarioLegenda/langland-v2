@@ -1,10 +1,11 @@
 <?php
 
-namespace App\PresentationLayer\Model;
+namespace App\PresentationLayer\Infrastructure\Model\Word;
 
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 
-class Language implements PresentationModelInterface, ArrayNotationInterface
+class Translation implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -19,17 +20,9 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
      */
     private $locale;
     /**
-     * @var bool $showOnPage
+     * @var bool $valid
      */
-    private $showOnPage;
-    /**
-     * @var string $description
-     */
-    private $description;
-    /**
-     * @var Image $image
-     */
-    private $image;
+    private $valid;
     /**
      * @return int
      */
@@ -54,30 +47,9 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
     /**
      * @return bool
      */
-    public function getShowOnPage()
+    public function isValid(): bool
     {
-        return $this->showOnPage;
-    }
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-    /**
-     * @return Image
-     */
-    public function getImage(): Image
-    {
-        return $this->image;
-    }
-    /**
-     * @param Image $image
-     */
-    public function setImage(Image $image): void
-    {
-        $this->image = $image;
+        return $this->valid;
     }
     /**
      * @return iterable
@@ -87,9 +59,8 @@ class Language implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => (is_int($this->id)) ? $this->getId() : null,
             'name' => $this->getName(),
+            'valid' => $this->isValid(),
             'locale' => $this->getLocale(),
-            'showOnPage' => $this->getShowOnPage(),
-            'description' => $this->getDescription(),
         ];
     }
 }

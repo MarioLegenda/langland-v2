@@ -8,10 +8,10 @@ use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
-use App\PresentationLayer\Model\Category;
-use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Locale;
-use App\PresentationLayer\Model\Word\Translation;
+use App\PresentationLayer\Infrastructure\Model\Category;
+use App\PresentationLayer\Infrastructure\Model\Language;
+use App\PresentationLayer\Infrastructure\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\Word\Translation;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Infrastructure\Model\ActionType;
@@ -19,7 +19,7 @@ use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Infrastructure\Helper\TypedArray;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
-use App\PresentationLayer\Model\Image;
+use App\PresentationLayer\Infrastructure\Model\Image;
 
 class WordEntryPointTest extends BasicSetup
 {

@@ -3,11 +3,11 @@
 namespace App\Tests\PresentationLayer;
 
 use App\Library\Http\Request\PaginatedInternalizedRequest;
-use App\PresentationLayer\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
-use App\PresentationLayer\Model\Language;
+use App\PresentationLayer\Infrastructure\Model\Language;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\ModelValidator;

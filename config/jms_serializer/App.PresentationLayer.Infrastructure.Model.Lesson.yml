@@ -1,4 +1,4 @@
-App\PresentationLayer\Model\Image:
+App\PresentationLayer\Infrastructure\Model\Lesson:
     exclusion_policy: all
     properties:
         id:
@@ -11,17 +11,18 @@ App\PresentationLayer\Model\Image:
             groups: [default]
             type: string
 
-        relativePath:
+        locale:
             expose: true
             groups: [default]
             type: string
 
-        createdAt:
+        temporaryText:
             expose: true
             groups: [default]
-            type: DateTime<'Y-m-d H:m:s'>
+            type: string
+            serialized_name: temporaryText
 
-        updatedAt:
+        language:
             expose: true
             groups: [default]
-            type: DateTime<'Y-m-d H:m:s'>
+            type: App\PresentationLayer\Infrastructure\Model\Language

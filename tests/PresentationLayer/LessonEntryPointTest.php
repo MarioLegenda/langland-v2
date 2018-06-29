@@ -6,11 +6,11 @@ use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\Less
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LessonEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
-use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\Language;
+use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
-use App\PresentationLayer\Model\Lesson as LessonPresentationModel;
+use App\PresentationLayer\Infrastructure\Model\Lesson as LessonPresentationModel;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;

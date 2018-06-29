@@ -1,10 +1,10 @@
 <?php
 
-namespace App\PresentationLayer\Model;
+namespace App\PresentationLayer\Infrastructure\Model;
 
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 
-class Category implements PresentationModelInterface, ArrayNotationInterface
+class Locale implements PresentationModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -15,9 +15,9 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
      */
     private $name;
     /**
-     * @var string $locale
+     * @var bool $default
      */
-    private $locale;
+    private $default;
     /**
      * @return int
      */
@@ -33,11 +33,11 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
         return $this->name;
     }
     /**
-     * @return string
+     * @return bool
      */
-    public function getLocale(): string
+    public function isDefault(): bool
     {
-        return $this->locale;
+        return $this->default;
     }
     /**
      * @return iterable
@@ -45,9 +45,9 @@ class Category implements PresentationModelInterface, ArrayNotationInterface
     public function toArray(): iterable
     {
         return [
-            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'id' => $this->getId(),
             'name' => $this->getName(),
-            'locale' => $this->getLocale(),
+            'default' => $this->isDefault(),
         ];
     }
 }

@@ -4,8 +4,8 @@ namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Logic\LessonLogic;
-use App\PresentationLayer\Model\Lesson;
-use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Infrastructure\Model\Lesson;
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\LogicLayer\LearningMetadata\Domain\Lesson as LessonDomainModel;

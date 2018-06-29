@@ -5,7 +5,7 @@ namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicGateway\Gateway\LessonGateway;
 use App\Symfony\ApiResponseWrapper;
-use App\PresentationLayer\Model\Lesson as LessonPresentationModel;
+use App\PresentationLayer\Infrastructure\Model\Lesson as LessonPresentationModel;
 use Symfony\Component\HttpFoundation\Response;
 
 class LessonEntryPoint

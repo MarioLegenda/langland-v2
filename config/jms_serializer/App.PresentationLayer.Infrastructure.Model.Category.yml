@@ -1,5 +1,5 @@
-App\PresentationLayer\Model\Word\Translation:
-    exlusion_policy: all
+App\PresentationLayer\Infrastructure\Model\Category:
+    exclusion_policy: all
     properties:
         id:
             expose: true
@@ -15,8 +15,3 @@ App\PresentationLayer\Model\Word\Translation:
             expose: true
             groups: [default]
             type: string
-
-        valid:
-            expose: true
-            groups: [default]
-            type: boolean

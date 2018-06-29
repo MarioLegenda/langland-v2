@@ -4,7 +4,7 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-    <class name="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Language">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -50,7 +50,7 @@
         </property>
     </class>
 
-    <class name="App\LogicLayer\Domain\Locale">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -74,7 +74,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Lesson">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -117,7 +117,7 @@
         </property>
     </class>
 
-    <class name="App\DataSourceLayer\Domain\Word\Word">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -177,7 +177,7 @@
         </property>
     </class>
 
-    <class name="App\DataSourceLayer\Infrastructure\Doctrine\Entity\Category">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -201,7 +201,7 @@
         </property>
     </class>
 
-    <class name="App\LogicLayer\Domain\Word\Translation">
+    <class name="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Translation">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>

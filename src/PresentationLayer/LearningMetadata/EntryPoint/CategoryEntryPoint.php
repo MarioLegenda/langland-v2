@@ -3,8 +3,8 @@
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
 use App\LogicGateway\Gateway\CategoryGateway;
-use App\PresentationLayer\Model\Category as CategoryModel;
-use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Infrastructure\Model\Category as CategoryModel;
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 

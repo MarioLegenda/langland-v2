@@ -3,7 +3,7 @@
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
 use App\LogicGateway\Gateway\WordGateway;
-use App\PresentationLayer\Model\Word\Word;
+use App\PresentationLayer\Infrastructure\Model\Word\Word;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 

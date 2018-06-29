@@ -6,10 +6,10 @@ use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
 use App\LogicLayer\LearningMetadata\Logic\CategoryLogic;
 use App\LogicLayer\LogicInterface;
-use App\PresentationLayer\Model\PresentationModelInterface;
+use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
-use App\PresentationLayer\Model\Category as CategoryPresentationModel;
+use App\PresentationLayer\Infrastructure\Model\Category as CategoryPresentationModel;
 
 class CategoryGateway
 {

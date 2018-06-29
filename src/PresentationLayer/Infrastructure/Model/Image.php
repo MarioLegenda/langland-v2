@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PresentationLayer\Model;
+namespace App\PresentationLayer\Infrastructure\Model;
 
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Notation\ArrayNotationInterface;

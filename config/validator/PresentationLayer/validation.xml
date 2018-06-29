@@ -4,7 +4,7 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-    <class name="App\PresentationLayer\Model\Language">
+    <class name="App\PresentationLayer\Infrastructure\Model\Language">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -50,7 +50,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Locale">
+    <class name="App\PresentationLayer\Infrastructure\Model\Locale">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -74,7 +74,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Lesson">
+    <class name="App\PresentationLayer\Infrastructure\Model\Lesson">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -117,7 +117,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Word\Translation">
+    <class name="App\PresentationLayer\Infrastructure\Model\Word\Translation">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>
@@ -148,7 +148,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Word\Word">
+    <class name="App\PresentationLayer\Infrastructure\Model\Word\Word">
 
         <constraint name="Callback">validate</constraint>
 
@@ -211,7 +211,7 @@
         </property>
     </class>
 
-    <class name="App\PresentationLayer\Model\Category">
+    <class name="App\PresentationLayer\Infrastructure\Model\Category">
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">'name' should not be blank</option>

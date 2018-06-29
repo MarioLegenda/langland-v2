@@ -4,7 +4,7 @@ namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicGateway\Gateway\LocaleGateway;
-use App\PresentationLayer\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 

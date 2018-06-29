@@ -4,9 +4,8 @@ namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
-use App\Library\Http\Request\Contract\PaginatedRequestInterface;
 use App\LogicGateway\Gateway\LanguageGateway;
-use App\PresentationLayer\Model\Language as LanguageModel;
+use App\PresentationLayer\Infrastructure\Model\Language as LanguageModel;
 use App\Symfony\ApiResponseWrapper;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -3,17 +3,17 @@
 namespace App\Tests\PresentationLayer\DataProvider;
 
 use App\Infrastructure\Model\CollectionEntity;
-use App\PresentationLayer\Model\Category;
-use App\PresentationLayer\Model\Language;
-use App\PresentationLayer\Model\Lesson;
-use App\PresentationLayer\Model\Locale;
-use App\PresentationLayer\Model\Word\Translation;
-use App\PresentationLayer\Model\Word\Word;
+use App\PresentationLayer\Infrastructure\Model\Category;
+use App\PresentationLayer\Infrastructure\Model\Language;
+use App\PresentationLayer\Infrastructure\Model\Lesson;
+use App\PresentationLayer\Infrastructure\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\Word\Translation;
+use App\PresentationLayer\Infrastructure\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
 use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
-use App\PresentationLayer\Model\Image;
+use App\PresentationLayer\Infrastructure\Model\Image;
 
 class PresentationModelDataProvider
 {
