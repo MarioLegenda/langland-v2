@@ -68,17 +68,4 @@ class Word implements LayerPropagationResourceResponse
             'updatedAt' => Util::formatFromDate($this->word->getUpdatedAt()),
         ];
     }
-    /**
-     * @return iterable
-     */
-    private function getWordCategories(): iterable
-    {
-        $categoryIds = [];
-        /** @var WordCategory $wordCategory */
-        foreach ($this->wordCategories as $wordCategory) {
-            $categoryIds[] = $wordCategory->getCategory()->getId();
-        }
-
-        return $categoryIds;
-    }
 }
