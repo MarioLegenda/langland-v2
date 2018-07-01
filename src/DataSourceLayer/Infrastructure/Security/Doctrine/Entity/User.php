@@ -3,6 +3,7 @@
 namespace App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -15,6 +16,8 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity @Table(
@@ -32,6 +35,12 @@ class User implements DataSourceEntity, ArrayNotationInterface
      * @GeneratedValue
      */
     private $id;
+    /**
+     * @var Locale $locale
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale")
+     * @JoinColumn(name="locale_id", referencedColumnName="id")
+     */
+    private $locale;
     /**
      * @var string $name
      * @Column(type="string")
@@ -78,6 +87,20 @@ class User implements DataSourceEntity, ArrayNotationInterface
     public function getId(): int
     {
         return $this->id;
+    }
+    /**
+     * @return Locale
+     */
+    public function getLocale(): Locale
+    {
+        return $this->locale;
+    }
+    /**
+     * @param Locale $locale
+     */
+    public function setLocale(Locale $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return string

@@ -3,6 +3,7 @@
 namespace App\LogicLayer\Security\Domain;
 
 use App\LogicLayer\DomainModelInterface;
+use App\LogicLayer\LearningMetadata\Domain\Locale;
 
 class User implements DomainModelInterface
 {
@@ -10,6 +11,10 @@ class User implements DomainModelInterface
      * @var int $id
      */
     private $id;
+    /**
+     * @var Locale $locale
+     */
+    private $locale;
     /**
      * @var string $name
      */
@@ -48,6 +53,20 @@ class User implements DomainModelInterface
     public function getId(): int
     {
         return $this->id;
+    }
+    /**
+     * @return Locale
+     */
+    public function getLocale(): Locale
+    {
+        return $this->locale;
+    }
+    /**
+     * @param Locale $locale
+     */
+    public function setLocale(Locale $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return string

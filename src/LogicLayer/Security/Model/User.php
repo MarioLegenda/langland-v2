@@ -39,6 +39,7 @@ class User implements LayerPropagationResourceResponse
             'username' => $this->user->getUsername(),
             'email' => $this->user->getEmail(),
             'enabled' => $this->user->isEnabled(),
+            'locale' => $this->user->getLocale()->toArray(),
             'createdAt' => Util::formatFromDate($this->user->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->user->getUpdatedAt()),
         ];

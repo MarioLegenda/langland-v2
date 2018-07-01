@@ -9,6 +9,10 @@ class User implements PresentationModelInterface
      */
     private $id;
     /**
+     * @var Locale $locale
+     */
+    private $locale;
+    /**
      * @var string $name
      */
     private $name;
@@ -38,6 +42,20 @@ class User implements PresentationModelInterface
     public function getId(): int
     {
         return $this->id;
+    }
+    /**
+     * @return Locale
+     */
+    public function getLocale(): Locale
+    {
+        return $this->locale;
+    }
+    /**
+     * @param Locale $locale
+     */
+    public function setLocale(Locale $locale): void
+    {
+        $this->locale = $locale;
     }
     /**
      * @return string

@@ -43,6 +43,15 @@ class UserEntryPointTest extends BasicSetup
         static::assertInternalType('bool', $responseData['enabled']);
         static::assertFalse($responseData['enabled']);
 
+        $locale = $responseData['locale'];
+
+        static::assertInternalType('int', $locale['id']);
+        static::assertInternalType('string', $locale['name']);
+        static::assertNotEmpty($locale['name']);
+        static::assertTrue($locale['default']);
+        static::assertTrue(Util::isValidDate($locale['createdAt']));
+        static::assertNull($locale['updatedAt']);
+
         static::assertTrue(Util::isValidDate($responseData['createdAt']));
         static::assertNull($responseData['updatedAt']);
     }

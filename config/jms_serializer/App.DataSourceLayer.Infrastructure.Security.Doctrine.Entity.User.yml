@@ -6,6 +6,11 @@ App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity\User:
             groups: [default]
             type: int
 
+        locale:
+            expose: true
+            groups: [default]
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale
+
         name:
             exclude: false
             groups: [default]

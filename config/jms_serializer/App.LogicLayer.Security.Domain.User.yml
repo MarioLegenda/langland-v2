@@ -6,6 +6,11 @@ App\LogicLayer\Security\Domain\User:
             groups: [default]
             type: int
 
+        locale:
+            expose: true
+            groups: [default]
+            type: App\LogicLayer\LearningMetadata\Domain\Locale
+
         name:
             expose: true
             groups: [default]
