@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\PresentationLayer;
+namespace App\Tests\PresentationLaye\LearningMetadata;
 
 use App\Library\Http\Request\PaginatedInternalizedRequest;
 use App\PresentationLayer\Infrastructure\Model\Locale;

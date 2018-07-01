@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\PresentationLayer;
+namespace App\Tests\PresentationLayerg\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\CategoryRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;

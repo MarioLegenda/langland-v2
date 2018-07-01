@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\PresentationLayer;
+namespace App\Tests\PresentationLayer\LearningMetadata;
 
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\Tests\Library\BasicSetup;

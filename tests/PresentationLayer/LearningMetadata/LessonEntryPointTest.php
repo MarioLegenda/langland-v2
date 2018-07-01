@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\PresentationLayer;
+namespace App\Tests\PresentationLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LessonRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;

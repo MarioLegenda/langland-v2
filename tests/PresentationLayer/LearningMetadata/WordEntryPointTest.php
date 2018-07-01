@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\PresentationLayer;
+namespace App\Tests\PresentationLayer\LearningMetadata;
 
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
