@@ -3,7 +3,7 @@
 namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\LearningMetadata\LessonDataSourceService;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Lesson as LessonDomainModel;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson as LessonDataSource;
 use Library\Infrastructure\Helper\ModelValidator;

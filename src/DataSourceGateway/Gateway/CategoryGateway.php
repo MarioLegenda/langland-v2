@@ -5,7 +5,7 @@ namespace App\DataSourceGateway\Gateway;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Category as CategoryDataSource;
 use App\DataSourceLayer\LearningMetadata\CategoryDataSourceService;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 
@@ -51,6 +51,8 @@ class CategoryGateway
         /** @var CategoryDataSource $categoryDataSource */
         $categoryDataSource = $this->serializerWrapper
             ->convertFromToByGroup($domainModel, 'default', CategoryDataSource::class);
+
+        $this->modelValidator->validate($categoryDataSource);
 
         return $this->categoryDataSourceService->createIfNotExists($categoryDataSource);
     }

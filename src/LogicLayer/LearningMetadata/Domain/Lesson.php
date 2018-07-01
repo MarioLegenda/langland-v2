@@ -4,6 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Domain;
 
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
+use App\LogicLayer\DomainModelInterface;
 
 class Lesson implements DomainModelInterface, ArrayNotationInterface
 {

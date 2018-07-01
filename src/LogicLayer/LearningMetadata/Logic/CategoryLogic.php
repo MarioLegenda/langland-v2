@@ -5,7 +5,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 use App\DataSourceGateway\Gateway\CategoryGateway;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Domain\Category;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LogicInterface;
 use App\LogicLayer\LearningMetadata\Model\Category as CategoryModel;
 

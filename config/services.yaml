@@ -70,6 +70,10 @@ services:
         resource: '../src/PresentationLayer/LearningMetadata/EntryPoint'
         tags: ['controller.service_arguments']
 
+    App\PresentationLayer\Security\EntryPoint\:
+        resource: '../src/PresentationLayer/Security/EntryPoint'
+        tags: ['controller.service_arguments']
+
     # SYMFONY SPECIFIC SERVICES
     App\Symfony\:
         resource: '../src/Symfony'

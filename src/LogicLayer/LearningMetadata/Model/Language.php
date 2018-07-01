@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use Library\Util\Util;
 use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;
 

@@ -33,6 +33,8 @@ class CategoryEntryPoint
     /**
      * @param CategoryModel $category
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create(CategoryModel $category): Response
     {

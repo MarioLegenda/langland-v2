@@ -4,7 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\DataSourceGateway\Gateway\LessonGateway;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Lesson;
 use App\LogicLayer\LogicInterface;
 use App\LogicLayer\LearningMetadata\Model\Lesson as LessonPropagationModel;

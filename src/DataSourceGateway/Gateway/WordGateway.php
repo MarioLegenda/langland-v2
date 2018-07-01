@@ -5,7 +5,7 @@ namespace App\DataSourceGateway\Gateway;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\WordCategory;
 use App\DataSourceLayer\LearningMetadata\WordCategoryDataSourceService;
 use App\DataSourceLayer\LearningMetadata\WordDataSourceService;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
@@ -82,20 +82,5 @@ class WordGateway
             'word' => $domainWord,
             'wordCategories' => $wordCategories,
         ];
-    }
-    /**
-     * @param iterable $wordCategories
-     * @return iterable
-     */
-    private function createDomainWordCategories(iterable $wordCategories): iterable
-    {
-        $domainWordCategories = TypedArray::create('integer', WordCategoryDomainModel::class);
-        /** @var WordCategory $wordCategory */
-        foreach ($wordCategories as $wordCategory) {
-            $domainWordCategories[] = $this->serializerWrapper
-                ->convertFromToByGroup($wordCategory, 'default', WordCategoryDomainModel::class);
-        }
-
-        return $domainWordCategories;
     }
 }

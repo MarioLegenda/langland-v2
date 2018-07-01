@@ -1,0 +1,37 @@
+App\PresentationLayer\Infrastructure\Model\User:
+    exclusion_policy: all
+    properties:
+        id:
+            expose: true
+            groups: [default]
+            type: int
+
+        name:
+            expose: true
+            groups: [default]
+            type: string
+
+        lastname:
+            expose: true
+            groups: [default]
+            type: string
+
+        username:
+            expose: true
+            groups: [default]
+            type: string
+
+        email:
+            expose: true
+            groups: [default]
+            type: string
+
+        password:
+            expose: true
+            groups: [default]
+            type: string
+
+        enabled:
+            expose: true
+            groups: [default]
+            type: bool

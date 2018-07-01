@@ -3,7 +3,7 @@
 namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
 use App\Infrastructure\Model\CollectionEntity;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Domain\Image;
 use Library\Infrastructure\Notation\ArrayNotationInterface;

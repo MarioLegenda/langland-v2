@@ -5,6 +5,7 @@ namespace App\LogicLayer\LearningMetadata\Domain;
 use App\LogicLayer\LearningMetadata\Domain\Image as DomainImage;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
+use App\LogicLayer\DomainModelInterface;
 
 class Language implements DomainModelInterface, ArrayNotationInterface
 {

@@ -3,7 +3,7 @@
 namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
 use App\LogicLayer\LearningMetadata\Logic\WordLogic;
 use App\LogicLayer\LogicInterface;
@@ -70,6 +70,8 @@ class WordGateway
         $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
         $wordDomainModel->setImage($domainImage);
         $wordDomainModel->setCategories($categories);
+
+        $this->modelValidator->validate($wordDomainModel);
 
         return $this->wordLogic->create($wordDomainModel);
     }

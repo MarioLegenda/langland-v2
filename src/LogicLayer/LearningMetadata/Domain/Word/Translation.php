@@ -2,7 +2,7 @@
 
 namespace App\LogicLayer\LearningMetadata\Domain\Word;
 
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 

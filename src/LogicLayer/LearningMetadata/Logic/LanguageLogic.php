@@ -7,7 +7,7 @@ use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Image;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Model\LanguageCollection;

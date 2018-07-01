@@ -7,6 +7,7 @@ use App\PresentationLayer\Infrastructure\Model\Category;
 use App\PresentationLayer\Infrastructure\Model\Language;
 use App\PresentationLayer\Infrastructure\Model\Lesson;
 use App\PresentationLayer\Infrastructure\Model\Locale;
+use App\PresentationLayer\Infrastructure\Model\User;
 use App\PresentationLayer\Infrastructure\Model\Word\Translation;
 use App\PresentationLayer\Infrastructure\Model\Word\Word;
 use App\Tests\Library\FakerTrait;
@@ -30,6 +31,27 @@ class PresentationModelDataProvider
         Deserializer $deserializer
     ) {
         $this->deserializer = $deserializer;
+    }
+    /**
+     * @param Locale $locale
+     * @return User
+     */
+    public function getUserModel(Locale $locale): User
+    {
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'lastname' => $this->faker()->lastName,
+            'locale' => $locale->toArray(),
+            'username' => $this->faker()->userName,
+            'email' => $this->faker()->email,
+            'password' => $this->faker()->password,
+            'enabled' => $this->faker()->boolean,
+        ];
+
+        /** @var User $user */
+        $user = $this->deserializer->create($modelBlueprint, User::class);
+
+        return $user;
     }
     /**
      * @param Image $image

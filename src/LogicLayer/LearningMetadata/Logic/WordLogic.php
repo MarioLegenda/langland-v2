@@ -4,7 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\WordGateway;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Image;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word;
 use App\LogicLayer\LogicInterface;

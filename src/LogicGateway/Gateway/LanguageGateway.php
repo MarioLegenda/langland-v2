@@ -6,7 +6,7 @@ use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\Library\Http\Request\Contract\PaginatedRequestInterface;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Model\LanguageCollection;
 use App\LogicLayer\LogicInterface;
@@ -73,6 +73,9 @@ class LanguageGateway
         $domainImage->setUploadedFile($presentationModel->getImage()->getUploadedFile());
 
         $logicModel->setImage($domainImage);
+
+        $this->modelValidator->validate($logicModel);
+
         /** @var LayerPropagationResourceResponse $domainLogicModel */
         $layerPropagationResponse = $this->logic->create($logicModel);
 

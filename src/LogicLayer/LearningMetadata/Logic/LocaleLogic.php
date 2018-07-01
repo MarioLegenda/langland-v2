@@ -4,7 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\LocaleGateway;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\LogicLayer\LearningMetadata\Domain\DomainModelInterface;
+use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Locale;
 use App\LogicLayer\LearningMetadata\Model\Locale as LocalePresentationResourceModel;
 
