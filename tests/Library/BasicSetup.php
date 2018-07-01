@@ -40,6 +40,7 @@ class BasicSetup extends WebTestCase
         $conn->exec('TRUNCATE TABLE word_categories');
         $conn->exec('TRUNCATE TABLE word_translations');
         $conn->exec('TRUNCATE TABLE locales');
+        $conn->exec('TRUNCATE TABLE users');
 
         $conn->exec('SET FOREIGN_KEY_CHECKS=1');
     }

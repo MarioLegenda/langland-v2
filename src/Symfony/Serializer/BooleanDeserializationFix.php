@@ -17,7 +17,19 @@ class BooleanDeserializationFix implements EventSubscriberInterface
             [
                 'event' => 'serializer.pre_deserialize',
                 'method' => 'onPreDeserialize',
-                'class' => 'App\\PresentationLayer\\Model\\Language',
+                'class' => 'App\\PresentationLayer\\Infrastructure\\Model\\Language',
+                'format' => 'json',
+            ],
+            [
+                'event' => 'serializer.pre_deserialize',
+                'method' => 'onPreDeserialize',
+                'class' => 'App\\PresentationLayer\\Infrastructure\\Model\\User',
+                'format' => 'json',
+            ],
+            [
+                'event' => 'serializer.pre_deserialize',
+                'method' => 'onPreDeserialize',
+                'class' => 'App\\DataSourceLayer\\Infrastructure\\Security\\Doctrine\\Entity\\User',
                 'format' => 'json',
             ],
         ];

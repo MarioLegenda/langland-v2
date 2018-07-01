@@ -2,6 +2,7 @@
 
 namespace App\PresentationLayer\Security\EntryPoint;
 
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicGateway\Gateway\UserGateway;
 use App\PresentationLayer\Infrastructure\Model\User;
 use App\Symfony\ApiResponseWrapper;
@@ -32,9 +33,14 @@ class UserEntryPoint
     /**
      * @param User $user
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create(User $user): Response
     {
-        $this->userGateway->create($user);
+        /** @var LayerPropagationResourceResponse $presentationModel */
+        $presentationModel = $this->userGateway->create($user);
+
+        return $this->apiResponseWrapper->createUserCreate($presentationModel->toArray());
     }
 }

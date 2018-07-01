@@ -8,6 +8,8 @@ use App\PresentationLayer\Security\EntryPoint\UserEntryPoint;
 use App\Tests\Library\BasicSetup;
 use App\Tests\PresentationLayer\DataProvider\PresentationModelDataProvider;
 use Library\Infrastructure\Helper\SerializerWrapper;
+use Library\Util\Util;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserEntryPointTest extends BasicSetup
 {
@@ -22,9 +24,28 @@ class UserEntryPointTest extends BasicSetup
 
         $user = $presentationModelDataProvider->getUserModel($locale);
 
-        $userEntryPoint->create($user);
-    }
+        $response = $userEntryPoint->create($user);
 
+        static::assertInstanceOf(Response::class, $response);
+
+        $responseData = json_decode($response->getContent(), true)['resource']['data'];
+
+        static::assertInternalType('int', $responseData['id']);
+        static::assertInternalType('string', $responseData['name']);
+        static::assertNotEmpty($responseData['name']);
+        static::assertInternalType('string', $responseData['lastname']);
+        static::assertNotEmpty($responseData['lastname']);
+        static::assertInternalType('string', $responseData['username']);
+        static::assertNotEmpty($responseData['username']);
+        static::assertInternalType('string', $responseData['email']);
+        static::assertNotEmpty($responseData['email']);
+        static::assertArrayNotHasKey('password', $responseData);
+        static::assertInternalType('bool', $responseData['enabled']);
+        static::assertFalse($responseData['enabled']);
+
+        static::assertTrue(Util::isValidDate($responseData['createdAt']));
+        static::assertNull($responseData['updatedAt']);
+    }
     /**
      * @param string $name
      * @return Locale

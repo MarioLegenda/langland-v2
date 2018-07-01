@@ -1,38 +1,38 @@
-App\LogicLayer\Security\Domain\User:
+App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity\User:
     exclusion_policy: all
     properties:
         id:
-            expose: true
+            exclude: false
             groups: [default]
             type: int
 
         name:
-            expose: true
+            exclude: false
             groups: [default]
             type: string
 
         lastname:
-            expose: true
+            exclude: false
             groups: [default]
             type: string
 
         username:
-            expose: true
+            exclude: false
             groups: [default]
             type: string
 
         email:
-            expose: true
+            exclude: false
             groups: [default]
             type: string
 
         password:
-            expose: true
+            exclude: false
             groups: [default]
             type: string
 
         enabled:
-            expose: true
+            exclude: false
             groups: [default]
             type: bool
 

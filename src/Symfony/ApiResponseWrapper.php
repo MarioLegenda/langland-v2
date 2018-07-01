@@ -22,7 +22,6 @@ class ApiResponseWrapper
     ) {
         $this->apiSdk = $apiSDK;
     }
-
     /**
      * @param string $type
      * @param array $data
@@ -151,6 +150,29 @@ class ApiResponseWrapper
             ->method('PUT')
             ->addMessage('Locale created')
             ->isCollection()
+            ->setStatusCode(201)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
+    public function createUserCreate($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('PUT')
+            ->addMessage('User created')
+            ->isResource()
             ->setStatusCode(201)
             ->build();
 

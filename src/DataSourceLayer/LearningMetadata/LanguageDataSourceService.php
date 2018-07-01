@@ -19,10 +19,6 @@ class LanguageDataSourceService
      */
     private $languageRepository;
     /**
-     * @var ModelValidator $modelValidator
-     */
-    private $modelValidator;
-    /**
      * @var LocaleRepository $localeRepository
      */
     private $localeRepository;
@@ -30,15 +26,12 @@ class LanguageDataSourceService
      * Language constructor.
      * @param LanguageRepository $languageRepository
      * @param LocaleRepository $localeRepository
-     * @param ModelValidator $modelValidator
      */
     public function __construct(
         LanguageRepository $languageRepository,
-        LocaleRepository $localeRepository,
-        ModelValidator $modelValidator
+        LocaleRepository $localeRepository
     ) {
         $this->languageRepository = $languageRepository;
-        $this->modelValidator = $modelValidator;
         $this->localeRepository = $localeRepository;
     }
     /**

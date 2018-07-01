@@ -2,6 +2,7 @@
 
 namespace App\LogicGateway\Gateway;
 
+use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\Security\Logic\UserLogic;
 use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
@@ -40,9 +41,12 @@ class UserGateway
         $this->userLogic = $userLogic;
     }
     /**
-     * @param PresentationModelInterface|User $presentationModel
+     * @param PresentationModelInterface $presentationModel
+     * @return LayerPropagationResourceResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(PresentationModelInterface $presentationModel)
+    public function create(PresentationModelInterface $presentationModel): LayerPropagationResourceResponse
     {
         $this->modelValidator->validate($presentationModel);
 
@@ -53,6 +57,6 @@ class UserGateway
             UserDomainModel::class
         );
 
-        $this->userLogic->create($userDomainModel);
+        return $this->userLogic->create($userDomainModel);
     }
 }

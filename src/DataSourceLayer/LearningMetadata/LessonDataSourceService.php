@@ -16,26 +16,19 @@ class LessonDataSourceService
      */
     private $lessonRepository;
     /**
-     * @var ModelValidator $modelValidator
-     */
-    private $modelValidator;
-    /**
      * @var LanguageRepository $languageRepository
      */
     private $languageRepository;
     /**
      * LessonDataSourceService constructor.
-     * @param ModelValidator $modelValidator
      * @param LanguageRepository $languageRepository
      * @param LessonRepository $lessonRepository
      */
     public function __construct(
         LessonRepository $lessonRepository,
-        LanguageRepository $languageRepository,
-        ModelValidator $modelValidator
+        LanguageRepository $languageRepository
     ) {
         $this->lessonRepository = $lessonRepository;
-        $this->modelValidator = $modelValidator;
         $this->languageRepository = $languageRepository;
     }
     /**

@@ -1,45 +1,75 @@
 <?php
 
-namespace App\LogicLayer\Security\Domain;
+namespace App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity;
 
-use App\LogicLayer\DomainModelInterface;
+use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
-class User implements DomainModelInterface
+/**
+ * @Entity @Table(
+ *     name="users",
+ *     uniqueConstraints={ @UniqueConstraint(columns={"email", "username"}) },
+ *     indexes={ @Index(name="user_idx", columns={"email", "username"}) }
+ * )
+ * @HasLifecycleCallbacks()
+ **/
+class User implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
+     * @Id @Column(type="integer")
+     * @GeneratedValue
      */
     private $id;
     /**
      * @var string $name
+     * @Column(type="string")
      */
     private $name;
     /**
      * @var string $lastname
+     * @Column(type="string")
      */
     private $lastname;
     /**
      * @var string $username
+     * @Column(type="string", unique=true)
      */
     private $username;
     /**
      * @var string $email
+     * @Column(type="string", unique=true)
      */
     private $email;
     /**
      * @var string $password
+     * @Column(type="string")
      */
     private $password;
     /**
      * @var bool $enabled
+     * @Column(type="boolean")
      */
     private $enabled = false;
     /**
      * @var \DateTime $createdAt
+     * @Column(type="datetime")
      */
     private $createdAt;
     /**
      * @var \DateTime $updatedAt
+     * @Column(type="datetime", nullable=true)
      */
     private $updatedAt;
     /**
@@ -134,6 +164,13 @@ class User implements DomainModelInterface
         $this->enabled = $enabled;
     }
     /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+    /**
      * @param \DateTime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt): void
@@ -141,11 +178,11 @@ class User implements DomainModelInterface
         $this->createdAt = $createdAt;
     }
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getCreatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTime
     {
-        return $this->createdAt;
+        return $this->updatedAt;
     }
     /**
      * @param \DateTime $updatedAt
@@ -155,10 +192,33 @@ class User implements DomainModelInterface
         $this->updatedAt = $updatedAt;
     }
     /**
-     * @return \DateTime
+     * @PrePersist()
      */
-    public function getUpdatedAt(): ?\DateTime
+    public function handleDates(): void
     {
-        return $this->updatedAt;
+        if ($this->updatedAt instanceof \DateTime) {
+            $this->setUpdatedAt(Util::toDateTime());
+        }
+
+        if (!$this->createdAt instanceof \DateTime) {
+            $this->setCreatedAt(Util::toDateTime());
+        }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => (is_int($this->id)) ? $this->getId() : null,
+            'name' => $this->getName(),
+            'lastname' => $this->getLastname(),
+            'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'enabled' => $this->isEnabled(),
+            'password' => $this->getPassword(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

@@ -34,9 +34,10 @@ class PresentationModelDataProvider
     }
     /**
      * @param Locale $locale
+     * @param bool $enabled
      * @return User
      */
-    public function getUserModel(Locale $locale): User
+    public function getUserModel(Locale $locale, $enabled = false): User
     {
         $modelBlueprint = [
             'name' => $this->faker()->name,
@@ -45,7 +46,7 @@ class PresentationModelDataProvider
             'username' => $this->faker()->userName,
             'email' => $this->faker()->email,
             'password' => $this->faker()->password,
-            'enabled' => $this->faker()->boolean,
+            'enabled' => $enabled,
         ];
 
         /** @var User $user */

@@ -15,20 +15,13 @@ class CategoryDataSourceService
      */
     private $categoryRepository;
     /**
-     * @var ModelValidator $modelValidator
-     */
-    private $modelValidator;
-    /**
      * Language constructor.
      * @param CategoryRepository $categoryRepository
-     * @param ModelValidator $modelValidator
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
-        ModelValidator $modelValidator
+        CategoryRepository $categoryRepository
     ) {
         $this->categoryRepository = $categoryRepository;
-        $this->modelValidator = $modelValidator;
     }
     /**
      * @param DataSourceEntity|Category $category

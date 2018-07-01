@@ -232,4 +232,76 @@
         </property>
     </class>
 
+    <class name="App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity\User">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">'name' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'name' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="lastname">
+            <constraint name="NotBlank">
+                <option name="message">'lastname' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'username' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="username">
+            <constraint name="NotBlank">
+                <option name="message">'username' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'username' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="email">
+            <constraint name="NotBlank">
+                <option name="message">'username' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'email' should be a string</option>
+            </constraint>
+
+            <constraint name="Email">
+                <option name="message">The email "{{ value }}" is not a valid email.</option>
+            </constraint>
+        </property>
+
+        <property name="password">
+            <constraint name="NotBlank">
+                <option name="message">'username' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'password' should be a string</option>
+            </constraint>
+        </property>
+
+        <property name="enabled">
+            <constraint name="NotNull">
+                <option name="message">'enabled' should not be null</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">boolean</option>
+                <option name="message">'enabled' should be a string</option>
+            </constraint>
+        </property>
+    </class>
+
 </constraint-mapping>
