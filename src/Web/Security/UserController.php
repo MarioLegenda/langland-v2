@@ -6,6 +6,7 @@ use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\PresentationLayer\Infrastructure\Model\User;
 use App\PresentationLayer\Security\EntryPoint\UserEntryPoint;
 use App\Symfony\ApiResponseWrapper;
+use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController
@@ -42,5 +43,27 @@ class UserController
         $propagationResponse = $this->userEntryPoint->create($user);
 
         return $this->apiResponseWrapper->createUserCreate($propagationResponse->toArray());
+    }
+
+    public function getLoggedInUser(): Response
+    {
+        // temporary code that will be deleted after security is finished
+
+        return $this->apiResponseWrapper->createGetLoggedInUser([
+            'id' => 1,
+            'name' => 'Mile',
+            'lastname' => 'Mile',
+            'username' => 'mile123',
+            'email' => 'mile@gmail.com',
+            'enabled' => true,
+            'locale' => [
+                'name' => 'en',
+                'default' => true,
+                'createdAt' => Util::formatFromDate(Util::toDateTime()),
+                'updatedAt' => null,
+            ],
+            'createdAt' => Util::formatFromDate(Util::toDateTime()),
+            'updatedAt' => null,
+        ]);
     }
 }

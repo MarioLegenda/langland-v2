@@ -183,4 +183,27 @@ class ApiResponseWrapper
             );
         }
     }
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
+    public function createGetLoggedInUser($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('GET')
+            ->addMessage('Logged in user')
+            ->isResource()
+            ->setStatusCode(200)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
 }

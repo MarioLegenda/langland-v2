@@ -66,12 +66,9 @@ services:
     # as action arguments even if you don't extend any base controller class
 
     # CONTROLLERS
-    App\PresentationLayer\LearningMetadata\EntryPoint\:
-        resource: '../src/PresentationLayer/LearningMetadata/EntryPoint'
-        tags: ['controller.service_arguments']
 
-    App\PresentationLayer\Security\EntryPoint\:
-        resource: '../src/PresentationLayer/Security/EntryPoint'
+    App\Web\:
+        resource: '../src/Web/'
         tags: ['controller.service_arguments']
 
     # SYMFONY SPECIFIC SERVICES
@@ -79,22 +76,11 @@ services:
         resource: '../src/Symfony'
 
     # SYMFONY ARGUMENT RESOLVERS
-    App\Symfony\Resolver\LanguageResolver:
+    App\Symfony\Resolver\UserResolver:
         arguments:
             $resolvedRequestResolver: '@Library\Http\Request\ResolvedRequestResolver'
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }
-
-    App\Symfony\Resolver\CategoryResolver:
-        arguments:
-            $resolvedRequestResolver: '@Library\Http\Request\ResolvedRequestResolver'
-        tags:
-            - { name: controller.argument_value_resolver, priority: 50 }
-
-    # JMS SERIALIZER
-    App\Symfony\Serializer\BooleanDeserializationFix:
-        tags:
-            - { name: jms_serializer.event_subscriber }
 
     # REPOSITORY
 

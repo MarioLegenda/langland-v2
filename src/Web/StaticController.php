@@ -1,10 +1,10 @@
 <?php
 
-namespace App\PresentationLayer\LearningMetadata\EntryPoint;
+namespace App\Web;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class StaticEntryPoint
+class StaticController
 {
 
     public function getIndex(\Twig_Environment $templating): Response

@@ -1,8 +1,18 @@
 app_index:
     path:     /
-    controller: App\PresentationLayer\LearningMetadata\EntryPoint\StaticEntryPoint::getIndex
+    controller: App\Web\StaticController::getIndex
     methods: [GET]
     host: 33.33.33.10
     schemes: [http]
     requirements:
         _format: 'text/html'
+
+app_user:
+    prefix: /api/v1/user
+    resource: 'Security/'
+    methods: [GET]
+    host: 33.33.33.10
+    schemes: [http]
+    type: directory
+    requirements:
+        _format: 'application/json'

@@ -43,17 +43,17 @@ class ResolvedRequestResolver
             $this->validator
         );
 
-        /** @var object $languageModel */
-        $languageModel = $this->serializerWrapper->convertFromToByArray(
+        /** @var object $model */
+        $model = $this->serializerWrapper->convertFromToByArray(
             $resolvedRequest->toArray(),
             $class
         );
 
-        if (get_class($languageModel) !== $class) {
+        if (get_class($model) !== $class) {
             $message = sprintf(
                 'Invalid model resolved. Expected \'%s\' got \'%s\'',
                 $class,
-                get_class($languageModel)
+                get_class($model)
             );
 
             throw new \RuntimeException($message);
@@ -61,7 +61,7 @@ class ResolvedRequestResolver
 
         return TypedArray::create('string', 'object', [
             'resolvedRequest' => $resolvedRequest,
-            'model' => $languageModel,
+            'model' => $model,
         ]);
     }
 }
