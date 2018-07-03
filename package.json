@@ -2,24 +2,26 @@
   "name": "langland_v2",
   "version": "1.0.0",
   "description": "Langland",
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "dependencies": {},
   "devDependencies": {
+    "babel-minify-webpack-plugin": "^0.3.1",
     "css-loader": "^0.28.11",
+    "serviceworker-webpack-plugin": "^1.0.0-alpha02",
     "ts-loader": "^4.4.1",
     "typescript": "^2.9.2",
     "vue": "^2.5.16",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.1",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "prod": "webpack --mode=production",
-    "dev": "webpack --mode=development",
+    "prod": "webpack",
+    "dev": "webpack --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

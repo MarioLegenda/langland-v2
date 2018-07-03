@@ -8,6 +8,7 @@
 
 <script lang="ts">
     import Vue from "vue";
+    import {UserRepository} from "./Repository/Implementation.ts";
 
     export default Vue.extend({})
 </script>

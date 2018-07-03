@@ -27,6 +27,7 @@ class UserEntryPointTest extends BasicSetup
         $response = $userEntryPoint->create($user);
 
         static::assertInstanceOf(Response::class, $response);
+        static::assertEquals($response->getStatusCode(), 201);
 
         $responseData = json_decode($response->getContent(), true)['resource']['data'];
 
