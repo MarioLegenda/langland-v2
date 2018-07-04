@@ -1,6 +1,19 @@
-import {ILanguageRepository, IResponse, IRequest} from "./Contract";
+import {IUserRepository, IResponse, IRequest, IRepository, Method, InternalType} from "./Contract";
+import {sources} from "./Context";
 
-class Response implements IResponse {
+function httpError(response) {
+    if (response.status < 200 || response.status > 299) {
+        throw new Error(`An error occurred. 200 status code not given. Status code: ${response.status}. Status text: ${response.statusText}`);
+    }
+
+    return response;
+}
+
+function toJson(response): Promise<object> {
+    return response.json();
+}
+
+export class Response implements IResponse {
     properties: string[];
     method: string;
     type: string;
@@ -18,7 +31,7 @@ class Response implements IResponse {
     }
 }
 
-class Request implements IRequest {
+export class Request implements IRequest {
     source: string;
     internalType: string;
     method: string;
@@ -34,38 +47,78 @@ class Request implements IRequest {
     }
 }
 
-export class UserRepository implements ILanguageRepository {
-    create(request: IRequest): IResponse {
-        // the place to fetch the data from the server
-        return new Response({
-            properties: [],
+export class UserRepository implements IUserRepository {
+    read(success: any, request?: IRequest): void {
+        if (!(success instanceof Function)) {
+            throw new Error(`First argument to create() has to be a function`);
+        }
+
+        if (typeof request === 'undefined') {
+            request = new Request({
+                source: sources.app_get_logged_in_user,
+                internalType: InternalType.FETCH,
+                method: Method.GET,
+                data: {},
+                name: 'get_user'
+            });
+        }
+
+        fetch(request.source, {
             method: 'GET',
-            type: 'creation',
-            statusCode: 201,
-            messages: [],
-            cacheKey: null
-        });
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(httpError)
+            .then(toJson)
+            .then(success)
     }
 
-    read(request: IRequest): IResponse {
-        return new Response({
-            properties: [],
+    async asyncRead(request?: IRequest): Promise<object> {
+        if (typeof request === 'undefined') {
+            request = new Request({
+                source: sources.app_get_logged_in_user,
+                internalType: 'fetch',
+                method: 'GET',
+                data: {},
+                name: 'get_user'
+            });
+        }
+
+        const promise = await fetch(request.source, {
             method: 'GET',
-            type: 'creation',
-            statusCode: 201,
-            messages: [],
-            cacheKey: null
-        });
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(httpError)
+            .then(toJson);
+
+        return promise;
+    }
+}
+
+export class RepositoryFactory {
+    private static _instance: RepositoryFactory;
+
+    private constructor() {}
+
+    static get getInstance(): RepositoryFactory {
+        if (RepositoryFactory.getInstance instanceof RepositoryFactory) {
+            return RepositoryFactory.getInstance;
+        }
+
+        RepositoryFactory._instance = new RepositoryFactory();
+
+        return RepositoryFactory.getInstance;
     }
 
-    update(request: IRequest): IResponse {
-        return new Response({
-            properties: [],
-            method: 'GET',
-            type: 'creation',
-            statusCode: 201,
-            messages: [],
-            cacheKey: null
-        });
+    public static create(key: string): IRepository {
+        switch (key) {
+            case 'user':
+                return new UserRepository();
+        }
+
+        throw new Error(`Repository ${key} not found`);
     }
 }

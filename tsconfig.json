@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./public/dist/",
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "noImplicitReturns": true,
     "module": "es2015",
     "moduleResolution": "node",

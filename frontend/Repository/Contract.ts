@@ -1,9 +1,3 @@
-interface IRepository {
-    create(context: IRequest): IResponse,
-    read(context: IRequest): IResponse,
-    update(context: IRequest): IResponse
-}
-
 interface IResponseResource {
     data: object
 }
@@ -13,10 +7,21 @@ interface IResponseCollection {
     data: object
 }
 
+export interface IRepository {
+    read(success: Function, context?: IRequest): void,
+    asyncRead(context?: IRequest): Promise<object>;
+}
+
 export enum Method {
     GET = 'GET',
     PUT = 'PUT',
     POST = 'POST'
+}
+
+export enum InternalType {
+    FETCH = 'fetch',
+    CREATE = 'create',
+    MODIFY = 'modify'
 }
 
 export interface IResponse {
@@ -38,4 +43,4 @@ export interface IRequest {
     name: string
 }
 
-export interface ILanguageRepository extends IRepository {}
+export interface IUserRepository extends IRepository {}

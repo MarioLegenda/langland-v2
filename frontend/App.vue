@@ -8,9 +8,14 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {UserRepository} from "./Repository/Implementation.ts";
+    import {IUserRepository} from "./Repository/Contract";
+    import {RepositoryFactory} from "./Repository/Implementation";
 
-    export default Vue.extend({})
+    const userRepository: IUserRepository = RepositoryFactory.create('user');
+
+    export default Vue.extend({
+
+    });
 </script>
 
 <style>
