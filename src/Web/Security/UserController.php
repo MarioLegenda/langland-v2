@@ -57,6 +57,7 @@ class UserController
             'email' => 'mile@gmail.com',
             'enabled' => true,
             'locale' => [
+                'id' => 1,
                 'name' => 'en',
                 'default' => true,
                 'createdAt' => Util::formatFromDate(Util::toDateTime()),

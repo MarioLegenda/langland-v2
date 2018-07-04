@@ -1,5 +1,6 @@
 import {IUserRepository, IResponse, IRequest, IRepository, Method, InternalType} from "./Contract";
 import {sources} from "./Context";
+import {IUser, User} from "./Models";
 
 function httpError(response) {
     if (response.status < 200 || response.status > 299) {
@@ -85,16 +86,18 @@ export class UserRepository implements IUserRepository {
             });
         }
 
-        const promise = await fetch(request.source, {
+        return await fetch(request.source, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(httpError)
-            .then(toJson);
-
-        return promise;
+            .then(toJson)
+            .then(function(response: any): IUser {
+                console.log(response);
+                return new User(response.resource.data);
+            });
     }
 }
 

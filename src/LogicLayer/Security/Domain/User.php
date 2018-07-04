@@ -4,8 +4,10 @@ namespace App\LogicLayer\Security\Domain;
 
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Locale;
+use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Library\Util\Util;
 
-class User implements DomainModelInterface
+class User implements DomainModelInterface, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -179,5 +181,22 @@ class User implements DomainModelInterface
     public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'lastname' => $this->getLastname(),
+            'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'enabled' => $this->isEnabled(),
+            'locale' => $this->getLocale()->toArray(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }
