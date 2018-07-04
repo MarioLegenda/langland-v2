@@ -95,7 +95,6 @@ export class UserRepository implements IUserRepository {
             .then(httpError)
             .then(toJson)
             .then(function(response: any): IUser {
-                console.log(response);
                 return new User(response.resource.data);
             });
     }

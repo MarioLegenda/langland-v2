@@ -18,7 +18,6 @@ new Vue({
     },
     created() {
         userRepository.asyncRead().then((user: IUser) => {
-            console.log(user);
             store.addUser(user);
         });
     }
