@@ -8,8 +8,8 @@ interface IResponseCollection {
 }
 
 export interface IRepository {
-    read(success: Function, context?: IRequest): void,
-    asyncRead(context?: IRequest): Promise<object>;
+    read(success?: Function, context?: IRequest): void,
+    asyncRead(success?: Function, context?: IRequest);
 }
 
 export enum Method {

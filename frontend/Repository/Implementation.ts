@@ -75,7 +75,7 @@ export class UserRepository implements IUserRepository {
             .then(success)
     }
 
-    async asyncRead(request?: IRequest): Promise<object> {
+    async asyncRead(success?: any, request?: IRequest) {
         if (typeof request === 'undefined') {
             request = new Request({
                 source: sources.app_get_logged_in_user,
@@ -86,17 +86,16 @@ export class UserRepository implements IUserRepository {
             });
         }
 
-        return await fetch(request.source, {
+        const response: any = await fetch(request.source, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-            .then(httpError)
-            .then(toJson)
-            .then(function(response: any): IUser {
-                return new User(response.resource.data);
-            });
+        });
+
+        httpError(response);
+
+        success(await response.json());
     }
 }
 
