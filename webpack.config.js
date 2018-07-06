@@ -2,7 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 module.exports = {
     entry: ['./frontend/index.ts', 'whatwg-fetch'],
@@ -41,11 +40,18 @@ module.exports = {
                 options: {
                     name: '[name].[ext]?[hash]'
                 }
+            },
+            {
+                test: /\.(scss|css|sass)$/,
+                use: [
+                    'vue-style-loader',
+                    'scss-loader'
+                ],
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.vue', '.json'],
+        extensions: ['.ts', '.js', '.vue', '.json', '.tsx'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         }

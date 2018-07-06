@@ -1,5 +1,5 @@
 import Vue from "vue";
-import App from "./App.vue";
+import {Header} from "./Header";
 import {IUserRepository} from "./Repository/Contract";
 import {RepositoryFactory} from "./Repository/Implementation";
 import {store} from "./store";
@@ -10,9 +10,11 @@ const userRepository: IUserRepository = RepositoryFactory.create('user');
 userRepository.read((response) => {
     new Vue({
         el: "#vue_app",
-        template: `<App></App>`,
+        template: `<div class="app">
+                       <Header></Header>
+                   </div>`,
         components: {
-            App
+            Header
         },
         beforeCreate() {
             store.addUser(new User(response.resource.data));

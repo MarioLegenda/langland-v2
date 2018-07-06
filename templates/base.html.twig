@@ -1,10 +1,15 @@
+{% set cache = random(9999999) %}
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Langland{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset("style/build.css?v="~cache) }}" />
+        {% endblock %}
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300|Lobster|Old+Standard+TT&amp;subset=latin-ext" rel="stylesheet">    </head>
     <body>
         <div id="vue_app">
             {% block body %}{% endblock %}
