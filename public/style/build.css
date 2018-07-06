@@ -86,6 +86,7 @@ html {
   font-size: 1.4em;
   float: left;
   width: 80px;
+  color: #F15A2D;
   padding: 20px;
 }
 #main_header .nav-wrapper, #main_header .user-actions-wrapper {
@@ -102,6 +103,7 @@ html {
   display: inline-block;
   padding: 5px;
   margin-right: 20px;
+  color: #6d6d6d;
 }
 #main_header .nav-wrapper a:hover {
   color: #F15A2D;
@@ -121,11 +123,45 @@ html {
   float: right;
   padding: 5px;
   border-radius: 10px;
+  color: #6d6d6d;
   border: 1px solid #d3d3d3;
   text-align: center;
 }
 #main_header .user-actions-wrapper a:hover {
   border: 1px solid #F15A2D;
+}
+
+#main_body_content {
+  width: 100%;
+  float: left;
+  padding: 20px;
+  font-family: "Old Standard TT", serif;
+}
+#main_body_content .left-body-content {
+  width: 400px;
+  float: left;
+  margin-top: 100px;
+  color: #6d6d6d;
+}
+#main_body_content .left-body-content h1 {
+  font-size: 1.5em;
+  padding-bottom: 5px;
+  color: #F15A2D;
+  border-bottom: 1px solid #F15A2D;
+}
+#main_body_content .left-body-content p {
+  padding: 20px 0 0 20px;
+  letter-spacing: 0.03em;
+  line-height: 1.3em;
+}
+#main_body_content .left-body-content a {
+  width: 100%;
+  display: block;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  text-align: right;
+  color: #F15A2D;
+  border-bottom: 1px solid #F15A2D;
 }
 
 /*# sourceMappingURL=build.css.map */
