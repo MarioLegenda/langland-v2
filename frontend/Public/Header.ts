@@ -10,8 +10,8 @@ const Navigation = {
 const UserActions = {
     template: `<div class="user-actions-wrapper">
                    <nav>
-                       <a href="">Sign in</a>
                        <router-link to="/sign-up">Sign up</router-link>
+                       <router-link to="/sign-in">Sign in</router-link>
                    </nav>
                </div>`
 };

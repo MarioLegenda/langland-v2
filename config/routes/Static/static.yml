@@ -9,3 +9,7 @@ app_static_guide:
 app_static_sign_up:
     path:     /sign-up
     controller: App\Web\StaticController::getSignUp
+
+app_static_sign_in:
+    path:     /sign-in
+    controller: App\Web\StaticController::getSignIn
