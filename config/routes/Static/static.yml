@@ -1,0 +1,11 @@
+app_static_index:
+    path:     /
+    controller: App\Web\StaticController::getIndex
+
+app_static_guide:
+    path:     /guide
+    controller: App\Web\StaticController::getGuide
+
+app_static_sign_up:
+    path:     /sign-up
+    controller: App\Web\StaticController::getSignUp

@@ -11,7 +11,7 @@ const UserActions = {
     template: `<div class="user-actions-wrapper">
                    <nav>
                        <a href="">Sign in</a>
-                       <a href="">Sign up</a>
+                       <router-link to="/sign-up">Sign up</router-link>
                    </nav>
                </div>`
 };
