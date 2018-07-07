@@ -76,6 +76,14 @@ html {
   -o-box-sizing: inherit;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 #main_header {
   border-bottom: 1px solid #d3d3d3;
   width: 100%;
@@ -86,8 +94,10 @@ html {
   font-size: 1.4em;
   float: left;
   width: 80px;
-  color: #F15A2D;
   padding: 20px;
+}
+#main_header .logo-header {
+  color: #F15A2D;
 }
 #main_header .nav-wrapper, #main_header .user-actions-wrapper {
   margin-top: 18px;

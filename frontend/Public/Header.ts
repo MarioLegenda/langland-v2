@@ -1,7 +1,7 @@
 const Navigation = {
     template: `<div class="nav-wrapper">
                    <nav>
-                       <a href="">GUIDE</a>
+                       <router-link to="/guide">GUIDE</router-link>
                        <a href="">ABOUT</a>
                    </nav>
                </div>`,
@@ -19,7 +19,7 @@ const UserActions = {
 export const Header = {
     template: `<header id="main_header" class="header">
                   <div class="logo">
-                      <h1>Langland</h1>
+                      <router-link to="/" class="logo-header">Langland</router-link>
                   </div>
                   
                   <UserActions></UserActions>

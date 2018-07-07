@@ -5,7 +5,9 @@
   "directories": {
     "test": "tests"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vue-router": "^3.0.1"
+  },
   "devDependencies": {
     "css-loader": "^0.28.11",
     "node-sass": "^4.9.1",

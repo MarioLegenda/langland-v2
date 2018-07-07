@@ -8,9 +8,12 @@
     font-size: 1.4em;
     float: left;
     width: 80px;
-    color: $colorOrange;
 
     padding: 20px;
+  }
+
+  .logo-header {
+    color: $colorOrange;
   }
 
   .nav-wrapper, .user-actions-wrapper {
