@@ -7,6 +7,15 @@ app_index:
     requirements:
         _format: 'text/html'
 
+app_guide:
+    path:     /guide
+    controller: App\Web\StaticController::getGuide
+    methods: [GET]
+    host: 33.33.33.10
+    schemes: [http]
+    requirements:
+        _format: 'text/html'
+
 app_user:
     prefix: /api/v1/user
     resource: 'Security/'
