@@ -13,3 +13,7 @@ app_static_sign_up:
 app_static_sign_in:
     path:     /sign-in
     controller: App\Web\StaticController::getSignIn
+
+app_static_langland_root_app_index:
+    path:     /langland
+    controller: App\Web\StaticController::getLanglandRootAppIndex

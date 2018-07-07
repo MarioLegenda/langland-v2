@@ -23,7 +23,8 @@ userRepository.read((response) => {
     new Vue({
         el: "#vue_app",
         router: router,
-        template: `<div class="app">
+        template: `
+                    <div class="app">
                        <PublicHeader></PublicHeader>
                        
                        <div id="main_body_content" class="main-body-content">
