@@ -6,6 +6,7 @@ use App\Infrastructure\Model\CollectionEntity;
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Domain\Image;
+use App\LogicLayer\LearningMetadata\Domain\Lesson;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 
@@ -51,6 +52,10 @@ class Word implements DomainModelInterface, ArrayNotationInterface
      * @var Image $image
      */
     private $image;
+    /**
+     * @var Lesson $lesson
+     */
+    private $lesson;
     /**
      * @var \DateTime $createdAt
      */
@@ -186,6 +191,20 @@ class Word implements DomainModelInterface, ArrayNotationInterface
         return $this->image;
     }
     /**
+     * @return Lesson
+     */
+    public function getLesson(): ?Lesson
+    {
+        return $this->lesson;
+    }
+    /**
+     * @param Lesson $lesson
+     */
+    public function setLesson(Lesson $lesson): void
+    {
+        $this->lesson = $lesson;
+    }
+    /**
      * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -223,6 +242,7 @@ class Word implements DomainModelInterface, ArrayNotationInterface
             'name' => $this->getName(),
             'type' => $this->getType(),
             'description' => $this->getDescription(),
+            'lesson' => ($this->getLesson() instanceof Lesson) ? $this->getLesson()->toArray() : null,
             'level' => $this->getLevel(),
             'pluralForm' => $this->getPluralForm(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),

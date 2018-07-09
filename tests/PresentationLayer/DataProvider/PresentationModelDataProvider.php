@@ -15,6 +15,7 @@ use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
 use App\PresentationLayer\Infrastructure\Model\Image;
+use Ramsey\Uuid\Uuid;
 
 class PresentationModelDataProvider
 {
@@ -174,6 +175,43 @@ class PresentationModelDataProvider
 
         return $word;
     }
+
+    public function getCreateWordModelWithLesson(
+        Lesson $lesson,
+        Language $language,
+        CollectionEntity $categories,
+        Image $image,
+        TypedArray $translations = null,
+        int $level = null
+    ): Word {
+        if (!$translations instanceof TypedArray) {
+            $translations = TypedArray::create('integer', Translation::class);
+            for ($i = 0; $i < 5; $i++) {
+                $translations[] = $this->getTranslationModel();
+            }
+        }
+
+        /** @var array $lesson */
+        $lessonArray = $this->makeLessonDataSeriazibleFromLessonArray($lesson->toArray());
+
+        $modelBlueprint = [
+            'name' => $this->faker()->name,
+            'type' => $this->faker()->name,
+            'language' => $language->toArray(),
+            'lesson' => $lessonArray,
+            'description' => $this->faker()->sentence(20),
+            'level' => (is_null($level)) ? rand(1, 5) : $level,
+            'pluralForm' => $this->faker()->name,
+            'translations' => $translations->toArray(),
+        ];
+
+        /** @var Word $word */
+        $word = $this->deserializer->create($modelBlueprint, Word::class);
+        $word->setImage($image);
+        $word->setCategories($categories);
+
+        return $word;
+    }
     /**
      * @return Word
      */
@@ -238,6 +276,7 @@ class PresentationModelDataProvider
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'locale' => $locale->getName(),
+            'internalName' => Uuid::uuid4()->toString(),
             'language' => $language->toArray(),
             'lessonData' => $this->createLessonData(),
         ];
@@ -261,5 +300,21 @@ class PresentationModelDataProvider
 
         return $data;
     }
+    /**
+     * @param array $lesson
+     * @return array
+     */
+    private function makeLessonDataSeriazibleFromLessonArray(array $lesson): array
+    {
+        $lessonData = $lesson['lessonData'];
 
+        $changedData = [];
+        foreach ($lessonData as $item) {
+            $changedData[]['name'] = $item;
+        }
+
+        $lesson['lessonData'] = $changedData;
+
+        return $lesson;
+    }
 }

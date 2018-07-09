@@ -11,6 +11,12 @@ App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson:
             groups: [default]
             type: string
 
+        internalName:
+            expose: true
+            groups: [default]
+            type: string
+            serialized_name: internalName
+
         locale:
             expose: true
             groups: [default]

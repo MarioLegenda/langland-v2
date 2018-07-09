@@ -11,6 +11,12 @@ App\LogicLayer\LearningMetadata\Domain\Lesson:
             groups: [default]
             type: string
 
+        internalName:
+            expose: true
+            groups: [default]
+            type: string
+            serialized_name: internalName
+
         locale:
             expose: true
             groups: [default]

@@ -47,6 +47,11 @@ App\LogicLayer\LearningMetadata\Domain\Word\Word:
             groups: [default]
             type: App\LogicLayer\LearningMetadata\Domain\Image
 
+        lesson:
+            expose: true
+            groups: [default]
+            type: App\LogicLayer\LearningMetadata\Domain\Lesson
+
         createdAt:
             expose: true
             groups: [default]

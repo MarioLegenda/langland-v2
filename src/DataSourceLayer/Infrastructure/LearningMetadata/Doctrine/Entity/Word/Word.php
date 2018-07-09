@@ -5,6 +5,7 @@ namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Wo
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
@@ -77,6 +78,11 @@ class Word implements DataSourceEntity, ArrayNotationInterface
      * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
+    /**
+     * @var Lesson $lesson
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson")
+     */
+    private $lesson;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -188,6 +194,20 @@ class Word implements DataSourceEntity, ArrayNotationInterface
         $this->image = $image;
     }
     /**
+     * @return Lesson|null
+     */
+    public function getLesson(): ?Lesson
+    {
+        return $this->lesson;
+    }
+    /**
+     * @param Lesson $lesson
+     */
+    public function setLesson(Lesson $lesson): void
+    {
+        $this->lesson = $lesson;
+    }
+    /**
      * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -248,6 +268,7 @@ class Word implements DataSourceEntity, ArrayNotationInterface
             'name' => $this->getName(),
             'type' => $this->getType(),
             'description' => $this->getDescription(),
+            'lesson' => ($this->getLesson() instanceof Lesson) ? $this->getLesson()->toArray() : null,
             'level' => $this->getLevel(),
             'pluralForm' => $this->getPluralForm(),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),

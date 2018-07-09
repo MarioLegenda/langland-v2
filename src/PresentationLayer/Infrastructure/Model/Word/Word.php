@@ -4,6 +4,7 @@ namespace App\PresentationLayer\Infrastructure\Model\Word;
 
 use App\Infrastructure\Model\CollectionEntity;
 use App\PresentationLayer\Infrastructure\Model\Language;
+use App\PresentationLayer\Infrastructure\Model\Lesson;
 use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -51,6 +52,10 @@ class Word implements PresentationModelInterface, ArrayNotationInterface
      * @var Image $image
      */
     private $image;
+    /**
+     * @var Lesson $lesson
+     */
+    private $lesson;
     /**
      * @return int
      */
@@ -136,6 +141,13 @@ class Word implements PresentationModelInterface, ArrayNotationInterface
         return $this->categories;
     }
     /**
+     * @return Lesson
+     */
+    public function getLesson(): ?Lesson
+    {
+        return $this->lesson;
+    }
+    /**
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
@@ -158,6 +170,7 @@ class Word implements PresentationModelInterface, ArrayNotationInterface
             'name' => $this->getName(),
             'type' => $this->getType(),
             'description' => $this->getDescription(),
+            'lesson' => ($this->getLesson() instanceof Lesson) ? $this->getLesson()->toArray() : null,
             'level' => $this->getLevel(),
             'pluralForm' => $this->getPluralForm(),
         ];

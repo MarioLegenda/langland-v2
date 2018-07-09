@@ -4,8 +4,10 @@ namespace App\Tests\PresentationLayer\LearningMetadata;
 
 use App\Infrastructure\Model\CollectionEntity;
 use App\Infrastructure\Model\CollectionMetadata;
+use App\PresentationLayer\Infrastructure\Model\Lesson;
 use App\PresentationLayer\LearningMetadata\EntryPoint\CategoryEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
+use App\PresentationLayer\LearningMetadata\EntryPoint\LessonEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\PresentationLayer\LearningMetadata\EntryPoint\WordEntryPoint;
 use App\PresentationLayer\Infrastructure\Model\Category;
@@ -65,6 +67,71 @@ class WordEntryPointTest extends BasicSetup
         $data = $responseData['resource']['data'];
 
         $this->assertResponse($data);
+    }
+
+    public function test_word_with_lesson_create_success()
+    {
+        /** @var WordEntryPoint $wordEntryPoint */
+        $wordEntryPoint = static::$container->get(WordEntryPoint::class);
+        /** @var PresentationModelDataProvider $presentationLayerDataProvider */
+        $presentationLayerDataProvider = static::$container->get(PresentationModelDataProvider::class);
+
+        /** @var LessonEntryPoint $lessonEntryPoint */
+        $lessonEntryPoint = static::$container->get(LessonEntryPoint::class);
+
+        /** @var Locale $localeModel */
+        $localeModel = $this->createLocale();
+        /** @var Language $language */
+        $language = $this->createLanguage($localeModel);
+        /** @var CollectionEntity $categories */
+        $categories = $this->createCategoryEntityCollection($localeModel);
+        /** @var Image $image */
+        $image = $presentationLayerDataProvider->getImageModel();
+
+        $lessonModel = $presentationLayerDataProvider->getLessonModel(
+            $language,
+            $localeModel
+        );
+
+        $lessonEntryPoint->create($lessonModel);
+
+        $translations = TypedArray::create('integer', Translation::class);
+        for ($i = 0; $i < 5; $i++) {
+            $translations[] = $presentationLayerDataProvider->getTranslationModel($localeModel);
+        }
+
+        $wordPresentationModel = $presentationLayerDataProvider->getCreateWordModelWithLesson(
+            $lessonModel,
+            $language,
+            $categories,
+            $image,
+            $translations
+        );
+
+        $response = $wordEntryPoint->create($wordPresentationModel);
+
+        static::assertInstanceOf(Response::class, $response);
+        static::assertEquals(201, $response->getStatusCode());
+
+        $responseData = json_decode($response->getContent(), true)['resource']['data'];
+
+        $this->assertResponse($responseData);
+
+        $lessonData = $responseData['lesson'];
+
+        static::assertInternalType('int', $lessonData['id']);
+        static::assertNotEmpty($lessonData['id']);
+        static::assertInternalType('string', $lessonData['name']);
+        static::assertNotEmpty($lessonData['name']);
+        static::assertInternalType('string', $lessonData['locale']);
+        static::assertNotEmpty($lessonData['locale']);
+        static::assertInternalType('string', $lessonData['internalName']);
+        static::assertNotEmpty($lessonData['internalName']);
+        static::assertInternalType('array', $lessonData['lessonData']);
+        static::assertNotEmpty($lessonData['lessonData']);
+
+        static::assertTrue(Util::isValidDate($lessonData['createdAt']));
+        static::assertNull($lessonData['updatedAt']);
     }
     /**
      * @param array $response

@@ -8,6 +8,7 @@ use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Word\Word as WordDomainModel;
 use Library\Util\Util;
+use App\LogicLayer\LearningMetadata\Domain\Lesson;
 
 class Word implements LayerPropagationResourceResponse
 {
@@ -50,6 +51,7 @@ class Word implements LayerPropagationResourceResponse
             'language' => $this->word->getLanguage()->toArray(),
             'description' => $this->word->getDescription(),
             'level' => $this->word->getLevel(),
+            'lesson' => ($this->word->getLesson() instanceof Lesson) ? $this->word->getLesson()->toArray() : null,
             'pluralForm' => $this->word->getPluralForm(),
             'translations' => apply_on_iterable($this->word->getTranslations(), function(Translation $value) {
                 return $value->toArray();

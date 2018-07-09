@@ -37,6 +37,11 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
      */
     private $name;
     /**
+     * @var string $internalName
+     * @Column(type="string")
+     */
+    private $internalName;
+    /**
      * @var string $locale
      * @Column(type="string")
      */
@@ -143,6 +148,20 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
 
             $this->lessonData->add($item);
         }
+    }
+    /**
+     * @return string
+     */
+    public function getInternalName(): string
+    {
+        return $this->internalName;
+    }
+    /**
+     * @param string $internalName
+     */
+    public function setInternalName(string $internalName): void
+    {
+        $this->internalName = $internalName;
     }
     /**
      * @return \DateTime

@@ -47,6 +47,11 @@ App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Word\Word:
             groups: [default]
             type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Image
 
+        lesson:
+            expose: true
+            groups: [default]
+            type: App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson
+
         createdAt:
             expose: true
             groups: [default]

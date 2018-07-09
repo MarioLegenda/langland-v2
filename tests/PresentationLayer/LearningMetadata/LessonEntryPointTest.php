@@ -14,6 +14,7 @@ use App\PresentationLayer\Infrastructure\Model\Lesson as LessonPresentationModel
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Library\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
+use Ramsey\Uuid\Uuid;
 
 class LessonEntryPointTest extends BasicSetup
 {
@@ -51,6 +52,18 @@ class LessonEntryPointTest extends BasicSetup
 
         static::assertInternalType('array', $responseData['lessonData']);
         static::assertNotEmpty($responseData['lessonData']);
+
+        static::assertInternalType('string', $responseData['internalName']);
+        static::assertNotEmpty($responseData['internalName']);
+
+        $validatesInternalNameAsUuid = true;
+        try {
+            Uuid::fromString($responseData['internalName']);
+        } catch (\Exception $e) {
+            $validatesInternalNameAsUuid = false;
+        }
+
+        static::assertTrue($validatesInternalNameAsUuid);
 
         foreach ($responseData['lessonData'] as $item) {
             static::assertInternalType('string', $item);

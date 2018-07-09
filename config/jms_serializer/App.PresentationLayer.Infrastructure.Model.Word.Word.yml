@@ -46,3 +46,9 @@ App\PresentationLayer\Infrastructure\Model\Word\Word:
             expose: true
             groups: [default]
             type: App\PresentationLayer\Infrastructure\Model\Image
+
+        lesson:
+            expose: true
+            groups: [default]
+            type: App\PresentationLayer\Infrastructure\Model\Lesson
+
