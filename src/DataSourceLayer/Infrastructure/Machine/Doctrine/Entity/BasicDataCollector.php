@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
  * )
  * @HasLifecycleCallbacks()
  **/
-class BasicDataCollector implements BasicDataCollectorInterface, DataSourceEntity
+class BasicDataCollector implements BasicDataCollectorInterface, DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -167,5 +167,20 @@ class BasicDataCollector implements BasicDataCollectorInterface, DataSourceEntit
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'accessed' => $this->getAccessed(),
+            'accessedNum' => $this->getAccessedNum(),
+            'completedCount' => $this->getCompletedCount(),
+            'uncompletedCount' => $this->getUncompletedCount(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }

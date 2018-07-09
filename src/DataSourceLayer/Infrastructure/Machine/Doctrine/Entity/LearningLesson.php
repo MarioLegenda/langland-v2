@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
  * )
  * @HasLifecycleCallbacks()
  **/
-class LearningLesson implements DataSourceEntity
+class LearningLesson implements DataSourceEntity, ArrayNotationInterface
 {
     /**
      * @var int $id
@@ -36,7 +36,7 @@ class LearningLesson implements DataSourceEntity
      */
     private $id;
     /**
-     * @var BasicDataCollectorInterface $dataCollector
+     * @var BasicDataCollectorInterface|ArrayNotationInterface $dataCollector
      * @ManyToOne(targetEntity="App\Infrastructure\Machine\Collector\BasicDataCollectorInterface")
      * @JoinColumn(name="data_collector_id", referencedColumnName="id")
      */
@@ -131,5 +131,18 @@ class LearningLesson implements DataSourceEntity
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function toArray(): iterable
+    {
+        return [
+            'id' => $this->getId(),
+            'dataCollector' => $this->dataCollector->toArray(),
+            'lesson' => $this->lesson->toArray(),
+            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
+            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
+        ];
     }
 }
