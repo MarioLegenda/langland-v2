@@ -1,8 +1,10 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\Machine\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson;
+use App\Infrastructure\Machine\Collector\BasicDataCollectorInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -14,37 +16,39 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Library\Util\Util;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 /**
  * @Entity @Table(
- *     name="categories",
- *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
- *     indexes={ @Index(name="category_name_idx", columns={"name"}) }
+ *     name="learning_lessons"
  * )
  * @HasLifecycleCallbacks()
  **/
-class Category implements DataSourceEntity, ArrayNotationInterface
+class LearningLesson implements DataSourceEntity
 {
     /**
      * @var int $id
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    protected $id;
+    private $id;
     /**
-     * @var string $name
-     * @Column(type="string", unique=true)
+     * @var BasicDataCollectorInterface $dataCollector
+     * @ManyToOne(targetEntity="App\Infrastructure\Machine\Collector\BasicDataCollectorInterface")
+     * @JoinColumn(name="data_collector_id", referencedColumnName="id")
      */
-    protected $name;
+    private $dataCollector;
     /**
-     * @var string $locale
-     * @Column(type="string")
+     * @var Lesson $lesson
+     * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson")
      */
-    protected $locale;
+    private $lesson;
     /**
      * @var \DateTime $createdAt
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=false)
      */
     private $createdAt;
     /**
@@ -55,30 +59,37 @@ class Category implements DataSourceEntity, ArrayNotationInterface
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
     /**
-     * @return string
+     * @return BasicDataCollectorInterface
      */
-    public function getName()
+    public function getDataCollector(): BasicDataCollectorInterface
     {
-        return $this->name;
+        return $this->dataCollector;
     }
     /**
-     * @return string
+     * @param BasicDataCollectorInterface $dataCollector
      */
-    public function getLocale(): string
+    public function setDataCollector(BasicDataCollectorInterface $dataCollector): void
     {
-        return $this->locale;
+        $this->dataCollector = $dataCollector;
     }
     /**
-     * @param string $name
+     * @return Lesson
      */
-    public function setName($name): void
+    public function getLesson(): Lesson
     {
-        $this->name = $name;
+        return $this->lesson;
+    }
+    /**
+     * @param Lesson $lesson
+     */
+    public function setLesson(Lesson $lesson): void
+    {
+        $this->lesson = $lesson;
     }
     /**
      * @return \DateTime
@@ -120,18 +131,5 @@ class Category implements DataSourceEntity, ArrayNotationInterface
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
-    }
-    /**
-     * @return iterable
-     */
-    public function toArray(): iterable
-    {
-        return [
-            'id' => (is_int($this->id)) ? $this->getId() : null,
-            'name' => $this->getName(),
-            'locale' => $this->getLocale(),
-            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
-            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
-        ];
     }
 }

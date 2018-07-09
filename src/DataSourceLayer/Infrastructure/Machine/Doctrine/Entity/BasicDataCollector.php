@@ -1,8 +1,10 @@
 <?php
 
-namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
+namespace App\DataSourceLayer\Infrastructure\Machine\Doctrine\Entity;
 
+use App\Infrastructure\Machine\Collector\BasicDataCollectorInterface;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -15,33 +17,43 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 /**
  * @Entity @Table(
- *     name="categories",
- *     uniqueConstraints={ @UniqueConstraint(columns={"name"}) },
- *     indexes={ @Index(name="category_name_idx", columns={"name"}) }
+ *     name="basic_data_collector"
  * )
  * @HasLifecycleCallbacks()
  **/
-class Category implements DataSourceEntity, ArrayNotationInterface
+class BasicDataCollector implements BasicDataCollectorInterface, DataSourceEntity
 {
     /**
      * @var int $id
      * @Id @Column(type="integer")
      * @GeneratedValue
      */
-    protected $id;
+    private $id;
     /**
-     * @var string $name
-     * @Column(type="string", unique=true)
+     * @var bool $accessed
+     * @Column(type="boolean")
      */
-    protected $name;
+    private $accessed;
     /**
-     * @var string $locale
-     * @Column(type="string")
+     * @var int $accessedNum
+     * @Column(type="integer")
      */
-    protected $locale;
+    private $accessedNum;
+    /**
+     * @var int $completedCount
+     * @Column(type="integer")
+     */
+    private $completedCount;
+    /**
+     * @var int $uncompletedCount
+     * @Column(type="integer")
+     */
+    private $uncompletedCount;
     /**
      * @var \DateTime $createdAt
      * @Column(type="datetime")
@@ -55,30 +67,65 @@ class Category implements DataSourceEntity, ArrayNotationInterface
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
     /**
-     * @return string
+     * @param bool $accessed
      */
-    public function getName()
+    public function setAccessed(bool $accessed): void
     {
-        return $this->name;
+        $this->accessed = $accessed;
     }
     /**
-     * @return string
+     * @return bool
      */
-    public function getLocale(): string
+    public function getAccessed(): bool
     {
-        return $this->locale;
+        return $this->accessed;
     }
     /**
-     * @param string $name
+     * @return int
      */
-    public function setName($name): void
+    public function getAccessedNum(): int
     {
-        $this->name = $name;
+        return $this->accessedNum;
+    }
+    /**
+     * @param int $accessedNum
+     */
+    public function setAccessedNum(int $accessedNum): void
+    {
+        $this->accessedNum = $accessedNum;
+    }
+    /**
+     * @return int
+     */
+    public function getCompletedCount(): int
+    {
+        return $this->completedCount;
+    }
+    /**
+     * @param int $completedCount
+     */
+    public function setCompletedCount(int $completedCount): void
+    {
+        $this->completedCount = $completedCount;
+    }
+    /**
+     * @return int
+     */
+    public function getUncompletedCount(): int
+    {
+        return $this->uncompletedCount;
+    }
+    /**
+     * @param int $uncompletedCount
+     */
+    public function setUncompletedCount(int $uncompletedCount): void
+    {
+        $this->uncompletedCount = $uncompletedCount;
     }
     /**
      * @return \DateTime
@@ -120,18 +167,5 @@ class Category implements DataSourceEntity, ArrayNotationInterface
         if (!$this->createdAt instanceof \DateTime) {
             $this->setCreatedAt(Util::toDateTime());
         }
-    }
-    /**
-     * @return iterable
-     */
-    public function toArray(): iterable
-    {
-        return [
-            'id' => (is_int($this->id)) ? $this->getId() : null,
-            'name' => $this->getName(),
-            'locale' => $this->getLocale(),
-            'createdAt' => Util::formatFromDate($this->getCreatedAt()),
-            'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
-        ];
     }
 }

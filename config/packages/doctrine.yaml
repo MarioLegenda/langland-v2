@@ -17,6 +17,8 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
+        resolve_target_entities:
+            App\Infrastructure\Machine\Collector\BasicDataCollectorInterface: App\DataSourceLayer\Infrastructure\Machine\Doctrine\Entity\BasicDataCollector
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
@@ -33,4 +35,11 @@ doctrine:
                 type: annotation
                 dir: '%kernel.project_dir%/src/DataSourceLayer/Infrastructure/Security/Doctrine/Entity'
                 prefix: 'App\DataSourceLayer\Infrastructure\Security\Doctrine\Entity'
+                alias: Security
+
+            Machine:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/DataSourceLayer/Infrastructure/Machine/Doctrine/Entity'
+                prefix: 'App\DataSourceLayer\Infrastructure\Machine\Doctrine\Entity'
                 alias: Security
