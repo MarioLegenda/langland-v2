@@ -4,6 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\LogicLayer\LearningMetadata\Domain\Lesson as LessonDomainModel;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
+use App\LogicLayer\LearningMetadata\Domain\LessonData;
 use Library\Util\Util;
 
 class Lesson implements LayerPropagationResourceResponse
@@ -26,14 +27,7 @@ class Lesson implements LayerPropagationResourceResponse
      */
     public function toArray(): iterable
     {
-        return [
-            'id' => $this->lesson->getId(),
-            'name' => $this->lesson->getName(),
-            'temporaryText' => $this->lesson->getTemporaryText(),
-            'locale' => $this->lesson->getLocale(),
-            'createdAt' => Util::formatFromDate($this->lesson->getCreatedAt()),
-            'updatedAt' => Util::formatFromDate($this->lesson->getUpdatedAt()),
-        ];
+        return $this->lesson->toArray();
     }
     /**
      * @return object|LessonDomainModel

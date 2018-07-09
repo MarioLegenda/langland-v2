@@ -21,9 +21,9 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
      */
     private $locale;
     /**
-     * @var string $temporaryText
+     * @var iterable $lessonData
      */
-    private $temporaryText;
+    private $lessonData;
     /**
      * @var Language $language
      */
@@ -58,18 +58,18 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
         return $this->locale;
     }
     /**
-     * @return string
-     */
-    public function getTemporaryText(): string
-    {
-        return $this->temporaryText;
-    }
-    /**
      * @return Language
      */
     public function getLanguage(): Language
     {
         return $this->language;
+    }
+    /**
+     * @return iterable
+     */
+    public function getLessonData(): iterable
+    {
+        return $this->lessonData;
     }
     /**
      * @param \DateTime $createdAt
@@ -107,8 +107,10 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'temporaryText' => $this->getTemporaryText(),
             'locale' => $this->getLocale(),
+            'lessonData' => apply_on_iterable($this->getLessonData(), function(LessonData $lessonData) {
+                return $lessonData->getName();
+            }),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];

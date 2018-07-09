@@ -44,12 +44,18 @@ class LessonEntryPointTest extends BasicSetup
         static::assertInternalType('int', $responseData['id']);
         static::assertInternalType('string', $responseData['name']);
         static::assertNotEmpty($responseData['name']);
-        static::assertInternalType('string', $responseData['temporaryText']);
-        static::assertNotEmpty($responseData['temporaryText']);
         static::assertInternalType('string', $responseData['locale']);
         static::assertNotEmpty($responseData['locale']);
         static::assertInternalType('string', $responseData['locale']);
         static::assertNotEmpty($responseData['locale']);
+
+        static::assertInternalType('array', $responseData['lessonData']);
+        static::assertNotEmpty($responseData['lessonData']);
+
+        foreach ($responseData['lessonData'] as $item) {
+            static::assertInternalType('string', $item);
+            static::assertNotEmpty($item);
+        }
 
         static::assertTrue(Util::isValidDate($responseData['createdAt']));
         static::assertNull($responseData['updatedAt']);

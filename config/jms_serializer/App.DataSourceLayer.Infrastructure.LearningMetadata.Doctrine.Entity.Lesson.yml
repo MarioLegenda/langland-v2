@@ -16,11 +16,11 @@ App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Lesson:
             groups: [default]
             type: string
 
-        temporaryText:
+        lessonData:
             expose: true
             groups: [default]
-            type: string
-            serialized_name: temporaryText
+            type: array<App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\LessonData>
+            serialized_name: lessonData
 
         language:
             expose: true

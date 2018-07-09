@@ -1,0 +1,12 @@
+App\PresentationLayer\Infrastructure\Model\LessonData:
+    exclusion_policy: all
+    properties:
+        id:
+            expose: true
+            groups: [default]
+            type: int
+
+        name:
+            expose: true
+            groups: [default]
+            type: string

@@ -4,6 +4,7 @@ namespace App\DataSourceLayer\LearningMetadata;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language;
+use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\LessonData;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LessonRepository;
 use Library\Infrastructure\Helper\ModelValidator;
@@ -40,6 +41,13 @@ class LessonDataSourceService
     public function create(DataSourceEntity $dataSourceEntity): LessonDataSource
     {
         $dataSourceEntity->setLanguage($this->getLanguage($dataSourceEntity));
+
+        $lessonData = $dataSourceEntity->getLessonData();
+
+        /** @var LessonData $item */
+        foreach ($lessonData as $item) {
+            $item->setLesson($dataSourceEntity);
+        }
 
         return $this->lessonRepository->persistAndFlush($dataSourceEntity);
     }

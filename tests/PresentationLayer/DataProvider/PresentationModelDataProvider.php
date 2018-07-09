@@ -238,14 +238,28 @@ class PresentationModelDataProvider
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'locale' => $locale->getName(),
-            'temporaryText' => $this->faker()->sentence(20),
             'language' => $language->toArray(),
+            'lessonData' => $this->createLessonData(),
         ];
 
         /** @var Lesson $lesson */
         $lesson = $this->deserializer->create($modelBlueprint, Lesson::class);
 
         return $lesson;
+    }
+    /**
+     * @return array
+     */
+    private function createLessonData(): array
+    {
+        $data = [];
+        for ($i = 0; $i < 10; $i++) {
+            $data[] = [
+                'name' => $this->faker()->name,
+            ];
+        }
+
+        return $data;
     }
 
 }

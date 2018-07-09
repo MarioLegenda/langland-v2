@@ -16,11 +16,11 @@ App\LogicLayer\LearningMetadata\Domain\Lesson:
             groups: [default]
             type: string
 
-        temporaryText:
+        lessonData:
             expose: true
             groups: [default]
-            type: string
-            serialized_name: temporaryText
+            type: array<App\LogicLayer\LearningMetadata\Domain\LessonData>
+            serialized_name: lessonData
 
         language:
             expose: true

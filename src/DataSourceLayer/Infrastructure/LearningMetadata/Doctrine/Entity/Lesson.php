@@ -3,6 +3,7 @@
 namespace App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\OneToMany;
 use Library\Infrastructure\Notation\ArrayNotationInterface;
 use Library\Util\Util;
 use Doctrine\ORM\Mapping\Table;
@@ -40,10 +42,10 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
      */
     private $locale;
     /**
-     * @var string $name
-     * @Column(type="string")
+     * @var LessonData[]|ArrayCollection $lessonData
+     * @OneToMany(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\LessonData", mappedBy="lesson", cascade={"persist"})
      */
-    private $temporaryText;
+    private $lessonData;
     /**
      * @var Language $language
      * @ManyToOne(targetEntity="App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language")
@@ -96,20 +98,6 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
         $this->locale = $locale;
     }
     /**
-     * @return string
-     */
-    public function getTemporaryText(): string
-    {
-        return $this->temporaryText;
-    }
-    /**
-     * @param string $temporaryText
-     */
-    public function setTemporaryText(string $temporaryText): void
-    {
-        $this->temporaryText = $temporaryText;
-    }
-    /**
      * @return Language
      */
     public function getLanguage(): Language
@@ -122,6 +110,39 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
     public function setLanguage(Language $language): void
     {
         $this->language = $language;
+    }
+    /**
+     * @param LessonData $lessonData
+     * @return Lesson
+     */
+    public function addLessonData(LessonData $lessonData): Lesson
+    {
+        $this->initializeLessonData();
+
+        $lessonData->setLesson($this);
+
+        $this->lessonData->add($lessonData);
+    }
+    /**
+     * @return LessonData[]
+     */
+    public function getLessonData(): array
+    {
+        return $this->lessonData;
+    }
+    /**
+     * @param LessonData[] $lessonData
+     */
+    public function setLessonData(array $lessonData): void
+    {
+        $this->initializeLessonData();
+
+        /** @var LessonData $item */
+        foreach ($lessonData as $item) {
+            $item->setLesson($this);
+
+            $this->lessonData->add($item);
+        }
     }
     /**
      * @return \DateTime
@@ -151,7 +172,6 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * @PrePersist()
      */
@@ -173,10 +193,19 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'temporaryText' => $this->getTemporaryText(),
             'locale' => $this->getLocale(),
+            'lessonData' => apply_on_iterable($this->getLessonData(), function(LessonData $lessonData) {
+                return $lessonData->getName();
+            }),
             'createdAt' => Util::formatFromDate($this->getCreatedAt()),
             'updatedAt' => Util::formatFromDate($this->getUpdatedAt()),
         ];
+    }
+
+    private function initializeLessonData(): void
+    {
+        if (!$this->lessonData instanceof LessonData) {
+            $this->lessonData = new ArrayCollection();
+        }
     }
 }

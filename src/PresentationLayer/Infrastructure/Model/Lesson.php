@@ -19,9 +19,9 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
      */
     private $locale;
     /**
-     * @var string $temporaryText
+     * @var iterable $lessonData
      */
-    private $temporaryText;
+    private $lessonData;
     /**
      * @var Language $language
      */
@@ -48,11 +48,11 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
         return $this->locale;
     }
     /**
-     * @return string
+     * @return iterable
      */
-    public function getTemporaryText(): string
+    public function getLessonData(): iterable
     {
-        return $this->temporaryText;
+        return $this->lessonData;
     }
     /**
      * @return Language
@@ -69,8 +69,10 @@ class Lesson implements PresentationModelInterface, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'temporaryText' => $this->getTemporaryText(),
             'locale' => $this->getLocale(),
+            'lessonData' => apply_on_iterable($this->getLessonData(), function(LessonData $lessonData) {
+                return $lessonData->getName();
+            }),
         ];
     }
 }

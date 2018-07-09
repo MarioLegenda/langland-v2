@@ -16,11 +16,11 @@ App\PresentationLayer\Infrastructure\Model\Lesson:
             groups: [default]
             type: string
 
-        temporaryText:
+        lessonData:
             expose: true
             groups: [default]
-            type: string
-            serialized_name: temporaryText
+            type: array<App\PresentationLayer\Infrastructure\Model\LessonData>
+            serialized_name: lessonData
 
         language:
             expose: true
