@@ -32,6 +32,7 @@ class BasicSetup extends WebTestCase
 
         $conn->exec('SET FOREIGN_KEY_CHECKS=0');
 
+        $conn->exec('TRUNCATE TABLE users');
         $conn->exec('TRUNCATE TABLE categories');
         $conn->exec('TRUNCATE TABLE images');
         $conn->exec('TRUNCATE TABLE languages');
@@ -41,6 +42,9 @@ class BasicSetup extends WebTestCase
         $conn->exec('TRUNCATE TABLE word_translations');
         $conn->exec('TRUNCATE TABLE locales');
         $conn->exec('TRUNCATE TABLE users');
+        $conn->exec('TRUNCATE TABLE lesson_data');
+        $conn->exec('TRUNCATE TABLE basic_data_collector');
+        $conn->exec('TRUNCATE TABLE learning_lessons');
 
         $conn->exec('SET FOREIGN_KEY_CHECKS=1');
     }

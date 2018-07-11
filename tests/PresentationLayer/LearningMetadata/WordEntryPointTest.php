@@ -101,11 +101,12 @@ class WordEntryPointTest extends BasicSetup
         }
 
         $wordPresentationModel = $presentationLayerDataProvider->getCreateWordModelWithLesson(
-            $lessonModel,
             $language,
             $categories,
             $image,
-            $translations
+            $translations,
+            0,
+            $lessonModel
         );
 
         $response = $wordEntryPoint->create($wordPresentationModel);

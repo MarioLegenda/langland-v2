@@ -175,14 +175,22 @@ class PresentationModelDataProvider
 
         return $word;
     }
-
+    /**
+     * @param Language $language
+     * @param CollectionEntity $categories
+     * @param Image $image
+     * @param TypedArray|null $translations
+     * @param int|null $level
+     * @param Lesson $lesson
+     * @return Word
+     */
     public function getCreateWordModelWithLesson(
-        Lesson $lesson,
         Language $language,
         CollectionEntity $categories,
         Image $image,
         TypedArray $translations = null,
-        int $level = null
+        int $level = null,
+        Lesson $lesson
     ): Word {
         if (!$translations instanceof TypedArray) {
             $translations = TypedArray::create('integer', Translation::class);

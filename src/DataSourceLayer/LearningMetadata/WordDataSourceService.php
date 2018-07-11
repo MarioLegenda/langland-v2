@@ -53,11 +53,10 @@ class WordDataSourceService
 
         return $this->wordRepository->persistAndFlush($wordDataSourceEntity);
     }
-
     /**
      * @param DataSourceEntity|Word $wordDataSourceEntity
      */
-    private function connectToLesson(DataSourceEntity $wordDataSourceEntity)
+    private function connectToLesson(DataSourceEntity $wordDataSourceEntity): void
     {
         if (!$wordDataSourceEntity->getLesson() instanceof Lesson) {
             return;
