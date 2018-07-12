@@ -45,6 +45,8 @@ class BasicSetup extends WebTestCase
         $conn->exec('TRUNCATE TABLE lesson_data');
         $conn->exec('TRUNCATE TABLE basic_data_collector');
         $conn->exec('TRUNCATE TABLE learning_lessons');
+        $conn->exec('TRUNCATE TABLE games');
+        $conn->exec('TRUNCATE TABLE game_blocks');
 
         $conn->exec('SET FOREIGN_KEY_CHECKS=1');
     }
