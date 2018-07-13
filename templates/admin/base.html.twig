@@ -1,0 +1,21 @@
+{% set cache = random(9999999) %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Langland | Admin{% endblock %}</title>
+    {% block stylesheets %}
+    {% endblock %}
+
+</head>
+<body>
+<div id="vue_app">
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}
+    {% set cacheClear = 'random'~random(999999) %}
+{% endblock %}
+</body>
+</html>

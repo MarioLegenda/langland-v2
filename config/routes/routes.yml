@@ -8,6 +8,12 @@ app_static:
     requirements:
         _format: 'text/html'
 
+admin_main_import:
+    prefix: /admin
+    resource: 'Admin/main.yml'
+    host: 33.33.33.10
+    schemes: [http]
+
 app_user:
     prefix: /api/v1/user
     resource: 'Security/'

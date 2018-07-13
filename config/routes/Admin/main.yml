@@ -1,0 +1,9 @@
+admin_static:
+    prefix: /
+    resource: 'Static/'
+    type: directory
+
+admin_lesson:
+    prefix: /lesson
+    resource: 'Lesson/'
+    type: directory
