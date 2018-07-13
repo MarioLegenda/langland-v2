@@ -29,6 +29,10 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
      */
     private $internalName;
     /**
+     * @var string $learningType
+     */
+    private $learningType;
+    /**
      * @var Language $language
      */
     private $language;
@@ -53,6 +57,20 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
     public function getName(): string
     {
         return $this->name;
+    }
+    /**
+     * @return string
+     */
+    public function getLearningType(): string
+    {
+        return $this->learningType;
+    }
+    /**
+     * @param string $learningType
+     */
+    public function setLearningType(string $learningType): void
+    {
+        $this->learningType = $learningType;
     }
     /**
      * @return string
@@ -127,6 +145,7 @@ class Lesson implements DomainModelInterface, ArrayNotationInterface
             'name' => $this->getName(),
             'locale' => $this->getLocale(),
             'internalName' => $this->getInternalName(),
+            'learningType' => $this->getLearningType(),
             'lessonData' => apply_on_iterable($this->getLessonData(), function(LessonData $lessonData) {
                 return $lessonData->getName();
             }),

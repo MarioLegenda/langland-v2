@@ -3,6 +3,7 @@
 namespace App\Tests\PresentationLayer\DataProvider;
 
 use App\Infrastructure\Model\CollectionEntity;
+use App\Infrastructure\Type\LearningType;
 use App\PresentationLayer\Infrastructure\Model\Category;
 use App\PresentationLayer\Infrastructure\Model\Language;
 use App\PresentationLayer\Infrastructure\Model\Lesson;
@@ -15,6 +16,7 @@ use Library\Infrastructure\FileUpload\Implementation\UploadedFile;
 use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
 use App\PresentationLayer\Infrastructure\Model\Image;
+use Library\Infrastructure\Type\TypeInterface;
 use Ramsey\Uuid\Uuid;
 
 class PresentationModelDataProvider
@@ -275,15 +277,22 @@ class PresentationModelDataProvider
     /**
      * @param Language $language
      * @param Locale $locale
+     * @param TypeInterface|null $learningType
      * @return Lesson
      */
     public function getLessonModel(
         Language $language,
-        Locale $locale
+        Locale $locale,
+        TypeInterface $learningType = null
     ): Lesson {
+        if (!$learningType instanceof LearningType) {
+            $learningType = LearningType::fromValue('Beginner');
+        }
+
         $modelBlueprint = [
             'name' => $this->faker()->name,
             'locale' => $locale->getName(),
+            'learningType' => $learningType->getKey(),
             'internalName' => Uuid::uuid4()->toString(),
             'language' => $language->toArray(),
             'lessonData' => $this->createLessonData(),

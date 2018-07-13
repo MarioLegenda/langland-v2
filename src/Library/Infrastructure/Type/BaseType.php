@@ -19,7 +19,7 @@ class BaseType implements TypeInterface, ArrayNotationInterface
      * @param array $type
      * @param array $types
      */
-    public function __construct(array $type, array $types)
+    protected function __construct(array $type, array $types)
     {
         $this->type = $type;
         $this->allTypes = $types;

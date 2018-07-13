@@ -49,6 +49,8 @@ class LessonEntryPointTest extends BasicSetup
         static::assertNotEmpty($responseData['locale']);
         static::assertInternalType('string', $responseData['locale']);
         static::assertNotEmpty($responseData['locale']);
+        static::assertInternalType('string', $responseData['learningType']);
+        static::assertNotEmpty($responseData['learningType']);
 
         static::assertInternalType('array', $responseData['lessonData']);
         static::assertNotEmpty($responseData['lessonData']);

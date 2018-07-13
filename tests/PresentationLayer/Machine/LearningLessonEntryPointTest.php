@@ -8,6 +8,6 @@ class LearningLessonEntryPointTest extends NormalSetup
 {
     public function create_learning_lesson()
     {
-        
+
     }
 }

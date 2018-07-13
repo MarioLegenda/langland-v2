@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Machine\Type;
 
+use Library\Infrastructure\Type\BaseType;
+
 class FreeTimeType extends BaseType implements NamedTypeInterface
 {
     protected static $types = [

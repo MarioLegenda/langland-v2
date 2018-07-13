@@ -42,6 +42,11 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
      */
     private $internalName;
     /**
+     * @var string $learningType
+     * @Column(type="string")
+     */
+    private $learningType;
+    /**
      * @var string $locale
      * @Column(type="string")
      */
@@ -87,6 +92,20 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+    /**
+     * @return string
+     */
+    public function getLearningType(): string
+    {
+        return $this->learningType;
+    }
+    /**
+     * @param string $learningType
+     */
+    public function setLearningType(string $learningType): void
+    {
+        $this->learningType = $learningType;
     }
     /**
      * @return string
@@ -212,6 +231,8 @@ class Lesson implements DataSourceEntity, ArrayNotationInterface
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'learningType' => $this->getLearningType(),
+            'internalName' => $this->getInternalName(),
             'locale' => $this->getLocale(),
             'lessonData' => apply_on_iterable($this->getLessonData(), function(LessonData $lessonData) {
                 return $lessonData->getName();

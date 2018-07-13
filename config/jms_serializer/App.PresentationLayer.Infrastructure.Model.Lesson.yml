@@ -17,6 +17,12 @@ App\PresentationLayer\Infrastructure\Model\Lesson:
             type: string
             serialized_name: internalName
 
+        learningType:
+            expose: true
+            groups: [default]
+            type: string
+            serialized_name: learningType
+
         locale:
             expose: true
             groups: [default]

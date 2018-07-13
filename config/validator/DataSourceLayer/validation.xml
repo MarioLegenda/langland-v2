@@ -97,6 +97,17 @@
             </constraint>
         </property>
 
+        <property name="learningType">
+            <constraint name="NotBlank">
+                <option name="message">'learningType' should not be blank</option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">'learningType' should be a string</option>
+            </constraint>
+        </property>
+
         <property name="language">
             <constraint name="Valid" />
 

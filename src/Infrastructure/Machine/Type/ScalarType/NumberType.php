@@ -2,23 +2,29 @@
 
 namespace App\Infrastructure\Machine\Type\ScalarType;
 
-use App\Infrastructure\Machine\Type\BaseType;
-use App\Infrastructure\Machine\Type\TypeInterface;
+use Library\Infrastructure\Type\BaseType;
+use Library\Infrastructure\Type\TypeInterface;
 
 class NumberType extends BaseType
 {
+    /**
+     * @var array $types
+     */
+    protected static $types = [];
     /**
      * @param mixed $value
      * @return TypeInterface
      */
     public static function fromValue($value): TypeInterface
     {
+        static::$types[] = $value;
+
         if (is_int($value)) {
-            return new static([$value]);
+            return parent::fromValue((int) $value);
         }
 
         if (is_numeric($value)) {
-            return new static([(int) $value]);
+            return parent::fromValue((int) $value);
         }
 
         throw new \RuntimeException(sprintf('%s could not be created from value %s', static::class, (string) $value));

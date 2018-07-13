@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Machine\Type;
 
+use Library\Infrastructure\Type\BaseType;
+
 class ProfessionType extends BaseType implements NamedTypeInterface
 {
     /**
