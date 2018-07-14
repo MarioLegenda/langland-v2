@@ -10,12 +10,14 @@
 
 </head>
 <body>
-<div id="vue_app">
+<div id="vue_admin">
     {% block body %}{% endblock %}
 </div>
 
 {% block javascripts %}
     {% set cacheClear = 'random'~random(999999) %}
+    <script src={{ asset("admin/dist/build.js?"~cacheClear) }}></script>
 {% endblock %}
+
 </body>
 </html>

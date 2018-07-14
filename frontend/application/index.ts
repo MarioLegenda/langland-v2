@@ -6,7 +6,7 @@ import {RepositoryFactory} from "./Repository/Implementation";
 import {store} from "./store";
 import {User} from "./Repository/Models";
 
-import {Header as PublicHeader} from "./Public/Header";
+import {Header as PublicHeader} from "../admin/Header";
 import {LandingPage} from "./Public/LandingPage";
 import {routes} from "./Public/routes";
 

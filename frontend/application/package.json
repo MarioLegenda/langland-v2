@@ -25,11 +25,6 @@
     "webpack-cli": "^3.0.8",
     "whatwg-fetch": "^2.0.4"
   },
-  "scripts": {
-    "prod-app": "webpack",
-    "dev-app-development": "webpack --config webpack-app.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MarioLegenda/langland-v2.git"

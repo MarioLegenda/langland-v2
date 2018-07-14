@@ -15,7 +15,7 @@ class StaticController
      */
     public function getIndex(\Twig_Environment $templating): Response
     {
-        $content = $templating->render('static/index.html.twig');
+        $content = $templating->render('application/static/index.html.twig');
 
         return new Response($content);
     }
@@ -28,7 +28,7 @@ class StaticController
      */
     public function getGuide(\Twig_Environment $templating): Response
     {
-        $content = $templating->render('static/index.html.twig');
+        $content = $templating->render('application/static/index.html.twig');
 
         return new Response($content);
     }
@@ -41,7 +41,7 @@ class StaticController
      */
     public function getSignUp(\Twig_Environment $templating): Response
     {
-        $content = $templating->render('static/index.html.twig');
+        $content = $templating->render('application/static/index.html.twig');
 
         return new Response($content);
     }
@@ -54,7 +54,7 @@ class StaticController
      */
     public function getSignIn(\Twig_Environment $templating): Response
     {
-        $content = $templating->render('static/index.html.twig');
+        $content = $templating->render('application/static/index.html.twig');
 
         return new Response($content);
     }
@@ -67,7 +67,7 @@ class StaticController
      */
     public function getLanglandRootAppIndex(\Twig_Environment $templating): Response
     {
-        $content = $templating->render('static/index.html.twig');
+        $content = $templating->render('application/static/index.html.twig');
 
         return new Response($content);
     }

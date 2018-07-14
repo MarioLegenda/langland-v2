@@ -3,11 +3,10 @@ var webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-    mode: 'development',
-    entry: ['./frontend/application/index.ts', 'whatwg-fetch'],
+    entry: ['./index.ts', 'whatwg-fetch'],
     output: {
-        path: path.resolve(__dirname, './public/application/dist'),
-        publicPath: './public/application/dist/',
+        path: path.resolve(__dirname, './../../public/admin/dist'),
+        publicPath: './../../public/admin/dist/',
         filename: 'build.js'
     },
     module: {

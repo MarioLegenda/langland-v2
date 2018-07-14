@@ -1,0 +1,36 @@
+{
+  "name": "langland_v2-admin",
+  "version": "1.0.0",
+  "description": "Langland",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "vue-router": "^3.0.1",
+    "css-loader": "^0.28.11",
+    "node-sass": "^4.9.2",
+    "promise-polyfill": "^8.0.0",
+    "sass-loader": "^7.0.3",
+    "serviceworker-webpack-plugin": "^1.0.0-alpha02",
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.2",
+    "vue": "^2.5.16",
+    "vue-loader": "^15.2.4",
+    "vue-material": "^1.0.0-beta-10.2",
+    "vue-style-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8",
+    "whatwg-fetch": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarioLegenda/langland-v2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarioLegenda/langland-v2/issues"
+  },
+  "homepage": "https://github.com/MarioLegenda/langland-v2#readme"
+}
