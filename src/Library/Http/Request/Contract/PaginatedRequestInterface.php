@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Http\Request\Contract;
+namespace Library\Http\Request\Contract;
 
 interface PaginatedRequestInterface
 {

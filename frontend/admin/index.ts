@@ -1,10 +1,29 @@
-import Vue from "vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router'
+
+import {routes} from "./routes";
 import {Header} from "./Header";
 
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: routes
+});
+
 new Vue({
-    el: "#vue_admin",
-    template: `<div class="app">
+    el: '#vue_admin',
+    router: router,
+    template: `<div>
                    <Header></Header>
+                   
+                   <div class="container">
+                       <div class="bs-docs-section">
+                           <div class="row">
+                               <router-view></router-view>
+                           </div>
+                       </div>
+                   </div>
                </div>`,
     components: {
         Header

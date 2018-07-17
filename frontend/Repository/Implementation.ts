@@ -1,4 +1,4 @@
-import {IUserRepository, IResponse, IRequest, IRepository, Method, InternalType} from "./Contract";
+import {IUserRepository, IResponse, IRequest, IRepository, Method, InternalType, ILanguageRepository} from "./Contract";
 import {sources} from "./Context";
 import {IUser, User} from "./Models";
 
@@ -64,6 +64,10 @@ export class UserRepository implements IUserRepository {
             });
         }
 
+        let headers: Headers = new Headers();
+        headers.append('Cache-Control', 'no-store');
+        headers.append('Pragma', 'no-cache');
+
         fetch(request.source, {
             method: 'GET',
             headers: {
@@ -83,6 +87,57 @@ export class UserRepository implements IUserRepository {
                 method: 'GET',
                 data: {},
                 name: 'get_user'
+            });
+        }
+
+        const response: any = await fetch(request.source, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        httpError(response);
+
+        success(await response.json());
+    }
+}
+
+export class LanguageRepository implements ILanguageRepository{
+    read(success: any, request?: IRequest): void {
+        if (!(success instanceof Function)) {
+            throw new Error(`First argument to create() has to be a function`);
+        }
+
+        if (typeof request === 'undefined') {
+            request = new Request({
+                source: sources.app_get_logged_in_user,
+                internalType: InternalType.FETCH,
+                method: Method.GET,
+                data: {},
+                name: 'get_languages'
+            });
+        }
+
+        fetch(request.source, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(httpError)
+            .then(toJson)
+            .then(success)
+    }
+
+    async asyncRead(success?: any, request?: IRequest) {
+        if (typeof request === 'undefined') {
+            request = new Request({
+                source: sources.app_get_logged_in_user,
+                internalType: 'fetch',
+                method: 'GET',
+                data: {},
+                name: 'get_languages'
             });
         }
 

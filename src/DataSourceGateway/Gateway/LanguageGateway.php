@@ -4,7 +4,7 @@ namespace App\DataSourceGateway\Gateway;
 
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\LearningMetadata\LanguageDataSourceService;
-use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\LogicLayer\DomainModelInterface;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language as LanguageDataSource;
 use App\LogicLayer\LearningMetadata\Domain\Language as LanguageDomainModel;

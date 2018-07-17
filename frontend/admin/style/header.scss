@@ -1,0 +1,18 @@
+#main_header {
+  border-bottom: 1px solid $lightGray;
+  width: 100%;
+  float: left;
+
+  .logo {
+    font-family: $fontLobster;
+    font-size: 1.4em;
+    float: left;
+    width: 80px;
+
+    padding: 20px;
+  }
+
+  .logo-header {
+    color: $colorOrange;
+  }
+}

@@ -23,3 +23,13 @@ app_user:
     type: directory
     requirements:
         _format: 'application/json'
+
+app_language:
+    prefix: /api/v1/learning-metadata
+    resource: 'LearningMetadata/'
+    methods: [GET]
+    host: 33.33.33.10
+    schemes: [http]
+    type: directory
+    requirements:
+        _format: 'application/json'

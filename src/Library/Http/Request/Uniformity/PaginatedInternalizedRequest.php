@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Library\Http\Request;
+namespace Library\Http\Request\Uniformity;
 
-use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 
 class PaginatedInternalizedRequest implements PaginatedInternalizedRequestInterface
 {
@@ -50,5 +50,13 @@ class PaginatedInternalizedRequest implements PaginatedInternalizedRequestInterf
     public function getLocale(): string
     {
         return $this->locale;
+    }
+    /**
+     * @param iterable $data
+     * @return PaginatedInternalizedRequestInterface
+     */
+    public static function createFromIterable(iterable $data): PaginatedInternalizedRequestInterface
+    {
+        return new static($data['offset'], $data['limit'], $data['locale']);
     }
 }

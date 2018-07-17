@@ -52,11 +52,6 @@ services:
         resource: '../src/Library'
         exclude: '../src/Library/{Http/Request}'
 
-    Library\Http\Request\ResolvedRequestResolver:
-        arguments:
-            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
-            $validator: '@Library\Infrastructure\Helper\ModelValidator'
-
     Library\Infrastructure\FileUpload\Implementation\ImageUpload:
         arguments:
             $imageDirs: '%image_dirs%'
@@ -78,7 +73,11 @@ services:
     # SYMFONY ARGUMENT RESOLVERS
     App\Symfony\Resolver\UserResolver:
         arguments:
-            $resolvedRequestResolver: '@Library\Http\Request\ResolvedRequestResolver'
+            $serializerWrapper: '@Library\Infrastructure\Helper\SerializerWrapper'
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    App\Symfony\Resolver\PaginatedRequestResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }
 

@@ -1,3 +1,7 @@
 admin_static_index:
     path:     /
     controller: App\Web\AdminStaticController::getIndex
+
+admin_static_lessons:
+    path:     /lessons/new
+    controller: App\Web\AdminStaticController::getNewLesson

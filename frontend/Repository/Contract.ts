@@ -44,3 +44,4 @@ export interface IRequest {
 }
 
 export interface IUserRepository extends IRepository {}
+export interface ILanguageRepository extends IRepository {}

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Library\Http\Request;
+namespace Library\Http\Request\Uniformity;
 
-use App\Library\Http\Request\Contract\PaginatedRequestInterface;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
 
 class PaginatedRequest implements PaginatedRequestInterface
 {

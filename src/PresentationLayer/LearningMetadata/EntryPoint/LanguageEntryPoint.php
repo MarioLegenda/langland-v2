@@ -2,8 +2,9 @@
 
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\LogicGateway\Gateway\LanguageGateway;
 use App\PresentationLayer\Infrastructure\Model\Language as LanguageModel;
 use App\Symfony\ApiResponseWrapper;
@@ -50,13 +51,13 @@ class LanguageEntryPoint
     }
     /**
      * @param PaginatedInternalizedRequestInterface $paginatedInternalizedRequest
-     * @return Response
+     * @return LayerPropagationCollectionResponse
      */
-    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): Response
+    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): LayerPropagationCollectionResponse
     {
         /** @var LayerPropagationResourceResponse $languageCollection */
-        $languageCollection = $this->languageGateway->getLanguages($paginatedInternalizedRequest);
+        $layerPropagationResourceResponse = $this->languageGateway->getLanguages($paginatedInternalizedRequest);
 
-        return $this->apiResponseWrapper->createGetLanguages($languageCollection->toArray());
+        return $layerPropagationResourceResponse;
     }
 }

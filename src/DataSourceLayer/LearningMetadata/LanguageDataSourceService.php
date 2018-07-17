@@ -8,9 +8,7 @@ use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Language
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
-use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
-use App\Library\Http\Request\Contract\PaginatedRequestInterface;
-use Library\Infrastructure\Helper\ModelValidator;
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 
 class LanguageDataSourceService
 {

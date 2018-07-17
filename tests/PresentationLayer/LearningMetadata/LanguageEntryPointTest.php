@@ -2,7 +2,8 @@
 
 namespace App\Tests\PresentationLaye\LearningMetadata;
 
-use App\Library\Http\Request\PaginatedInternalizedRequest;
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
+use Library\Http\Request\Uniformity\PaginatedInternalizedRequest;
 use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LanguageRepository;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LanguageEntryPoint;
@@ -177,53 +178,44 @@ class LanguageEntryPointTest extends BasicSetup
         /** @var LanguageEntryPoint $languageEntryPoint */
         $languageEntryPoint = $this->locator->get(LanguageEntryPoint::class);
 
-        $limit = 0;
+        $limit = 10;
         $locales = [$enLocaleModel, $frLocaleModel];
-        for ($i = 0; $i < $langNum; $i++) {
-            /** @var Locale $locale */
-            foreach ($locales as $locale) {
-                $paginatedRequest = new PaginatedInternalizedRequest(
-                    0,
-                    $limit,
-                    $locale->getName()
-                );
+        /** @var Locale $locale */
+        foreach ($locales as $locale) {
+            $paginatedRequest = new PaginatedInternalizedRequest(
+                0,
+                $limit,
+                $locale->getName()
+            );
 
-                $languages = $languageEntryPoint->getLanguages($paginatedRequest);
+            $languages = $languageEntryPoint->getLanguages($paginatedRequest);
 
-                static::assertInstanceOf(Response::class, $languages);
-                static::assertEquals(200, $languages->getStatusCode());
+            static::assertInstanceOf(LayerPropagationCollectionResponse::class, $languages);
 
-                static::assertInstanceOf(Response::class, $languages);
+            $responseData = $languages->toArray();
 
-                $responseData = json_decode($languages->getContent(), true)['collection']['data'];
+            static::assertEquals(count($responseData), $limit);
 
-                static::assertEquals(count($responseData), $limit);
+            foreach ($responseData as $data) {
+                static::assertInternalType('int', $data['id']);
+                static::assertNotEmpty($data['name']);
+                static::assertInternalType('bool', $data['showOnPage']);
+                static::assertNotEmpty($data['description']);
+                static::assertInternalType('array', $data['image']);
+                static::assertNotEmpty($data['image']);
+                static::assertInternalType('string', $data['locale']);
+                static::assertNotEmpty($data['locale']);
+                static::assertTrue(Util::isValidDate($data['createdAt']));
+                static::assertNull($data['updatedAt']);
 
-                foreach ($responseData as $data) {
-                    static::assertInternalType('int', $data['id']);
-                    static::assertNotEmpty($data['name']);
-                    static::assertInternalType('bool', $data['showOnPage']);
-                    static::assertNotEmpty($data['description']);
-                    static::assertInternalType('array', $data['image']);
-                    static::assertNotEmpty($data['image']);
-                    static::assertInternalType('string', $data['locale']);
-                    static::assertNotEmpty($data['locale']);
-                    static::assertTrue(Util::isValidDate($data['createdAt']));
-                    static::assertNull($data['updatedAt']);
+                $image = $data['image'];
 
-                    $image = $data['image'];
-
-                    static::assertInternalType('int', $image['id']);
-                    static::assertNotEmpty($image['name']);
-                    static::assertNotEmpty($image['relativePath']);
-                    static::assertTrue(Util::isValidDate($image['createdAt']));
-                    static::assertNull($image['updatedAt']);
-                }
-
-                $limit++;
+                static::assertInternalType('int', $image['id']);
+                static::assertNotEmpty($image['name']);
+                static::assertNotEmpty($image['relativePath']);
+                static::assertTrue(Util::isValidDate($image['createdAt']));
+                static::assertNull($image['updatedAt']);
             }
-
-            $limit = 0;
         }
     }
     /**

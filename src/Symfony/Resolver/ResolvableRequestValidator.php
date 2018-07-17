@@ -8,9 +8,9 @@ trait ResolvableRequestValidator
 {
     /**
      * @param Request $request
-     * @return bool
+     * @return bool|array
      */
-    public function getHttpData(Request $request): bool
+    public function getHttpData(Request $request)
     {
         $http = $request->request->get('http');
 
@@ -23,7 +23,7 @@ trait ResolvableRequestValidator
         }
 
         if (is_null($http) or empty($http)) {
-            return false;
+            return null;
         }
 
         return $http;

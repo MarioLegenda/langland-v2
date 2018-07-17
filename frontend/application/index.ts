@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter from 'vue-router'
 
-import {IUserRepository} from "./Repository/Contract";
-import {RepositoryFactory} from "./Repository/Implementation";
+import {IUserRepository} from "../Repository/Contract";
+import {RepositoryFactory} from "../Repository/Implementation";
 import {store} from "./store";
-import {User} from "./Repository/Models";
+import {User} from "../Repository/Models";
 
 import {Header as PublicHeader} from "../admin/Header";
 import {LandingPage} from "./Public/LandingPage";

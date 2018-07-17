@@ -4,8 +4,7 @@ namespace App\LogicGateway\Gateway;
 
 use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
-use App\Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
-use App\Library\Http\Request\Contract\PaginatedRequestInterface;
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Language;
 use App\LogicLayer\LearningMetadata\Model\LanguageCollection;

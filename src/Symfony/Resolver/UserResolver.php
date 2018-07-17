@@ -2,8 +2,9 @@
 
 namespace App\Symfony\Resolver;
 
+use App\Library\Http\Request\Uniformity\UniformRequestResolverFactory;
 use App\PresentationLayer\Infrastructure\Model\User;
-use Library\Http\Request\ResolvedRequestResolver;
+use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -12,21 +13,21 @@ class UserResolver implements ArgumentValueResolverInterface
 {
     use ResolvableRequestValidator;
     /**
-     * @var ResolvedRequestResolver $resolvedRequestResolver
+     * @var SerializerWrapper $serializerWrapper
      */
-    private $resolvedRequestResolver;
+    private $serializerWrapper;
     /**
      * @var User $user
      */
     private $user;
     /**
      * UserResolver constructor.
-     * @param ResolvedRequestResolver $resolvedRequestResolver
+     * @param SerializerWrapper $serializerWrapper
      */
     public function __construct(
-        ResolvedRequestResolver $resolvedRequestResolver
+        SerializerWrapper $serializerWrapper
     ) {
-        $this->resolvedRequestResolver = $resolvedRequestResolver;
+        $this->serializerWrapper = $serializerWrapper;
     }
     /**
      * @param Request $request
@@ -36,24 +37,24 @@ class UserResolver implements ArgumentValueResolverInterface
     public function supports(Request $request, ArgumentMetadata $argument)
     {
         $httpData = $this->getHttpData($request);
-        if ($httpData === false) {
+        if (is_null($httpData)) {
             return false;
         }
 
-        /** @var array $httpData */
-        $httpData = $this->getHttpData($request);
-        if ($httpData === false) {
-            return false;
-        }
+        $uniformedRequest = UniformRequestResolverFactory::create($httpData);
 
-        $resolvedData = $this->resolvedRequestResolver->resolveTo(
-            User::class,
-            $httpData
+        $user = $this->serializerWrapper->convertFromToByArray(
+            $uniformedRequest->getData(),
+            User::class
         );
 
-        $request->request->set('resolved_request', $resolvedData['resolvedRequest']);
+        if (!$user instanceof User) {
+            return false;
+        }
 
-        $this->user = $resolvedData['model'];
+        $this->user = $user;
+
+        return true;
     }
     /**
      * @param Request $request
