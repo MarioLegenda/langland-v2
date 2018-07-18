@@ -1,4 +1,4 @@
-import {IUser} from "../Repository/Models";
+import {IUser} from "../DataSource/Models";
 
 export const store = {
     debug: true,

@@ -2,6 +2,7 @@
 
 namespace App\Symfony\Resolver;
 
+use Library\Http\Request\Contract\PaginatedInternalizedRequestInterface;
 use Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Http\Request\Type\InternalTypeType;
 use Library\Http\Request\Uniformity\PaginatedInternalizedRequest;
@@ -27,49 +28,45 @@ class PaginatedRequestResolver implements ArgumentValueResolverInterface
      */
     public function supports(Request $request, ArgumentMetadata $argument)
     {
-        $httpData = $this->getHttpData($request);
+        if (PaginatedInternalizedRequestInterface::class !== $argument->getType()) {
+            return false;
+        }
 
+        $httpData = $this->getHttpData($request);
         if (is_null($httpData)) {
             return false;
         }
 
         $uniformedRequest = UniformRequestResolverFactory::create($httpData);
 
-        $tempInternalType = InternalTypeType::fromValue('update');
-        $internalType = [$httpData['internalType']];
+        /** @var TypeInterface|ArrayNotationInterface $internalType */
+        $internalType = InternalTypeType::fromValue($httpData['internalType']);
+        $data = $uniformedRequest->getData();
 
-        if ($tempInternalType->inValueRange($internalType)) {
-            /** @var TypeInterface|ArrayNotationInterface $internalType */
-            $internalType = InternalTypeType::fromValue($httpData['internalType']);
-            $data = $uniformedRequest->getData();
-
-            if ($internalType->equalsValue('paginated_internalized_view')) {
-                $this->paginatedRequest = new PaginatedInternalizedRequest(
-                    $data['offset'],
-                    $data['limit'],
-                    $data['locale']
-                );
-            } else if ($internalType->equalsValue('paginated_request')) {
-                $this->paginatedRequest = new PaginatedRequest(
-                    $data['offset'],
-                    $data['limit']
-                );
-            }
-
-            if (!$this->paginatedRequest instanceof PaginatedRequestInterface) {
-                $message = sprintf(
-                    'Invalid paginated request name given. \'internal_type\' can only be one of \'%s\'. \'%s\' given',
-                    implode(', ', $internalType->toArray()),
-                    $internalType->getValue()
-                );
-
-                throw new \RuntimeException($message);
-            }
-
-            return true;
+        if ($internalType->equalsValue('paginated_internalized_view')) {
+            $this->paginatedRequest = new PaginatedInternalizedRequest(
+                $data['offset'],
+                $data['limit'],
+                $data['locale']
+            );
+        } else if ($internalType->equalsValue('paginated_request')) {
+            $this->paginatedRequest = new PaginatedRequest(
+                $data['offset'],
+                $data['limit']
+            );
         }
 
-        return false;
+        if (!$this->paginatedRequest instanceof PaginatedRequestInterface) {
+            $message = sprintf(
+                'Invalid paginated request name given. \'internal_type\' can only be one of \'%s\'. \'%s\' given',
+                implode(', ', $internalType->toArray()),
+                $internalType->getValue()
+            );
+
+            throw new \RuntimeException($message);
+        }
+
+        return true;
     }
     /**
      * Returns the possible value(s).

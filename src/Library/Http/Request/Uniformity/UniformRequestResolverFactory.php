@@ -13,7 +13,9 @@ class UniformRequestResolverFactory
      */
     public static function create(array $data): UniformedRequest
     {
-        $internalType = InternalTypeType::fromValue($data['internal_type']);
+        $baseUrl = $data['baseUrl'];
+        $route = $data['route'];
+        $internalType = InternalTypeType::fromValue($data['internalType']);
         $method = HttpTypeFactory::create($data['method']);
         $requestData = $data['data'];
         $name = $data['name'];
@@ -22,7 +24,9 @@ class UniformRequestResolverFactory
             $internalType,
             $method,
             $requestData,
-            $name
+            $name,
+            $baseUrl,
+            $route
         );
     }
 }

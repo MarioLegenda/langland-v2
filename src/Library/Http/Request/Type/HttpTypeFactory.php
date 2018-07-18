@@ -19,7 +19,9 @@ class HttpTypeFactory
             'put' => PutHttpType::class,
         ];
 
-        if (!array_key_exists(strtolower($type), $types)) {
+        $type = strtolower($type);
+
+        if (!array_key_exists($type, $types)) {
             $message = sprintf(
                 'Cannot create http type. Invalid type \'%s\' given',
                 $type

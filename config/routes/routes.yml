@@ -27,7 +27,6 @@ app_user:
 app_language:
     prefix: /api/v1/learning-metadata
     resource: 'LearningMetadata/'
-    methods: [GET]
     host: 33.33.33.10
     schemes: [http]
     type: directory

@@ -119,7 +119,7 @@ class ApiResponseWrapper
      * @param string $type
      * @return JsonResponse
      */
-    public function createGetLanguages($data = [], string $type = 'json')
+    public function createGetAllLanguages($data = [], string $type = 'json')
     {
         /** @var ApiResponseData $responseData */
         $responseData = $this->apiSdk

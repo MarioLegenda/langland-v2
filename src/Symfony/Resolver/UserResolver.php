@@ -2,7 +2,7 @@
 
 namespace App\Symfony\Resolver;
 
-use App\Library\Http\Request\Uniformity\UniformRequestResolverFactory;
+use Library\Http\Request\Uniformity\UniformRequestResolverFactory;
 use App\PresentationLayer\Infrastructure\Model\User;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +36,10 @@ class UserResolver implements ArgumentValueResolverInterface
      */
     public function supports(Request $request, ArgumentMetadata $argument)
     {
+        if (User::class !== $argument->getType()) {
+            return false;
+        }
+
         $httpData = $this->getHttpData($request);
         if (is_null($httpData)) {
             return false;

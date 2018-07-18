@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router'
 
-import {routes} from "./routes";
-import {Header} from "./Header";
+import {routes} from "./js/routes";
+import {Header} from "./js/Header";
 
 Vue.use(VueRouter);
 

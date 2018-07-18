@@ -41,3 +41,7 @@ services:
     App\Tests\Command\CombinedSeed:
         tags:
             - { name: 'console.command' }
+
+    App\Tests\Command\ResetCommand:
+        tags:
+            - { name: 'console.command' }

@@ -23,17 +23,29 @@ class UniformedRequest
      */
     private $uniqueName;
     /**
+     * @var string $baseUrl
+     */
+    private $baseUrl;
+    /**
+     * @var string $route
+     */
+    private $route;
+    /**
      * UniformedRequest constructor.
      * @param TypeInterface $internalType
      * @param TypeInterface $method
      * @param iterable $data
      * @param string $uniqueName
+     * @param string $baseUrl
+     * @param string $route
      */
     public function __construct(
         TypeInterface $internalType,
         TypeInterface $method,
         iterable $data,
-        string $uniqueName
+        string $uniqueName,
+        string $baseUrl,
+        string $route
     ) {
         $this->internalType = $internalType;
         $this->method = $method;
@@ -68,5 +80,19 @@ class UniformedRequest
     public function getUniqueName(): string
     {
         return $this->uniqueName;
+    }
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        return $this->route;
     }
 }

@@ -3,7 +3,7 @@ var webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-    entry: ['./index.ts', 'whatwg-fetch'],
+    entry: ['./index.js', 'whatwg-fetch'],
     output: {
         path: path.resolve(__dirname, './../../public/admin/dist'),
         publicPath: './../../public/admin/dist/',
@@ -26,11 +26,10 @@ module.exports = {
                 }
             },
             {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
+                test: /\.js$/,
                 exclude: /node_modules/,
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
+                use: {
+                    loader: 'babel-loader'
                 }
             },
             {
@@ -50,7 +49,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.vue', '.json', '.tsx'],
+        extensions: ['.js', '.vue', '.json'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         }

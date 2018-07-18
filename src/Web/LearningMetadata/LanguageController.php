@@ -46,11 +46,11 @@ class LanguageController
      * @param PaginatedInternalizedRequestInterface $paginatedInternalizedRequest
      * @return Response
      */
-    public function getLanguages(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): Response
+    public function getAll(PaginatedInternalizedRequestInterface $paginatedInternalizedRequest): Response
     {
         /** @var LayerPropagationCollectionResponse $layerPropagationCollection */
         $layerPropagationCollection = $this->languageEntryPoint->getLanguages($paginatedInternalizedRequest);
 
-        return $this->apiResponseWrapper->createGetLanguages($layerPropagationCollection);
+        return $this->apiResponseWrapper->createGetAllLanguages($layerPropagationCollection->toArray());
     }
 }

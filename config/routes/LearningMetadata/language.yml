@@ -1,0 +1,6 @@
+app_get_languages:
+    path: /language/get-all
+    controller: App\Web\LearningMetadata\LanguageController::getAll
+    methods: [POST]
+    requirements:
+        _format: 'application/json'
