@@ -22,8 +22,7 @@
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
-    "whatwg-fetch": "^2.0.4"
+    "webpack-cli": "^3.0.8"
   },
   "repository": {
     "type": "git",
