@@ -2,10 +2,12 @@
 
 namespace App\PresentationLayer\LearningMetadata\EntryPoint;
 
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicGateway\Gateway\LocaleGateway;
 use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\Symfony\ApiResponseWrapper;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class LocaleEntryPoint
@@ -42,5 +44,13 @@ class LocaleEntryPoint
         $localePropagationModel = $this->localeGateway->create($locale);
 
         return $this->apiResponseWrapper->createLessonCreate($localePropagationModel->toArray());
+    }
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return LayerPropagationCollectionResponse
+     */
+    public function getAll(PaginatedRequestInterface $paginatedRequest): LayerPropagationCollectionResponse
+    {
+        return $this->localeGateway->getAll($paginatedRequest);
     }
 }

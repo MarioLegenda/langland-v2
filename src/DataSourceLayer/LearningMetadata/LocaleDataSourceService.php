@@ -5,6 +5,7 @@ namespace App\DataSourceLayer\LearningMetadata;
 use App\DataSourceLayer\Infrastructure\DataSourceEntity;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Repository\LocaleRepository;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
 
 class LocaleDataSourceService
 {
@@ -44,6 +45,22 @@ class LocaleDataSourceService
         }
 
         return $this->localeRepository->persistAndFlush($dataSourceEntity);
+    }
+
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return iterable
+     */
+    public function getAll(PaginatedRequestInterface $paginatedRequest): iterable
+    {
+        $locales = $this->localeRepository->findBy(
+            [],
+            null,
+            $paginatedRequest->getLimit(),
+            $paginatedRequest->getOffset()
+        );
+
+        return $locales;
     }
     /**
      * @return Locale

@@ -137,4 +137,27 @@ class Util
     {
         return 'Y-m-d H:m:s';
     }
+
+    public static function recursiveClosureExecution(
+        \Closure $closure,
+        int $currentIteration = 0,
+        int $maxIterations = 1000
+    ) {
+        if ($currentIteration === $maxIterations) {
+            $message = sprintf(
+                'Maximum number of %d iterations occurred. Use Util::recursiveClosureExecution() with caution because it only implements recursion for you, not the logic behind the recursion.',
+                $maxIterations
+            );
+
+            throw new \RuntimeException($message);
+        }
+
+        $product = $closure();
+
+        if (is_null($product)) {
+            $product = Util::recursiveClosureExecution($closure, ++$currentIteration, $maxIterations);
+        }
+
+        return $product;
+    }
 }

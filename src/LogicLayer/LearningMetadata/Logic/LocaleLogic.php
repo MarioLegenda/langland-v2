@@ -3,10 +3,14 @@
 namespace App\LogicLayer\LearningMetadata\Logic;
 
 use App\DataSourceGateway\Gateway\LocaleGateway;
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\DomainModelInterface;
 use App\LogicLayer\LearningMetadata\Domain\Locale;
 use App\LogicLayer\LearningMetadata\Model\Locale as LocalePresentationResourceModel;
+use App\LogicLayer\LearningMetadata\Model\LocaleCollection;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
+use App\LogicLayer\LearningMetadata\Model\Locale as LocaleModel;
 
 class LocaleLogic
 {
@@ -35,5 +39,25 @@ class LocaleLogic
         $createdLocale = $this->localeGateway->create($locale);
 
         return new LocalePresentationResourceModel($createdLocale);
+    }
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return LayerPropagationCollectionResponse
+     */
+    public function getAll(PaginatedRequestInterface $paginatedRequest): LayerPropagationCollectionResponse
+    {
+        /** @var DomainModelInterface[]|Locale[]|iterable $languages */
+        $locales = $this->localeGateway->getAll($paginatedRequest);
+
+        $localeModels = [];
+        /** @var DomainModelInterface|Locale $language */
+        foreach ($locales as $locale) {
+            $localeModels[] = new LocaleModel($locale);
+        }
+
+        return new LocaleCollection(
+            $localeModels,
+            true
+        );
     }
 }

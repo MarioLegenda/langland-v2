@@ -4,7 +4,7 @@ namespace App\LogicLayer\LearningMetadata\Model;
 
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 
-class LanguageCollection extends BaseCollectionModel
+class LocaleCollection extends BaseCollectionModel
 {
     /**
      * @var bool $isPaginated

@@ -18,7 +18,9 @@ class ResolvedRequestTest extends WebTestCase
     public function test_valid_resolved_request()
     {
         $validRequest = [
-            'internal_type' => 'view',
+            'baseUrl' => '33.33.33.10',
+            'route' => '/route/to/resource',
+            'internalType' => 'view',
             'name' => 'name',
             'data' => [
                 'some_data' => [],

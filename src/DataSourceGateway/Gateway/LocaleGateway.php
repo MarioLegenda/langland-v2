@@ -6,6 +6,7 @@ use App\LogicLayer\LearningMetadata\Domain\Locale as LocaleDomainModel;
 use App\DataSourceLayer\Infrastructure\LearningMetadata\Doctrine\Entity\Locale as LocaleDataSourceModel;
 use App\DataSourceLayer\LearningMetadata\LocaleDataSourceService;
 use App\LogicLayer\DomainModelInterface;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 
@@ -70,6 +71,26 @@ class LocaleGateway
         );
 
         return $domainLocale;
+    }
+
+    /**
+     * @param PaginatedRequestInterface $paginatedRequest
+     * @return DomainModelInterface|LocaleDomainModel|iterable
+     */
+    public function getAll(PaginatedRequestInterface $paginatedRequest): iterable
+    {
+        $locales = $this->localeDataSourceService->getAll($paginatedRequest);
+
+        $this->modelValidator->bulkValidate($locales);
+
+        /** @var DomainModelInterface[]|LocaleDomainModel[]|iterable $domainModels */
+        $domainModels = $this->serializerWrapper->convertCollectionByGroup(
+            $locales,
+            'default',
+            LocaleDomainModel::class
+        );
+
+        return $domainModels;
     }
     /**
      * @param DomainModelInterface|LocaleDomainModel $domainModel

@@ -17,6 +17,7 @@ use Library\Infrastructure\Helper\Deserializer;
 use Library\Infrastructure\Helper\TypedArray;
 use App\PresentationLayer\Infrastructure\Model\Image;
 use Library\Infrastructure\Type\TypeInterface;
+use Library\Util\Util;
 use Ramsey\Uuid\Uuid;
 
 class PresentationModelDataProvider
@@ -90,6 +91,41 @@ class PresentationModelDataProvider
         $localeModel = $this->deserializer->create($data, Locale::class);
 
         return $localeModel;
+    }
+
+    public function getMultipleLocaleModels(int $numOfLocales): iterable
+    {
+        $localeModels = TypedArray::create('integer', 'array');
+
+        $createdLocales = [];
+        $hasDefault = false;
+        for ($i = 0; $i < $numOfLocales; $i++) {
+            $localeName = Util::recursiveClosureExecution(function() use (&$createdLocales) {
+                $name = substr($this->faker()->word, 0, 2);
+
+                if (in_array($name, $createdLocales) === true) {
+                    return null;
+                }
+
+                $createdLocales[] = $name;
+
+                return $name;
+            });
+
+            $default = false;
+
+            if ($hasDefault === false) {
+                $hasDefault = true;
+                $default = true;
+            }
+
+            $localeModels[] = [
+                'name' => $localeName,
+                'default' => $default,
+            ];
+        }
+
+        return $localeModels->toArray();
     }
     /**
      * @return Language

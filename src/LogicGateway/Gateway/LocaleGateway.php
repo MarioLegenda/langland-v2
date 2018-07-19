@@ -3,10 +3,13 @@
 namespace App\LogicGateway\Gateway;
 
 
+use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Logic\LocaleLogic;
+use App\LogicLayer\LearningMetadata\Model\LocaleCollection;
 use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
+use Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Infrastructure\Helper\ModelValidator;
 use Library\Infrastructure\Helper\SerializerWrapper;
 use App\LogicLayer\LearningMetadata\Domain\Locale as DomainLocale;
@@ -14,9 +17,9 @@ use App\LogicLayer\LearningMetadata\Domain\Locale as DomainLocale;
 class LocaleGateway
 {
     /**
-     * @var LocaleLogic $localeLogic
+     * @var LocaleLogic $logic
      */
-    private $localeLogic;
+    private $logic;
     /**
      * @var SerializerWrapper $serializerWrapper
      */
@@ -36,7 +39,7 @@ class LocaleGateway
         SerializerWrapper $serializerWrapper,
         ModelValidator $modelValidator
     ) {
-        $this->localeLogic = $localeLogic;
+        $this->logic = $localeLogic;
         $this->serializerWrapper = $serializerWrapper;
         $this->modelValidator = $modelValidator;
     }
@@ -59,6 +62,14 @@ class LocaleGateway
 
          $this->modelValidator->validate($domainModel);
 
-         return $this->localeLogic->create($domainModel);
+         return $this->logic->create($domainModel);
+     }
+
+     public function getAll(PaginatedRequestInterface $paginatedRequest): LayerPropagationCollectionResponse
+     {
+         /** @var LocaleCollection $languages */
+         $locales = $this->logic->getAll($paginatedRequest);
+
+         return $locales;
      }
 }

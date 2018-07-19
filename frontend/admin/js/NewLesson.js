@@ -10,7 +10,8 @@ export const NewLesson = {
                 locale: ''
             },
             form: {
-                languages: []
+                languages: [],
+                locales: [],
             }
         }
     },
