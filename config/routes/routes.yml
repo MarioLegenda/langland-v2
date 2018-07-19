@@ -24,7 +24,7 @@ app_user:
     requirements:
         _format: 'application/json'
 
-app_language:
+app_learning_metadata:
     prefix: /api/v1/learning-metadata
     resource: 'LearningMetadata/'
     host: 33.33.33.10

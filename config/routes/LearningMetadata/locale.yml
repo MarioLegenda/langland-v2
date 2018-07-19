@@ -1,0 +1,6 @@
+app_get_locale:
+    path: /locale/get-all
+    controller: App\Web\LearningMetadata\LocaleController::getAll
+    methods: [POST]
+    requirements:
+        _format: 'application/json'

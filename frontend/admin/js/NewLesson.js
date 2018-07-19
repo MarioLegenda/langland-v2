@@ -17,6 +17,22 @@ export const NewLesson = {
     },
     beforeCreate: function() {
         const languageRepository = RepositoryFactory.create('language');
+        const localeRepository = RepositoryFactory.create('locale');
+
+        localeRepository.read(new Request({
+            baseUrl: sources.baseUrl,
+            route: sources.routes.app_get_locales,
+            method: Method.POST,
+            internalType: InternalType.PAGINATED_VIEW,
+            data: {
+                offset: 0,
+                limit: 10,
+                locale: 'en',
+            },
+            name: 'locale_list',
+        }), (data) => {
+            this.form.locales = data.collection.data;
+        });
 
         languageRepository.read(new Request({
             baseUrl: sources.baseUrl,
@@ -52,9 +68,7 @@ export const NewLesson = {
                 <label>Locale</label>
                     <select v-model="model.locale" class="form-control">
                       <option disabled value="">Please select one</option>
-                      <option>en</option>
-                      <option>fr</option>
-                      <option>sp</option>
+                      <option v-for="locale in form.locales">{{ locale.name }}</option>
                     </select>
             </div>
         </div>

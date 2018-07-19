@@ -28,7 +28,10 @@ class PaginatedRequestResolver implements ArgumentValueResolverInterface
      */
     public function supports(Request $request, ArgumentMetadata $argument)
     {
-        if (PaginatedInternalizedRequestInterface::class !== $argument->getType()) {
+        if (
+            PaginatedInternalizedRequestInterface::class !== $argument->getType() and
+            PaginatedRequestInterface::class !== $argument->getType()
+        ) {
             return false;
         }
 
@@ -49,7 +52,7 @@ class PaginatedRequestResolver implements ArgumentValueResolverInterface
                 $data['limit'],
                 $data['locale']
             );
-        } else if ($internalType->equalsValue('paginated_request')) {
+        } else if ($internalType->equalsValue('paginated_view')) {
             $this->paginatedRequest = new PaginatedRequest(
                 $data['offset'],
                 $data['limit']

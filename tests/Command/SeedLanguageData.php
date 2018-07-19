@@ -104,14 +104,35 @@ class SeedLanguageData extends BaseCommand
 
         $progress->advance();
 
-        /** @var Locale $locale */
-        $locale = $this->createLocale();
+        $locales = [
+            [
+                'name' => 'en',
+                'default' => true,
+            ],
+            [
+                'name' => 'fr',
+                'default' => false,
+            ],
+            [
+                'name' => 'sp',
+                'default' => false,
+            ]
+        ];
+
+        $defaultLocale = null;
+        foreach ($locales as $locale) {
+            $createdLocale = $this->createLocale($locale);
+
+            if ($locale['default'] === true) {
+                $defaultLocale = $createdLocale;
+            }
+        }
 
         $progress->advance();
 
         $categories = new CollectionEntity();
         for ($i = 0; $i < 5; $i++) {
-            $category = $this->createCategory($locale);
+            $category = $this->createCategory($defaultLocale);
 
             $categoryMetadata = new CollectionMetadata(
                 $category->getId(),
@@ -126,7 +147,7 @@ class SeedLanguageData extends BaseCommand
         $languages = [];
         for ($i = 0; $i < 3; $i++) {
             /** @var Language $language */
-            $language = $this->createLanguage($locale);
+            $language = $this->createLanguage($defaultLocale);
 
             $languages[] = $language;
 
@@ -137,7 +158,7 @@ class SeedLanguageData extends BaseCommand
         /** @var Language $language */
         foreach ($languages as $language) {
             for ($l = 0; $l < 20; $l++) {
-                $lesson = $this->createLesson($language, $locale);
+                $lesson = $this->createLesson($language, $defaultLocale);
 
                 $lessons[] = $lesson;
 

@@ -1,5 +1,5 @@
-class LanguageRepository {
-    read(request, success, failure) {
+class BaseRepository {
+    makeDefaultRequest(request, success, failure) {
         $.ajax({
             method: request.options.method,
             url: request.options.route,
@@ -9,9 +9,25 @@ class LanguageRepository {
             success: success
         });
     }
+}
 
-    asyncRead() {
+class LanguageRepository extends BaseRepository{
+    constructor() {
+        super();
+    }
 
+    read(request, success, failure) {
+        this.makeDefaultRequest(request, success, failure);
+    }
+}
+
+class LocaleRepository extends BaseRepository{
+    constructor() {
+        super();
+    }
+
+    read(request, success, failure) {
+        this.makeDefaultRequest(request, success, failure);
     }
 }
 
@@ -20,9 +36,16 @@ class Factory {
         this.repositories = {};
 
         switch (repository) {
-            case repository:
+            case 'language':
                 if (!this.repositories.hasOwnProperty(repository)) {
                     this.repositories[repository] = new LanguageRepository();
+                }
+
+                return this.repositories[repository];
+
+            case 'locale':
+                if (!this.repositories.hasOwnProperty(repository)) {
+                    this.repositories[repository] = new LocaleRepository();
                 }
 
                 return this.repositories[repository];
@@ -44,6 +67,7 @@ export const Method = {
 export const InternalType = {
     VIEW: 'view',
     PAGINATED_INTERNALIZED_VIEW: 'paginated_internalized_view',
+    PAGINATED_VIEW: 'paginated_view',
 };
 
 export class Request {

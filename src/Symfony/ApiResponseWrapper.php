@@ -188,6 +188,29 @@ class ApiResponseWrapper
      * @param string $type
      * @return JsonResponse
      */
+    public function createGetAllLocales($data = [], string $type = 'json')
+    {
+        /** @var ApiResponseData $responseData */
+        $responseData = $this->apiSdk
+            ->create($data)
+            ->method('GET')
+            ->addMessage('List of locales')
+            ->isCollection()
+            ->setStatusCode(200)
+            ->build();
+
+        switch ($type) {
+            case 'json': return new JsonResponse(
+                $responseData->toArray(),
+                $responseData->getStatusCode()
+            );
+        }
+    }
+    /**
+     * @param array $data
+     * @param string $type
+     * @return JsonResponse
+     */
     public function createGetLoggedInUser($data = [], string $type = 'json')
     {
         /** @var ApiResponseData $responseData */
