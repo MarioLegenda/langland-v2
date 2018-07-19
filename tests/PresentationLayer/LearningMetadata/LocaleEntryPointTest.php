@@ -2,7 +2,6 @@
 
 namespace App\Tests\PresentationLayer\LearningMetadata;
 
-use App\LogicLayer\LearningMetadata\Domain\Locale;
 use App\LogicLayer\LearningMetadata\Model\LocaleCollection;
 use App\PresentationLayer\LearningMetadata\EntryPoint\LocaleEntryPoint;
 use App\Tests\Library\BasicSetup;

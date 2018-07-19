@@ -7,7 +7,6 @@ use App\Infrastructure\Response\LayerPropagationCollectionResponse;
 use App\Infrastructure\Response\LayerPropagationResourceResponse;
 use App\LogicLayer\LearningMetadata\Logic\LocaleLogic;
 use App\LogicLayer\LearningMetadata\Model\LocaleCollection;
-use App\PresentationLayer\Infrastructure\Model\Locale;
 use App\PresentationLayer\Infrastructure\Model\PresentationModelInterface;
 use Library\Http\Request\Contract\PaginatedRequestInterface;
 use Library\Infrastructure\Helper\ModelValidator;
